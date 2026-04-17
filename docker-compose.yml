@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  neo4j:
+    image: neo4j:latest
+    ports:
+      - "7474:7474" # Web interface
+      - "7687:7687"
+    environment:
+      - NEO4J_AUTH=neo4j/testpassword123
+    volumes:
+      - ./data/neo4j:/data
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./data/ollama:/data
+
+  python-app:
+    build: .
+    depends_on:
+      - neo4j
+      - ollama
