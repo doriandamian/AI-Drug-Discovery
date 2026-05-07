@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   neo4j:
     image: neo4j:latest
@@ -16,10 +14,21 @@ services:
     ports:
       - "11434:11434"
     volumes:
-      - ./data/ollama:/data
+      - ./data/ollama:/root/.ollama
+    entrypoint: >
+      /bin/sh -c "
+        ollama serve &
+        until ollama list; do sleep 2; done;
+        ollama pull llama3;
+        wait
+        "
 
   python-app:
     build: .
     depends_on:
       - neo4j
       - ollama
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app

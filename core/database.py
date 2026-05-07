@@ -1,5 +1,5 @@
 import time
-from neo4j import GraphDatabase
+from neo4j import GraphDatabase, exceptions
 
 URI = "bolt://neo4j:7687"
 AUTH = ("neo4j", "testpassword123")
@@ -20,5 +20,5 @@ def wait_for_neo4j():
             )
             driver.verify_connectivity()
             return
-        except:
+        except exceptions.ServiceUnavailable: # Catch specific Neo4j connection error
             time.sleep(2)

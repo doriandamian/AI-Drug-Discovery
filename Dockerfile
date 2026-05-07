@@ -23,4 +23,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 7. Copiem restul codului sursă în container (app.py, /agents, /tools, etc.)
 COPY . /app/
 
-CMD ["python", "app.py"]
+EXPOSE 8000
+
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
