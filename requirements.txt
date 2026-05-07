@@ -11,3 +11,5 @@ xmltodict==1.0.4
 fastapi==0.136.1
 uvicorn==0.46.0
 pydantic==2.13.3
+pypdf==6.10.2
+requests==2.33.1

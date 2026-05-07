@@ -1,0 +1,40 @@
+from langchain_community.vectorstores import Neo4jVector
+from langchain_ollama import OllamaEmbeddings
+from langchain_core.tools import tool
+
+NEO4J_URI = "bolt://neo4j:7687"
+NEO4J_USERNAME = "neo4j"
+NEO4J_PASSWORD = "testpassword123"
+
+@tool(description="Searches the local Neo4j vector database for private medical literature and PDF documents. Input: A medical question in English.")
+def search_literature(query: str):
+    """
+    Această funcție va deveni un 'Tool' pentru agentul tău.
+    """
+    embeddings = OllamaEmbeddings(
+        model="nomic-embed-text",
+        base_url="http://ollama:11434"
+    )
+    
+    vector_store = Neo4jVector.from_existing_index(
+        embedding=embeddings,
+        url=NEO4J_URI,
+        username=NEO4J_USERNAME,
+        password=NEO4J_PASSWORD,
+        index_name="local_pdf",
+        text_node_property="text",
+    )
+    
+    results = vector_store.similarity_search(query, k=3)
+    
+    formatted_results = []
+    for doc in results:
+        # Preluăm sursa și pagina dacă există în metadate, altfel afișăm doar textul
+        sursa = doc.metadata.get('source', 'Document Necunoscut')
+        pagina = doc.metadata.get('page', '?')
+        formatted_results.append(f"- Sursă ({sursa}, Pagina {pagina}):\n{doc.page_content}\n")
+        
+    if not formatted_results:
+        return "Nu am găsit nicio informație relevantă în documentele locale."
+        
+    return "\n".join(formatted_results)

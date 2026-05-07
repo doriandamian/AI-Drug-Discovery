@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 import core.database as db
 import core.llm_config as llm
+import rag.ingest as ingest
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -17,6 +18,8 @@ async def lifespan(app: FastAPI):
     print("CONNECTED TO OLLAMA")
 
     print("STARTUP IS COMPLETE")
+
+    # ingest.build_vector_store()
 
     yield
 

@@ -1,6 +1,6 @@
 services:
   neo4j:
-    image: neo4j:latest
+    image: neo4j:ubi9
     ports:
       - "7474:7474" # Web interface
       - "7687:7687"
@@ -10,7 +10,7 @@ services:
       - ./data/neo4j:/data
 
   ollama:
-    image: ollama/ollama:latest
+    image: ollama/ollama:0.23.1
     ports:
       - "11434:11434"
     volumes:
@@ -19,7 +19,8 @@ services:
       /bin/sh -c "
         ollama serve &
         until ollama list; do sleep 2; done;
-        ollama pull llama3;
+        ollama pull llama3.1;
+        ollama pull nomic-embed-text;
         wait
         "
 
@@ -30,5 +31,7 @@ services:
       - ollama
     ports:
       - "8000:8000"
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
     volumes:
       - .:/app
