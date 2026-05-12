@@ -16,8 +16,8 @@ class AgentState(TypedDict):
 
 tools = [search_pubmed, fetch_pubchem_properties, search_literature]
 
-llm = ChatOllama(model="llama3.1", base_url="http://ollama:11434")
-# llm = ChatOllama(model="llama3.1", base_url="http://host.docker.internal:11434")
+# llm = ChatOllama(model="llama3.1", base_url="http://ollama:11434")
+llm = ChatOllama(model="llama3.1", base_url="http://host.docker.internal:11434")
 llm_with_tools = llm.bind_tools(tools)
 
 def chatbot(state: AgentState):

@@ -8,6 +8,8 @@ NEO4J_URI = "bolt://neo4j:7687"
 NEO4J_USERNAME = "neo4j"
 NEO4J_PASSWORD = "testpassword123"
 
+OLLAMA_URL = os.getenv("OLLAMA_BASE_URL", "http://host.docker.internal:11434")
+
 def build_vector_store():
     print("Reading PDF files from data/raw/ ...")
     loader = PyPDFDirectoryLoader("./data/raw")
@@ -24,7 +26,7 @@ def build_vector_store():
     print("Creating embeddings using Ollama...")
     embeddings = OllamaEmbeddings(
         model="nomic-embed-text",
-        base_url="http://ollama:11434"
+        base_url=OLLAMA_URL
     )
 
     print("Storing embeddings in Neo4j...")
