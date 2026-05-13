@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="header">
+    <h1>🧬 AI Drug Discovery Lab</h1>
+    <p>Pune o întrebare sistemului tău Multi-Agent (PubMed & PubChem)</p>
+  </div>
+
+  <div class="chat-box">
+    <div
+      *ngFor="let msg of messages"
+      class="message-wrapper"
+      [ngClass]="msg.role"
+    >
+      <div class="message-bubble">
+        <strong>{{ msg.role === "user" ? "👤 Tu" : "🤖 AI Agent" }}:</strong
+        ><br />
+        <span class="message-text">{{ msg.text }}</span>
+
+        <div *ngIf="msg.role === 'ai'" class="time-stamp">
+          ⏱️ Cercetare finalizată în {{ msg.time }} secunde.
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" class="loading-indicator">
+      <em>🧠 Echipa de Agenți analizează datele...</em>
+    </div>
+  </div>
+
+  <form (ngSubmit)="sendMessage()" class="input-form">
+    <input
+      type="text"
+      name="userInput"
+      [(ngModel)]="userInput"
+      placeholder="Ex: Caută greutatea Aspirinei în PubChem și efectele adverse în PubMed..."
+      [disabled]="isLoading"
+      autocomplete="off"
+    />
+    <button type="submit" [disabled]="isLoading">Trimite</button>
+  </form>
+</div>

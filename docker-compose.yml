@@ -7,29 +7,14 @@ services:
     environment:
       - NEO4J_AUTH=neo4j/testpassword123
     volumes:
-      - ./data/neo4j:/data
-
-  # ollama:
-  #   image: ollama/ollama:0.23.1
-  #   ports:
-  #     - "11434:11434"
-  #   volumes:
-  #     - ./data/ollama:/root/.ollama
-  #   entrypoint: >
-  #     /bin/sh -c "
-  #       ollama serve &
-  #       until ollama list; do sleep 2; done;
-  #       ollama pull llama3.1;
-  #       ollama pull qwen2.5;
-  #       ollama pull nomic-embed-text;
-  #       wait
-  #       "
+      - ./backend/data/neo4j:/data
 
   python-app:
-    build: .
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     depends_on:
       - neo4j
-      # - ollama
     ports:
       - "8000:8000"
     extra_hosts:
@@ -37,4 +22,13 @@ services:
     env_file:
       - .env
     volumes:
-      - .:/app
+      - ./backend:/app
+
+  angular-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - python-app

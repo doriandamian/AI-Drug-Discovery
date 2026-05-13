@@ -1,0 +1,106 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.chat-box {
+  height: 60vh;
+  overflow-y: auto;
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+.message-wrapper {
+  margin: 10px 0;
+}
+
+.message-wrapper.user { text-align: right; }
+.message-wrapper.ai { text-align: left; }
+.message-wrapper.error { text-align: left; }
+
+.message-bubble {
+  display: inline-block;
+  padding: 12px;
+  border-radius: 8px;
+  max-width: 80%;
+  text-align: left;
+  line-height: 1.5;
+}
+
+.user .message-bubble {
+  background-color: #007bff;
+  color: white;
+}
+
+.ai .message-bubble {
+  background-color: #ffffff;
+  color: black;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.error .message-bubble {
+  background-color: #ffdddd;
+  color: #d8000c;
+  border: 1px solid #d8000c;
+}
+
+.message-text {
+  white-space: pre-wrap; /* Păstrează formatarea cu linii noi din textul AI-ului */
+}
+
+.time-stamp {
+  font-size: 11px;
+  color: #666;
+  margin-top: 8px;
+  border-top: 1px solid #eee;
+  padding-top: 4px;
+}
+
+.loading-indicator {
+  text-align: left;
+  color: #666;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
+.input-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.input-form input {
+  flex: 1;
+  padding: 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.input-form button {
+  padding: 15px 30px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.input-form button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
