@@ -1,106 +1,166 @@
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-}
-
-.header {
-  text-align: center;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
-}
-
-.chat-box {
-  height: 60vh;
-  overflow-y: auto;
-  margin-top: 20px;
-  padding: 10px;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  background-color: #fafafa;
-}
-
-.message-wrapper {
-  margin: 10px 0;
-}
-
-.message-wrapper.user { text-align: right; }
-.message-wrapper.ai { text-align: left; }
-.message-wrapper.error { text-align: left; }
-
-.message-bubble {
-  display: inline-block;
-  padding: 12px;
-  border-radius: 8px;
-  max-width: 80%;
-  text-align: left;
-  line-height: 1.5;
-}
-
-.user .message-bubble {
-  background-color: #007bff;
-  color: white;
-}
-
-.ai .message-bubble {
-  background-color: #ffffff;
-  color: black;
-  border: 1px solid #e0e0e0;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.error .message-bubble {
-  background-color: #ffdddd;
-  color: #d8000c;
-  border: 1px solid #d8000c;
-}
-
-.message-text {
-  white-space: pre-wrap; /* Păstrează formatarea cu linii noi din textul AI-ului */
-}
-
-.time-stamp {
-  font-size: 11px;
-  color: #666;
-  margin-top: 8px;
-  border-top: 1px solid #eee;
-  padding-top: 4px;
-}
-
-.loading-indicator {
-  text-align: left;
-  color: #666;
-  margin-top: 15px;
-  margin-left: 10px;
-}
-
-.input-form {
+/* --- CONTAINERUL PRINCIPAL --- */
+.chat-container {
   display: flex;
-  gap: 10px;
-  margin-top: 20px;
+  flex-direction: column;
+  height: 85vh; /* Ocupă 85% din înălțimea ecranului */
+  max-width: 900px;
+  margin: 20px auto;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-.input-form input {
+/* --- LISTA DE MESAJE (ZONA SCROLLABILĂ) --- */
+.messages-list {
   flex: 1;
-  padding: 15px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 16px;
+  padding: 24px;
+  overflow-y: auto;
+  background-color: #f8fafc; /* Un gri extrem de deschis, odihnitor */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.input-form button {
-  padding: 15px 30px;
-  background-color: #28a745;
+/* --- STILIZARE BULLETS MESAJE --- */
+.user-message, .ai-message {
+  max-width: 75%;
+  padding: 14px 18px;
+  border-radius: 16px;
+  line-height: 1.5;
+  font-size: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+/* Mesajele utilizatorului (Aliniate la dreapta, Albastre) */
+.user-message {
+  align-self: flex-end;
+  background-color: #2563eb;
+  color: #ffffff;
+  border-bottom-right-radius: 4px; /* Efect de bulă de chat */
+}
+
+/* Mesajele AI-ului (Aliniate la stânga, Albe/Gri) */
+.ai-message {
+  align-self: flex-start;
+  background-color: #ffffff;
+  color: #1e293b;
+  border-top-left-radius: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+/* Corecție pentru textul generat de librăria de Markdown în interiorul bulelor */
+::ng-deep markdown p {
+  margin: 0 0 10px 0;
+}
+::ng-deep markdown p:last-child {
+  margin: 0;
+}
+.user-message ::ng-deep markdown code {
+  background-color: #1d4ed8;
+  color: #ffffff;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* --- PROPRIETĂȚILE MOLECULELOR (CANVAS) --- */
+.molecule-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.molecule-canvas {
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.molecule-canvas:hover {
+  transform: scale(1.02); /* Efect discret de zoom la hover */
+}
+
+/* --- INDICATORUL DE LOADING --- */
+.loading-indicator {
+  align-self: flex-start;
+  background-color: #f1f5f9;
+  color: #64748b;
+  font-style: italic;
+  font-size: 14px;
+  padding: 10px 16px;
+  border-radius: 20px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/* --- ZONA DE INPUT (JOS) --- */
+.input-area {
+  display: flex;
+  padding: 16px 24px;
+  background-color: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  gap: 12px;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 14px 18px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-area input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.input-area button {
+  padding: 0 24px;
+  background-color: #2563eb;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
+  transition: background-color 0.2s;
 }
 
-.input-form button:disabled {
-  background-color: #cccccc;
+.input-area button:hover {
+  background-color: #1d4ed8;
+}
+
+.input-area button:disabled {
+  background-color: #94a3b8;
   cursor: not-allowed;
+}
+
+/* --- SCROLLBAR DESIGN (Pentru un aspect premium în Chrome/Safari) --- */
+.messages-list::-webkit-scrollbar {
+  width: 6px;
+}
+.messages-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.messages-list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+.messages-list::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }

@@ -1,40 +1,28 @@
-<div class="container">
-  <div class="header">
-    <h1>🧬 AI Drug Discovery Lab</h1>
-    <p>Pune o întrebare sistemului tău Multi-Agent (PubMed & PubChem)</p>
-  </div>
+<div class="chat-container">
+  <div class="messages-list">
+    
+    <div *ngFor="let msg of messages; let msgIndex = index" 
+         [ngClass]="{'ai-message': msg.isAi, 'user-message': !msg.isAi}">
+      
+      <markdown [data]="msg.text"></markdown>
 
-  <div class="chat-box">
-    <div
-      *ngFor="let msg of messages"
-      class="message-wrapper"
-      [ngClass]="msg.role"
-    >
-      <div class="message-bubble">
-        <strong>{{ msg.role === "user" ? "👤 Tu" : "🤖 AI Agent" }}:</strong
-        ><br />
-        <span class="message-text">{{ msg.text }}</span>
-
-        <div *ngIf="msg.role === 'ai'" class="time-stamp">
-          ⏱️ Cercetare finalizată în {{ msg.time }} secunde.
-        </div>
+      <div *ngIf="msg.smilesList && msg.smilesList.length > 0" class="molecule-container">
+        <canvas *ngFor="let smile of msg.smilesList; let smileIndex = index"
+                [id]="'smiles-canvas-' + msgIndex + '-' + smileIndex"
+                class="molecule-canvas">
+        </canvas>
       </div>
+
     </div>
 
     <div *ngIf="isLoading" class="loading-indicator">
-      <em>🧠 Echipa de Agenți analizează datele...</em>
+      AI-ul analizează și calculează proprietățile...
     </div>
+
   </div>
 
-  <form (ngSubmit)="sendMessage()" class="input-form">
-    <input
-      type="text"
-      name="userInput"
-      [(ngModel)]="userInput"
-      placeholder="Ex: Caută greutatea Aspirinei în PubChem și efectele adverse în PubMed..."
-      [disabled]="isLoading"
-      autocomplete="off"
-    />
-    <button type="submit" [disabled]="isLoading">Trimite</button>
-  </form>
+  <div class="input-area">
+    <input [(ngModel)]="userInput" (keyup.enter)="sendMessage()" placeholder="Scrie un prompt (ex: Proiectează o moleculă nouă)...">
+    <button (click)="sendMessage()" [disabled]="isLoading">Trimite</button>
+  </div>
 </div>

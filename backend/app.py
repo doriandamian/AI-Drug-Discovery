@@ -1,3 +1,5 @@
+import os
+import time
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
@@ -6,7 +8,9 @@ import core.llm_config as llm
 import rag.ingest as ingest
 from agents.orchestrator import orchestrator
 from pydantic import BaseModel
-import time
+import ml.train_model as ml_trainer
+
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "ml", "toxicity_model.pkl")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -22,6 +26,13 @@ async def lifespan(app: FastAPI):
 
     print("SETTING UP LOCAL DATABASE...")
     ingest.build_vector_store()
+
+    print("CHECKING TOXICITY MODEL...")
+    if not os.path.exists(MODEL_PATH):
+        print("TOXICITY MODEL NOT FOUND. TRAINING NEW MODEL...")
+        ml_trainer.train()
+    else:
+        print("USING EXISTING TOXICITY MODEL.")
 
     print("STARTUP IS COMPLETE")
 

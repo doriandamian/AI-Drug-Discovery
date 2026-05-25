@@ -8,12 +8,13 @@ from langchain_ollama import ChatOllama
 
 from tools.pubmed_api import search_pubmed
 from tools.pubchem_api import fetch_pubchem_properties
+from tools.toxicity_predictor import predict_toxicity
 from rag.retriever import search_literature
 
 class AgentState(TypedDict):
     messages: Annotated[list[BaseMessage], add_messages]
 
-tools = [search_pubmed, fetch_pubchem_properties, search_literature]
+tools = [search_pubmed, fetch_pubchem_properties, search_literature, predict_toxicity]
 tool_node = ToolNode(tools=tools)
 
 llm_manager = ChatOllama(model="llama3.1", base_url="http://host.docker.internal:11434", temperature=0)
@@ -28,7 +29,21 @@ def manager_node(state: AgentState):
 
 def scientist_node(state: AgentState):
     """Node that generates the final response for the user."""
-    messages = state["messages"] + [HumanMessage(content="Generate a final answer for the user based on the conversation and tool outputs.")]
+
+    strict_prompt = """You are a strict output formatting agent. Your ONLY job is to take the data from the tools and write a final clean response.
+
+CRITICAL RULES FOR CHEMICAL FORMULAS:
+- If you write a SMILES formula (like c1ccccc1, CN1C=NC2=..., etc.), you MUST wrap it in <smiles> and </smiles>.
+- NEVER use quotes, single quotes, or backticks around a SMILES string.
+- EXAMPLE OF CORRECT OUTPUT: The generated derivative is <smiles>CC(=O)OC1=CC=CC=C1C(=O)O</smiles> which has a low toxicity risk.
+
+CRITICAL RULES FOR NUMBERS AND SCORES:
+- When printing toxicity probabilities or safety scores (like 0.85, 99.00%, 0.35), print them as normal text. 
+- NEVER wrap plain numbers, scores, or percentages in <smiles> tags or quotes. 
+
+Do not log steps, do not output raw JSON code blocks."""
+
+    messages = state["messages"] + [HumanMessage(content=strict_prompt)]
     response = llm_scientist.invoke(messages)
     return {"messages": [response]}
 
