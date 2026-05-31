@@ -11,23 +11,18 @@ def test_connection():
             record = result.single()
             print(record["number"])
 
-def wait_for_neo4j():
-    for _ in range(20):
+def wait_for_neo4j(retries: int = 20, delay: float = 2.0):
+    for attempt in range(1, retries + 1):
         try:
-            driver = GraphDatabase.driver(
-                "bolt://neo4j:7687",
-                auth=("neo4j", "testpassword123")
-            )
+            driver = GraphDatabase.driver(URI, auth=AUTH)
             driver.verify_connectivity()
             return
-        except exceptions.ServiceUnavailable: # Catch specific Neo4j connection error
-            time.sleep(2)
+        except exceptions.ServiceUnavailable:
+            print(f"Neo4j not ready (attempt {attempt}/{retries}), retrying in {delay}s...")
+            time.sleep(delay)
+    raise RuntimeError(f"Neo4j unavailable after {retries} attempts ({retries * delay:.0f}s)")
 
 def upsert_compound(name, properties):
-    from neo4j import GraphDatabase
-
-    driver = GraphDatabase.driver(URI, auth=AUTH)
-
     query = """
     MERGE (c:Compound {name: $name})
     SET c.smiles = $smiles
@@ -37,31 +32,27 @@ def upsert_compound(name, properties):
     RETURN c
     """
 
-    with driver.session() as session:
-        result = session.run(
-            query,
-            name=name.capitalize(),
-            smiles=properties.get('smiles'),
-            molecular_weight=properties.get('molecular_weight'),
-            xlogp=properties.get('xlogp')
-        )
-    driver.close()
+    with GraphDatabase.driver(URI, auth=AUTH) as driver:
+        with driver.session() as session:
+            session.run(
+                query,
+                name=name.capitalize(),
+                smiles=properties.get('smiles'),
+                molecular_weight=properties.get('mw'),
+                xlogp=properties.get('logp')
+            )
 
 def get_compound(name):
-    from neo4j import GraphDatabase
+    query = "MATCH (c:Compound {name: $name}) RETURN c LIMIT 1"
 
-    driver = GraphDatabase.driver(URI, auth=AUTH)
-
-    query = "MATCH (c:Compound {name: $name}) RETURN c"
-
-    with driver.session() as session:
-        result = session.run(query, name=name.capitalize()).single()
-        if result:
-            node = result['c']
-            return {
-                'smiles': node.get('smiles'),
-                'molecular_weight': node.get('molecular_weight'),
-                'xlogp': node.get('xlogp')
-            }
-    driver.close()
+    with GraphDatabase.driver(URI, auth=AUTH) as driver:
+        with driver.session() as session:
+            result = session.run(query, name=name.capitalize()).single()
+            if result:
+                node = result['c']
+                return {
+                    'smiles': node.get('smiles'),
+                    'molecular_weight': node.get('molecular_weight'),
+                    'xlogp': node.get('xlogp')
+                }
     return None

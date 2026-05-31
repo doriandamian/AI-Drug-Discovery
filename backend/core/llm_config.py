@@ -2,7 +2,7 @@ from langchain_ollama.chat_models import ChatOllama
 
 def get_local_llm():
     return ChatOllama(
-        model="llama3.1",
+        model="qwen2.5",
         # base_url="http://ollama:11434",
         base_url="http://host.docker.internal:11434",
         temperature=0.1

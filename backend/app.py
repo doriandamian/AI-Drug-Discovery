@@ -1,6 +1,6 @@
 import os
 import time
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
 import core.database as db
@@ -47,7 +47,6 @@ app.add_middleware(
     allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
-    allow_credentials=True,
 )
 
 class ChatRequest(BaseModel):
@@ -65,24 +64,52 @@ async def chat_endpoint(request: ChatRequest):
 
     final_content = ""
 
-    events = orchestrator.stream(inputs, stream_mode="values")
+    events = orchestrator.stream(inputs, stream_mode="values", config={"recursion_limit": 15})
 
-    print("Processing response...")
+    SEP = "─" * 52
 
-    for event in events:
-        if "messages" in event:
-            last_message = event["messages"][-1]
-            print(f"\n[STEP: {last_message.type.upper()}]")
-            if hasattr(last_message, 'tool_calls') and last_message.tool_calls:
-                print(f"Tool calls: {[tc['name'] for tc in last_message.tool_calls]}")
-            elif last_message.type == "tool":
-                print(f"📥 DATE PRIMITE DE LA: {last_message.name}")
-                print(last_message.content) # Afișăm TOT conținutul găsit (lucrări, date)
-            else:
-                print(f"Content: {last_message.content[:200]}...")
-            
-            if last_message.type == "ai" and not last_message.tool_calls:
-                final_content = last_message.content
+    step = 0
+    step_start = time.time()
+
+    try:
+        for event in events:
+            if "messages" not in event:
+                continue
+
+            step += 1
+            msg = event["messages"][-1]
+            elapsed = time.time() - step_start
+            step_start = time.time()
+
+            print(f"\n{SEP}")
+
+            if msg.type == "human":
+                print(f"STEP {step} │ USER")
+                print(SEP)
+                print(msg.content[:300])
+
+            elif msg.type == "ai" and msg.tool_calls:
+                n = len(msg.tool_calls)
+                print(f"STEP {step} │ MANAGER → calling {n} tool{'s' if n > 1 else ''}")
+                print(SEP)
+                for tc in msg.tool_calls:
+                    args = ", ".join(f'"{v}"' for v in tc["args"].values()) if tc["args"] else ""
+                    print(f"  ▸ {tc['name']}({args})")
+
+            elif msg.type == "tool":
+                print(f"STEP {step} │ TOOL RESULT ← {msg.name}  ({elapsed:.2f}s)")
+                print(SEP)
+                print(msg.content[:600])
+
+            elif msg.type == "ai" and not msg.tool_calls:
+                print(f"STEP {step} │ FINAL RESPONSE  ({elapsed:.2f}s)")
+                print(SEP)
+                print(msg.content[:400])
+                if msg.content:
+                    final_content = msg.content
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Agent error: {str(e)}")
 
     elapsed_time = time.time() - start_time
     print(f"\nTotal processing time: {elapsed_time:.2f} seconds")
