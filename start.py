@@ -50,17 +50,36 @@ def setup_ollama():
     time.sleep(3)
 
 def pull_models():
-    models = ["llama3.1", "qwen2.5", "nomic-embed-text"]
+    models = ["qwen2.5:14b", "qwen2.5:7b", "nomic-embed-text"]
     for model in models:
         print(f"Verifying/Downloading model: {model} (this might take a few minutes on first run)...")
         os.system(f"ollama pull {model}")
 
 def configure_environment():
     print("\nConfiguring environment variables for the network...")
-    env_content = "OLLAMA_BASE_URL=http://host.docker.internal:11434\n"
-    with open(".env", "w") as f:
-        f.write(env_content)
-    print("File .env has been generated.")
+    defaults = {"OLLAMA_BASE_URL": "http://host.docker.internal:11434"}
+
+    lines = []
+    if os.path.exists(".env"):
+        with open(".env") as f:
+            lines = f.read().splitlines()
+
+    present = {
+        line.split("=", 1)[0].strip()
+        for line in lines
+        if line.strip() and not line.strip().startswith("#") and "=" in line
+    }
+
+    missing = [(k, v) for k, v in defaults.items() if k not in present]
+    if missing:
+        with open(".env", "a") as f:
+            if lines and lines[-1].strip() != "":
+                f.write("\n")
+            for k, v in missing:
+                f.write(f"{k}={v}\n")
+        print("File .env updated (added missing defaults, existing values preserved).")
+    else:
+        print("File .env is ready (existing values preserved).")
 
 def start_docker_compose():
     print("\nStarting Docker infrastructure (FastAPI & Neo4j)...")

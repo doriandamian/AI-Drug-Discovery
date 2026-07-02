@@ -5,9 +5,10 @@ services:
       - "7474:7474" # Web interface
       - "7687:7687"
     environment:
-      - NEO4J_AUTH=neo4j/testpassword123
+      - NEO4J_AUTH=${NEO4J_USERNAME:-neo4j}/${NEO4J_PASSWORD:?NEO4J_PASSWORD must be set in .env}
     volumes:
       - ./backend/data/neo4j:/data
+      - neo4j_logs:/logs
 
   python-app:
     build:
@@ -34,7 +35,11 @@ services:
       - python-app
     volumes:
       - ./frontend:/app
-      - /app/node_modules
+      - frontend_node_modules:/app/node_modules
     command: npx ng serve --host 0.0.0.0 --poll 2000
     environment:
       - NODE_ENV=development
+
+volumes:
+  neo4j_logs:
+  frontend_node_modules:

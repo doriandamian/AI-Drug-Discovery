@@ -1,3 +1,20 @@
 data/
-
+__pycache__/
 test.py
+.env
+.DS_Store
+.flashrank_cache/
+
+# Trained model artifacts, regenerated on startup by app.py / train scripts
+*.pkl
+
+# pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Application logs
+logs/
+*.log
+
+eval/

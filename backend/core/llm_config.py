@@ -1,14 +1,16 @@
+import logging
+import time
 from langchain_ollama.chat_models import ChatOllama
+from core.config import OLLAMA_BASE_URL, MANAGER_MODEL
 
-def get_local_llm():
+logger = logging.getLogger(__name__)
+
+def get_local_llm(model: str = MANAGER_MODEL):
     return ChatOllama(
-        model="qwen2.5",
-        # base_url="http://ollama:11434",
-        base_url="http://host.docker.internal:11434",
+        model=model,
+        base_url=OLLAMA_BASE_URL,
         temperature=0.1
     )
-
-import time
 
 def wait_for_ollama(retries=20, delay=2):
     for i in range(retries):
@@ -16,11 +18,11 @@ def wait_for_ollama(retries=20, delay=2):
             llm = get_local_llm()
             response = llm.invoke("Respond with a simple Yes if you can hear me.")
             if "yes" in response.content.lower():
-                print("Ollama connection successful.")
+                logger.info("Ollama connection successful.")
                 return
             else:
-                print(f"Ollama responded unexpectedly: {response.content}. Retrying...")
+                logger.warning("Ollama responded unexpectedly: %s. Retrying...", response.content)
         except Exception as e:
-            print(f"Attempt {i+1}/{retries}: Error connecting to Ollama: {e}. Retrying in {delay} seconds...")
+            logger.warning("Attempt %d/%d: Error connecting to Ollama: %s. Retrying in %ds...", i + 1, retries, e, delay)
         time.sleep(delay)
     raise ConnectionError("Failed to connect to Ollama after multiple retries.")

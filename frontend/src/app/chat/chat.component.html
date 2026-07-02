@@ -1,10 +1,53 @@
 <div class="chat-container">
+
+  <header class="chat-header">
+    <div class="header-title">
+      <span class="logo">🧬</span>
+      <div>
+        <h1>AI Drug Discovery</h1>
+        <p class="subtitle">Multi-agent assistant for cheminformatics, toxicology &amp; literature</p>
+      </div>
+    </div>
+
+    <div class="backend-status"
+         [ngClass]="{
+           'is-online': backendOnline === true,
+           'is-offline': backendOnline === false,
+           'is-checking': backendOnline === null
+         }">
+      <span class="status-dot"></span>
+      <span class="status-label">
+        {{ backendOnline === true ? 'Backend online'
+           : backendOnline === false ? 'Backend offline'
+           : 'Checking...' }}
+      </span>
+    </div>
+  </header>
+
   <div class="messages-list">
-    
-    <div *ngFor="let msg of messages; let msgIndex = index" 
-         [ngClass]="{'ai-message': msg.isAi, 'user-message': !msg.isAi}">
-      
-      <markdown [data]="msg.text"></markdown>
+
+    <div *ngIf="messages.length === 0" class="welcome">
+      <span class="welcome-icon">💊</span>
+      <h2>How can I help with your research?</h2>
+      <p>Ask about molecules, toxicity, properties, or the literature. Try one of these:</p>
+      <div class="suggestions">
+        <button *ngFor="let s of suggestions"
+                class="suggestion-chip"
+                [disabled]="isLoading || backendOnline === false"
+                (click)="useSuggestion(s)">
+          {{ s }}
+        </button>
+      </div>
+    </div>
+
+    <div *ngFor="let msg of messages; let msgIndex = index"
+         [ngClass]="{'ai-message': msg.isAi, 'user-message': !msg.isAi, 'is-streaming': msg.isStreaming}">
+
+      <div *ngIf="msg.isStreaming" class="streaming-badge">Generating...</div>
+      <pre *ngIf="msg.isStreaming && msg.text" class="streaming-text">{{ msg.text }}<span class="streaming-cursor"></span></pre>
+      <markdown *ngIf="!msg.isStreaming && msg.text" [data]="msg.text"></markdown>
+
+      <div *ngIf="msg.status" class="step-status">{{ msg.status }}</div>
 
       <div *ngIf="msg.smilesList && msg.smilesList.length > 0" class="molecule-container">
         <canvas *ngFor="let smile of msg.smilesList; let smileIndex = index"
@@ -13,16 +56,25 @@
         </canvas>
       </div>
 
-    </div>
+      <div *ngIf="msg.isAi && !msg.isStreaming && msg.elapsed" class="message-meta">
+        Generated in {{ msg.elapsed }}s
+      </div>
 
-    <div *ngIf="isLoading" class="loading-indicator">
-      AI-ul analizează și calculează proprietățile...
     </div>
 
   </div>
 
   <div class="input-area">
-    <input [(ngModel)]="userInput" (keyup.enter)="sendMessage()" placeholder="Scrie un prompt (ex: Proiectează o moleculă nouă)...">
-    <button (click)="sendMessage()" [disabled]="isLoading">Trimite</button>
+    <input [(ngModel)]="userInput"
+           (keyup.enter)="sendMessage()"
+           [disabled]="backendOnline === false"
+           placeholder="Write a prompt (e.g. Design a novel molecule)...">
+    <button (click)="sendMessage()" [disabled]="isLoading || backendOnline === false">
+      {{ isLoading ? 'Working...' : 'Send' }}
+    </button>
+  </div>
+
+  <div *ngIf="backendOnline === false" class="offline-banner">
+    ⚠️ The backend is not reachable. Start it and this will reconnect automatically.
   </div>
 </div>
