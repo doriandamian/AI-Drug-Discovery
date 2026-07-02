@@ -42,13 +42,15 @@ export class ChatComponent implements OnInit, OnDestroy {
     'Find recent literature on kinase inhibitors',
   ];
 
+  private readonly agentNames: Record<string, string> = {
+    cheminformatics_agent: 'cheminformatics',
+    safety_agent: 'toxicology',
+    literature_agent: 'literature',
+    graph_agent: 'knowledge-graph',
+    molecular_design_agent: 'molecular design',
+  };
+
   private readonly toolLabels: Record<string, string> = {
-    // Specialist sub-agents
-    cheminformatics_agent: 'Consulting the cheminformatics agent',
-    safety_agent: 'Consulting the toxicology agent',
-    literature_agent: 'Consulting the literature agent',
-    graph_agent: 'Consulting the knowledge-graph agent',
-    // Underlying tools
     search_pubmed: 'Searching PubMed',
     search_semantic_scholar: 'Searching Semantic Scholar',
     search_literature: 'Searching the local knowledge base',
@@ -144,19 +146,34 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
   }
 
+  private isAgent(name: string): boolean {
+    return name.endsWith('_agent');
+  }
+
+  private agentName(name: string): string {
+    return this.agentNames[name] ?? name.replace(/_agent$/, '').replace(/_/g, ' ');
+  }
+
   private handleEvent(evt: any, aiMsg: ChatMessage) {
     switch (evt?.type) {
       case 'tool_call': {
         this.flushTokenBuffer();
         aiMsg.text = '';
-        const labels = (evt.tools ?? []).map(
-          (t: string) => this.toolLabels[t] ?? t,
-        );
-        aiMsg.status = '⚙️ ' + labels.join(', ') + '...';
+        const tools: string[] = evt.tools ?? [];
+        const agents = tools.filter((t) => this.isAgent(t));
+        const others = tools.filter((t) => !this.isAgent(t));
+        const parts: string[] = [];
+        if (agents.length) {
+          parts.push('Consulting: ' + agents.map((t) => this.agentName(t)).join(', '));
+        }
+        parts.push(...others.map((t) => this.toolLabels[t] ?? t));
+        aiMsg.status = '⚙️ ' + parts.join(' · ') + '...';
         break;
       }
       case 'tool_result':
-        aiMsg.status = '✓ ' + (this.toolLabels[evt.name] ?? evt.name);
+        aiMsg.status = this.isAgent(evt.name)
+          ? '✓ ' + this.agentName(evt.name) + ' agent'
+          : '✓ ' + (this.toolLabels[evt.name] ?? evt.name);
         break;
       case 'reset': {
         if (this.flushTimer) {
