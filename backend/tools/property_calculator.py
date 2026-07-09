@@ -17,8 +17,8 @@ _FUNCTIONAL_GROUP_SMARTS: list[tuple[str, str]] = [
     ("ester",           "[#6][CX3](=O)[OX2H0][#6]"),
     ("ketone",          "[#6][CX3](=O)[#6]"),
     ("aldehyde",        "[CX3H1](=O)"),
-    ("phenol",          "[OX2H]c"),      # aromatic hydroxyl
-    ("hydroxyl",        "[OX2H][CX4]"),  # aliphatic hydroxyl
+    ("phenol",          "[OX2H]c"),
+    ("hydroxyl",        "[OX2H][CX4]"),
     ("primary amine",   "[NX3;H2;!$(NC=O)]"),
     ("secondary amine", "[NX3;H1;!$(NC=O)]"),
     ("tertiary amine",  "[NX3;H0;!$(NC=O);!$(N=*)]"),

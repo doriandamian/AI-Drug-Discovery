@@ -20,7 +20,6 @@ def reset() -> None:
 
 
 def _canonical(s: str) -> str | None:
-    """RDKit-canonical SMILES, or None if it is not a real (≥2-atom) structure."""
     s = (s or "").strip().strip("'\"`")
     if len(s) < 2:
         return None
@@ -40,8 +39,6 @@ def _add(s: str) -> None:
 
 
 def record_from_text(text: str) -> None:
-    """Record any SMILES found in a trustworthy TOOL output.
-    """
     if not text:
         return
     for m in _TAG_RE.findall(text):
@@ -53,11 +50,6 @@ def record_from_text(text: str) -> None:
 
 
 def record_user_message(text: str) -> None:
-    """Record SMILES the user provided, whether wrapped in <smiles>...</smiles>
-    tags or pasted as a raw structure. A structure the user typed themselves is by
-    definition not a hallucination, so the assistant may echo it back verbatim. The
-    RDKit validity gate in _canonical keeps ordinary words from being recorded.
-    """
     if not text:
         return
     for m in _TAG_RE.findall(text):
@@ -67,8 +59,6 @@ def record_user_message(text: str) -> None:
 
 
 def sanitize(answer: str) -> tuple[str, list[str]]:
-    """Strip ungrounded SMILES from an answer.
-    """
     if not answer:
         return answer, []
     prov = _provenance.get()

@@ -5,16 +5,16 @@ from rdkit.Chem.Scaffolds import MurckoScaffold
 from ml.train_model import scaffold_split, tune_threshold
 
 SMILES = [
-    "CC(=O)Oc1ccccc1C(=O)O",       # aspirin
-    "CC(C)Cc1ccc(C(C)C(=O)O)cc1",  # ibuprofen
-    "CN1C=NC2=C1C(=O)N(C(=O)N2C)C",  # caffeine
-    "CC(=O)Nc1ccc(O)cc1",          # paracetamol
-    "c1ccccc1",                    # benzene
-    "c1ccccc1C",                   # toluene (same Murcko core as benzene)
-    "C1CCCCC1",                    # cyclohexane
-    "O=C(O)c1ccccc1",              # benzoic acid (benzene core)
-    "CCO",                         # ethanol (no ring scaffold)
-    "CCN(CC)CC",                   # triethylamine (no ring scaffold)
+    "CC(=O)Oc1ccccc1C(=O)O",
+    "CC(C)Cc1ccc(C(C)C(=O)O)cc1",  
+    "CN1C=NC2=C1C(=O)N(C(=O)N2C)C",  
+    "CC(=O)Nc1ccc(O)cc1",
+    "c1ccccc1",     
+    "c1ccccc1C",    
+    "C1CCCCC1",     
+    "O=C(O)c1ccccc1",
+    "CCO",
+    "CCN(CC)CC",
 ]
 
 

@@ -47,7 +47,6 @@ DATASETS = {
 }
 
 def _cached_read(name, url):
-    """Download a dataset once and cache it locally to avoid re-fetching."""
     os.makedirs(DATA_DIR, exist_ok=True)
     path = os.path.join(DATA_DIR, f"{name}.csv.gz")
     if not os.path.exists(path):
@@ -57,14 +56,11 @@ def _cached_read(name, url):
 
 
 def _normalize_clintox(df):
-    """ClinTox -> [smiles, toxic] using the CT_TOX column."""
     df = df.dropna(subset=["smiles", "CT_TOX"])
     return pd.DataFrame({"smiles": df["smiles"], "toxic": df["CT_TOX"].astype(int)})
 
 
 def _normalize_tox21(df):
-    """Tox21 -> [smiles, toxic]. Toxic if active (==1) in ANY assay; safe if
-    measured and inactive in all; dropped if every assay value is missing."""
     assay_cols = [c for c in df.columns if c not in ("mol_id", "smiles")]
     measured = df[assay_cols].notna().any(axis=1)
     df = df[measured].copy()
@@ -75,7 +71,6 @@ def _normalize_tox21(df):
 NORMALIZERS = {"clintox": _normalize_clintox, "tox21": _normalize_tox21}
 
 def load_dataset():
-    """Load every enabled source, normalize to [smiles, toxic], merge, clean."""
     frames = []
     for name, cfg in DATASETS.items():
         if not cfg.get("enabled"):
@@ -102,8 +97,6 @@ def load_dataset():
     return df.reset_index(drop=True)
 
 def featurize_dataset(df):
-    """Build the feature matrix (fingerprint + descriptors), labels, the raw
-    fingerprint bits, and the kept canonical SMILES."""
     X, y, fps, smiles = [], [], [], []
     for smi, label in zip(df["canonical"], df["toxic"]):
         result = featurize(smi)
@@ -118,9 +111,6 @@ def featurize_dataset(df):
 
 
 def scaffold_split(smiles, test_size, seed=RANDOM_STATE):
-    """Split by Bemis-Murcko scaffold so structurally similar molecules never
-    straddle train and test. Common scaffolds fill the train set; rare/novel
-    scaffolds fall into test"""
     scaffolds = {}
     for i, smi in enumerate(smiles):
         mol = Chem.MolFromSmiles(smi)
@@ -156,7 +146,6 @@ def build_model():
 
 
 def tune_threshold(y_true, y_prob, beta=THRESHOLD_BETA):
-    """Pick the probability cutoff that maximizes F-beta for the toxic class."""
     precision, recall, thresholds = precision_recall_curve(y_true, y_prob)
     precision, recall = precision[:-1], recall[:-1]
     b2 = beta * beta
@@ -167,7 +156,6 @@ def tune_threshold(y_true, y_prob, beta=THRESHOLD_BETA):
 
 
 def evaluate(model, X_test, y_test, threshold=0.5):
-    """Return a human-readable metrics report for an imbalanced toxicity task."""
     y_prob = model.predict_proba(X_test)[:, 1]
     y_pred = (y_prob >= threshold).astype(int)
 

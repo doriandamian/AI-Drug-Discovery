@@ -59,8 +59,6 @@ def get_compound(name: str) -> dict[str, object] | None:
     return None
 
 
-# --- Knowledge-graph queries -------------------------------------------------
-
 _CYPHER_BLOCKLIST = re.compile(
     r'\b(LOAD\s+CSV|apoc\.load|apoc\.import|apoc\.export|apoc\.util\.sleep'
     r'|CALL\s+apoc|dbms\.|PERIODIC\s+COMMIT|USING\s+PERIODIC'
@@ -70,22 +68,12 @@ _CYPHER_BLOCKLIST = re.compile(
 
 
 def run_read_query(cypher: str, params: dict | None = None, limit: int = 50) -> list[dict]:
-    """Run a read-only Cypher query and return rows as plain dicts.
-
-    The write clauses (CREATE/MERGE/SET/DELETE/DETACH/REMOVE/DROP) are blocked
-    here at the app layer rather than relied on implicitly via the driver's
-    read-transaction enforcement, so this function's read-only guarantee does
-    not depend on Neo4j driver/session behavior the caller can't see.
-    """
     if _CYPHER_BLOCKLIST.search(cypher):
         raise ValueError(
             "Blocked: query contains a disallowed clause (write clauses "
             "CREATE/MERGE/SET/DELETE/DETACH/REMOVE/DROP, LOAD CSV, apoc.load/import/export, dbms.*)"
         )
     with get_driver().session() as session:
-        # Cap while streaming: zip against range(limit) stops pulling from the
-        # cursor after `limit` rows, so excess rows are never materialized even
-        # when the (LLM-generated) query omits its own LIMIT clause.
         rows = session.execute_read(
             lambda tx: [r.data() for _, r in zip(range(limit), tx.run(cypher, params or {}))]
         )
@@ -93,9 +81,6 @@ def run_read_query(cypher: str, params: dict | None = None, limit: int = 50) -> 
 
 
 def link_toxicity_endpoints(name: str, results: list[tuple[str, float, float, bool]]) -> None:
-    """Persist a compound's per-endpoint toxicity predictions into the graph as
-    (:Compound)-[:HAS_TOXICITY]->(:ToxicityEndpoint), so they become queryable
-    later via query_knowledge_graph."""
     query = """
     MERGE (c:Compound {name: $name})
     WITH c
@@ -121,8 +106,6 @@ def link_toxicity_endpoints(name: str, results: list[tuple[str, float, float, bo
 
 
 def link_targets(name: str, targets: list[dict[str, object]]) -> None:
-    """Persist a compound's molecular targets into the graph as
-    (:Compound)-[:TARGETS]->(:Protein), keyed on the target's ChEMBL ID."""
     query = """
     MERGE (c:Compound {name: $name})
     WITH c
@@ -142,8 +125,6 @@ def link_targets(name: str, targets: list[dict[str, object]]) -> None:
 
 
 def link_indications(name: str, diseases: list[dict[str, object]]) -> None:
-    """Persist a compound's approved/investigational indications into the graph
-    as (:Compound)-[:TREATS]->(:Disease), keyed on the disease name."""
     query = """
     MERGE (c:Compound {name: $name})
     WITH c

@@ -10,7 +10,6 @@ from tests.conftest import ASPIRIN_SMILES, CAFFEINE_SMILES
 
 
 def _call(tool, value):
-    """Invoke a LangChain @tool with the single compound_name argument."""
     return tool.invoke({"compound_name": value})
 
 

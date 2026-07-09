@@ -1,7 +1,7 @@
 import hashlib
 import os
 
-_CHUNK = 1 << 20  # 1 MiB
+_CHUNK = 1 << 20
 
 
 def _hash_file(path: str) -> str:

@@ -19,7 +19,6 @@ MAX_RESULTS = 3
 
 
 def _search_pubmed_pmids(query: str, max_results: int = MAX_RESULTS) -> list[str]:
-    """Use esearch to find the most relevant PMIDs for a query."""
     params = {
         "db": "pubmed",
         "term": query,

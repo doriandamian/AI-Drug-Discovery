@@ -65,7 +65,6 @@ _READONLY_GRAPH_RE = re.compile(
 )
 
 
-# Compiled specialist graphs
 _cheminformatics = None
 _safety = None
 _literature = None
@@ -75,7 +74,6 @@ _molecular_design = None
 
 
 def build_specialists() -> None:
-    """Compile all specialist ReAct agents. Must be called after Ollama is reachable."""
     global _llm_subagent, _llm_literature, _llm_design
     global _cheminformatics, _safety, _literature, _graph, _graph_readonly, _molecular_design
 
@@ -111,7 +109,6 @@ def build_specialists() -> None:
 
 
 def _stream_agent(agent, task: str) -> tuple[str, list[tuple[str, str]]]:
-    """Run one specialist's ReAct loop to completion."""
     final = ""
     inner_tools: list[str] = []
     tool_io: list[tuple[str, str]] = []
@@ -144,7 +141,6 @@ def _stream_agent(agent, task: str) -> tuple[str, list[tuple[str, str]]]:
 
 
 def _run_agent(agent, task: str) -> str:
-    """Run a specialist's ReAct loop and return only its final composed text."""
     final, _ = _stream_agent(agent, task)
     return final or "(the specialist returned no answer)"
 
@@ -160,7 +156,6 @@ _RENDERERS = {
 
 
 def _render(name: str, raw: str) -> str:
-    """Render one tool's JSON output via its deterministic renderer."""
     renderer = _RENDERERS.get(name)
     if renderer is None:
         return raw
@@ -173,7 +168,6 @@ def _render(name: str, raw: str) -> str:
 def _render_from_tools(
     tool_io: list[tuple[str, str]], prefer: tuple[str, ...], fallback: tuple[str, ...] = (),
 ) -> str:
-    """Deterministically render a specialist's answer from its captured tool I/O."""
     blocks = [_render(name, raw) for name, raw in tool_io if name in prefer]
     if not blocks:
         blocks = [_render(name, raw) for name, raw in tool_io if name in fallback]
@@ -181,7 +175,6 @@ def _render_from_tools(
 
 
 def _last_output(tool_io: list[tuple[str, str]], *names: str) -> str | None:
-    """The raw output of the LAST call to any of `names`."""
     for name, raw in reversed(tool_io):
         if name in names:
             return raw
@@ -189,7 +182,6 @@ def _last_output(tool_io: list[tuple[str, str]], *names: str) -> str | None:
 
 
 def _finish(report: str, fallback: str) -> str:
-    """Ground any SMILES in a deterministically-rendered report and return it."""
     if report:
         smiles_guard.record_from_text(report)
         return report
@@ -197,7 +189,6 @@ def _finish(report: str, fallback: str) -> str:
 
 
 def _run_design_agent(agent, task: str) -> str:
-    """Run the design specialist, then render its answer deterministically."""
     set_design_goal(detect_design_goal(task))
     try:
         final, tool_io = _stream_agent(agent, task)
@@ -209,7 +200,6 @@ def _run_design_agent(agent, task: str) -> str:
 
 
 def _run_cheminformatics_agent(agent, task: str) -> str:
-    """Property/drug-likeness answer, rendered in code from the tool JSON."""
     final, tool_io = _stream_agent(agent, task)
     report = _render_from_tools(
         tool_io, prefer=("calculate_properties", "validate_smiles"),
@@ -226,7 +216,6 @@ _SAFETY_SCOPE = (
 
 
 def _run_safety_agent(agent, task: str) -> str:
-    """Toxicity answer, rendered in code from each predict_toxicity profile."""
     final, tool_io = _stream_agent(agent, task)
     report = _render_from_tools(tool_io, prefer=("predict_toxicity",))
     if report:
@@ -235,7 +224,6 @@ def _run_safety_agent(agent, task: str) -> str:
 
 
 def _run_graph_agent(agent, task: str) -> str:
-    """Relationship answer, rendered from the FINAL query rows (enrichment is a precursor)."""
     final, tool_io = _stream_agent(agent, task)
     raw = _last_output(tool_io, "query_knowledge_graph")
     name = "query_knowledge_graph"
@@ -246,7 +234,6 @@ def _run_graph_agent(agent, task: str) -> str:
     return _finish(report, final)
 
 
-# Specialist tools exposed to the supervisor
 @tool
 def cheminformatics_agent(task: str) -> str:
     """Compound IDENTITY, physicochemical PROPERTIES (MW, logP, TPSA...), DRUG-LIKENESS
@@ -293,9 +280,6 @@ def molecular_design_agent(task: str) -> str:
 
 
 def warmup_subagents():
-    """Load each distinct sub-agent model into Ollama so the first real delegation
-    is not a cold start.  Deduplicates by model name so redundant round-trips are
-    skipped even when multiple LLM instances share the same model."""
     seen: set[str] = set()
     for llm in (_llm_subagent, _llm_literature, _llm_design):
         if llm is None:

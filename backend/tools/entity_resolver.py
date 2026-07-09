@@ -80,7 +80,7 @@ def fuzzy_resolve(
         content = m.group(1)
         key = content.strip().lower()
         if not key or key in lower_map:
-            return m.group(0)  # empty or already an exact stored name
+            return m.group(0)
         close = difflib.get_close_matches(key, candidates, n=1, cutoff=cutoff)
         if not close:
             return m.group(0)

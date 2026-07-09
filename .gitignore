@@ -5,24 +5,15 @@ test.py
 .DS_Store
 .flashrank_cache/
 
-# Trained model artifacts, regenerated on startup by app.py / train scripts
 *.pkl
 
-# pytest / coverage
 .pytest_cache/
 .coverage
 htmlcov/
 
-# Application logs
 logs/
 *.log
 
-# Eval: code + datasets are tracked, but ad-hoc/debug run output is not.
-# Keep only the results that back a number cited in the README/thesis:
-#   eval_report_pharma300.txt / eval_results_pharma300.json      (headline 300-Q run)
-#   eval_report_single_agent_50.txt / eval_results_single_agent_50.json (official baseline)
-#   eval_report_multiagent.txt / eval_results_multiagent.json    (naive multi-agent regression)
-#   eval_report_multiagent_v2.txt / eval_results_multiagent_v2.json (post-fix recovery)
 backend/eval/dataset_*_verify.json
 backend/eval/eval_report.txt
 backend/eval/eval_report.html

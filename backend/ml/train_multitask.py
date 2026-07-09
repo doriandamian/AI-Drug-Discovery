@@ -1,16 +1,3 @@
-"""Multi-task toxicity training.
-
-Instead of collapsing every assay into one binary "toxic" label, this trains a
-separate calibrated classifier for EACH toxicity endpoint (the 12 Tox21 assays
-plus ClinTox clinical-trial toxicity). The sparse label matrix is handled
-naturally: each task trains only on the molecules that have a label for it.
-
-A single GLOBAL scaffold split assigns molecules to train/test once, so no
-scaffold leaks across tasks and the per-task scores stay comparable.
-
-Output: tools/toxicity_predictor.py consumes the saved bundle and returns a
-per-endpoint toxicity profile rather than a single yes/no.
-"""
 import os
 import sys
 import warnings
@@ -60,8 +47,6 @@ TASK_INFO = {
 
 
 def load_multitask():
-    """Build a master table: one row per unique molecule, one column per task,
-    values in {0, 1, NaN}. NaN means 'not measured for this endpoint'."""
     tox = _cached_read("tox21", DATASETS["tox21"]["url"])
     assay_cols = [c for c in tox.columns if c not in ("mol_id", "smiles")]
     tox["canonical"] = tox["smiles"].apply(canonical_smiles)

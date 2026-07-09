@@ -29,7 +29,6 @@ _splitter = RecursiveCharacterTextSplitter(
 
 
 def _normalize_section(raw: str) -> str:
-    """Map a matched header to a canonical, lower-case section key."""
     s = raw.strip().lower()
     if s.startswith("material"):
         return "methods"

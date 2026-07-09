@@ -1,25 +1,3 @@
-"""Rubric engine for the evaluation suite.
-
-A question's `checks` block is a small declarative rubric. Each supported key is
-an independent assertion; a question PASSES only if every assertion holds. The
-checks are deliberately lenient on phrasing (case-insensitive substring / regex)
-and strict on the things that actually matter for this agent:
-
-  must_include          [str]  every substring must appear in the answer
-  must_include_any*     [str]  at least one must appear. Any key whose name
-                               starts with "must_include_any" is its own OR-group
-                               (use must_include_any, must_include_any_2, ... to
-                               require several independent "at least one" groups).
-  must_not_include      [str]  none of these substrings may appear
-  expected_tools        [str]  every tool must have been called
-  expected_tools_any    [str]  at least one of these tools must have been called
-  forbidden_tools       [str]  none of these tools may have been called
-  regex_must            [str]  every pattern must match (re.search, IGNORECASE)
-  regex_must_not        [str]  no pattern may match
-
-All string matching is case-insensitive. Tool checks read the list of tool names
-the agent actually invoked.
-"""
 import re
 
 
@@ -28,7 +6,6 @@ def _lower(s: str) -> str:
 
 
 def evaluate(checks: dict, answer: str, tools_called: list[str]) -> tuple[bool, list[str]]:
-    """Return (passed, failures). `failures` lists each unmet assertion."""
     failures: list[str] = []
     text = _lower(answer)
     tools = [_lower(t) for t in tools_called]

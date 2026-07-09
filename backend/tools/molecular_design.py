@@ -10,9 +10,9 @@ from ml.generative import design_molecules
 __all__ = ["detect_design_goal", "set_design_goal", "design_analogs", "format_design_report"]
 
 DESIGN_GOALS: dict[str, tuple[float, float, float]] = {
-    "safer":     (0.25, 0.60, 0.15),   # prioritize predicted safety (lower tox)
-    "drug_like": (0.60, 0.25, 0.15),   # prioritize drug-likeness (QED)
-    "balanced":  (0.40, 0.40, 0.20),   # default, matches the engine's own weights
+    "safer":     (0.25, 0.60, 0.15),
+    "drug_like": (0.60, 0.25, 0.15),
+    "balanced":  (0.40, 0.40, 0.20),
 }
 _GOAL_LABEL = {
     "safer": "predicted safety (lower toxicity weighted highest)",
@@ -45,14 +45,13 @@ _active_goal: contextvars.ContextVar[str] = contextvars.ContextVar(
 
 
 def set_design_goal(goal: str) -> None:
-    """Set the goal the next design_analogs call optimizes for (unknown → balanced)."""
     _active_goal.set(goal if goal in DESIGN_GOALS else "balanced")
 
 _METRICS = (
-    ("fitness", "fitness", True),   # higher = better overall triage score
-    ("qed", "QED", True),           # higher = more drug-like
-    ("tox", "tox", False),          # lower  = safer (predicted)
-    ("sa", "SA", False),            # lower  = easier to synthesize
+    ("fitness", "fitness", True),
+    ("qed", "QED", True),
+    ("tox", "tox", False),
+    ("sa", "SA", False),
 )
 _METRIC_LABEL = {key: label for key, label, _ in _METRICS}
 

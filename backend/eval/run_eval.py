@@ -1,31 +1,3 @@
-"""End-to-end evaluation harness for the drug-discovery agent.
-
-Runs every question in dataset.json through the live LangGraph orchestrator,
-capturing for each one:
-  - the final answer text,
-  - which tools were called (routing),
-  - how many LLM round-trips the manager made (the real driver of latency),
-  - wall-clock latency.
-
-It then scores answers against the per-question rubric (eval/checks.py) and
-writes two artifacts:
-  - eval_report.txt   human-readable summary table + aggregates (thesis-ready),
-  - eval_results.json raw per-question records (for plots / deeper analysis).
-
-This is the BASELINE measurement of the current single-agent system. Re-running
-it after each architecture change (multi-agent, model routing, generative agent)
-produces the comparison tables the thesis is built on. The manager model is read
-from MANAGER_MODEL, so the same suite drives the model-size ablation:
-
-    # baseline
-    python -m eval.run_eval
-    # 7b vs 14b ablation
-    MANAGER_MODEL=qwen2.5:7b  python -m eval.run_eval --tag 7b
-    MANAGER_MODEL=qwen2.5:14b python -m eval.run_eval --tag 14b
-
-Requires the same backing services as the app (Ollama with the chosen model
-pulled, Neo4j running with the RAG index built). Run from the backend/ directory.
-"""
 import os
 import sys
 import json
@@ -41,15 +13,11 @@ from eval.stats import mean_ci, wilson_ci
 from core.config import MANAGER_MODEL
 
 HERE = os.path.dirname(__file__)
-DATASET_PATH = os.path.join(HERE, "dataset.json")  # default; overridden by --dataset
+DATASET_PATH = os.path.join(HERE, "dataset.json")
 RECURSION_LIMIT = 15
 
 
 def _run_question(question: str):
-    """Stream one question through the orchestrator, returning the captured trace.
-
-    Imported lazily so --help and arg parsing work without spinning up Ollama.
-    """
     from agents.orchestrator import orchestrator
     from agents import trace, smiles_guard
 
@@ -59,13 +27,7 @@ def _run_question(question: str):
     final = ""
     error = None
 
-    # The top-level stream only shows which SPECIALIST (sub-agent) the supervisor
-    # routed to. Each specialist records its INNER tool calls here so routing
-    # checks that reference low-level tools (search_pubmed, predict_toxicity, …)
-    # still see them — keeping the baseline comparison apples-to-apples.
     trace.reset()
-    # Start a fresh SMILES-provenance window and seed it with anything the user
-    # supplied, so the guard can strip ungrounded structures from the answer.
     smiles_guard.reset()
     smiles_guard.record_user_message(question)
 
@@ -84,26 +46,18 @@ def _run_question(question: str):
                     elif getattr(msg, "type", None) == "ai" and msg.content:
                         llm_hops += 1
                         final = msg.content
-    except Exception as e:  # noqa: BLE001 - record, don't crash the whole suite
+    except Exception as e:
         error = f"{type(e).__name__}: {e}"
     elapsed = time.perf_counter() - t0
 
-    # Merge the specialists' inner tool calls in alongside the supervisor's
-    # agent-level routing, so both routing layers are visible to the rubric.
     tools_called.extend(trace.get())
 
-    # IMPORTANT: score the RAW model output, never the guarded one. The rubric
-    # (incl. the hallucination probes that forbid ungrounded SMILES) must measure
-    # what the MODEL did; sanitising first would let the guard hide a real
-    # hallucination and turn a fail into a pass. We separately record what the
-    # live guard WOULD strip, so the guard's defense-in-depth value is reported
-    # honestly instead of masking model behaviour.
     answer_delivered, guard_removed = smiles_guard.sanitize(final)
 
     return {
-        "answer": final,                    # raw model output — what the rubric scores
-        "answer_delivered": answer_delivered,  # what the live API would return to the user
-        "guard_removed": guard_removed,        # ungrounded SMILES the guard stripped
+        "answer": final,
+        "answer_delivered": answer_delivered,
+        "guard_removed": guard_removed,
         "tools_called": tools_called,
         "llm_hops": llm_hops,
         "latency_s": round(elapsed, 2),
@@ -112,7 +66,6 @@ def _run_question(question: str):
 
 
 def _run_pass(questions: list[dict]) -> list[dict]:
-    """Run every question once and return the scored per-question records."""
     records = []
     for i, q in enumerate(questions, 1):
         print(f"[{i}/{len(questions)}] {q['id']} ...", end=" ", flush=True)
@@ -144,12 +97,6 @@ def _run_pass(questions: list[dict]) -> list[dict]:
 
 
 def run_suite(tag: str | None, runs: int = 1) -> list[list[dict]]:
-    """Run the whole suite `runs` times, returning one record list per pass.
-
-    Multiple passes are what make the metrics defensible: an LLM-backed pipeline
-    is not bit-reproducible even at temperature 0, so we report each headline
-    number with a confidence interval across passes rather than a single value.
-    """
     with open(DATASET_PATH) as f:
         dataset = json.load(f)
     questions = dataset["questions"]
@@ -158,7 +105,6 @@ def run_suite(tag: str | None, runs: int = 1) -> list[list[dict]]:
           + (f" (tag: {tag})" if tag else "")
           + (f"  ×{runs} runs" if runs > 1 else "") + "\n")
 
-    # Build the orchestrator graph (initialises _llm_supervisor etc.) then warm up.
     from agents.specialists import build_specialists
     from agents.orchestrator import build_orchestrator, warmup
     build_specialists()
@@ -208,10 +154,6 @@ def _aggregate(records):
         "latency_p50": round(pctl(50), 2),
         "latency_p95": round(pctl(95), 2),
         "hops_mean": round(statistics.mean(hops), 2) if hops else float("nan"),
-        # Defense-in-depth: how often the model emitted an ungrounded SMILES that
-        # the guard had to strip. Scored answers are RAW, so this is reported, not
-        # hidden — a non-zero count means the rubric still saw (and judged) the
-        # model's hallucination while the live API would have caught it.
         "guard_interventions": sum(1 for r in records if r.get("guard_removed")),
     }
 
@@ -257,12 +199,6 @@ def _pct(x: float) -> str:
 
 
 def _aggregate_multirun(passes: list[list[dict]]) -> dict:
-    """Aggregate N passes: pooled rates with CIs + per-question stability.
-
-    Pooling treats each (question, run) as one trial for the proportion CIs, and
-    pools all latencies across runs. Per-question we also record how many runs
-    passed, which surfaces FLAKY questions a single run would hide.
-    """
     runs = len(passes)
     ids = [r["id"] for r in passes[0]]
     by_id = {rid: [p[i] for p in passes] for i, rid in enumerate(ids)}
@@ -293,7 +229,6 @@ def _aggregate_multirun(passes: list[list[dict]]) -> dict:
             "n_errors": runs - len(ok),
         })
 
-    # Pooled trials across all runs for the proportion CIs.
     auto_recs = [r for p in passes for r in p if not r["manual_review"] and not r["error"]]
     halluc_recs = [r for p in passes for r in p if r["category"] == "hallucination" and not r["error"]]
     auto_k = sum(r["passed"] for r in auto_recs)
@@ -309,7 +244,6 @@ def _aggregate_multirun(passes: list[list[dict]]) -> dict:
         k = max(0, min(len(lat_sorted) - 1, int(round((q / 100) * (len(lat_sorted) - 1)))))
         return lat_sorted[k]
 
-    # Per-run auto pass rate, so we can report run-to-run spread directly.
     per_run_auto_rate = [
         statistics.mean([r["passed"] for r in p if not r["manual_review"] and not r["error"]])
         for p in passes
@@ -317,8 +251,6 @@ def _aggregate_multirun(passes: list[list[dict]]) -> dict:
     lat_mean, lat_half = mean_ci(latencies)
     auto_lo, auto_hi = wilson_ci(auto_k, len(auto_recs))
     halluc_lo, halluc_hi = wilson_ci(halluc_k, len(halluc_recs))
-    # Spread of the per-run pass rate. A standard deviation (not a t-CI) because
-    # with the small N of runs here a t-interval blows up and reads as nonsense.
     rate_mean = statistics.mean(per_run_auto_rate) if per_run_auto_rate else float("nan")
     rate_std = statistics.stdev(per_run_auto_rate) if len(per_run_auto_rate) > 1 else float("nan")
 
@@ -406,8 +338,6 @@ def main():
                         help="Repeat the whole suite N times and report metrics with 95%% confidence intervals (default 1).")
     parser.add_argument("--dataset", default=None,
                         help="Path to a dataset JSON file (default: eval/dataset.json).")
-    parser.add_argument("--html", action="store_true",
-                        help="Also generate an HTML report alongside the text report.")
     parser.add_argument("--judge", action="store_true",
                         help="After the deterministic rubric, run the LLM-judge V&V tier "
                              "(eval/judge.py) over the FAILs and rescue answers that are "
@@ -418,7 +348,6 @@ def main():
     if args.runs < 1:
         parser.error("--runs must be >= 1")
 
-    # Allow swapping in an alternate question bank without touching the default.
     if args.dataset:
         global DATASET_PATH
         DATASET_PATH = os.path.abspath(args.dataset)
@@ -430,12 +359,8 @@ def main():
     json_path = os.path.join(HERE, f"eval_results{suffix}.json")
 
     if args.runs == 1:
-        # Single-run output is the regression-guard format the thesis already uses.
         records = passes[0]
 
-        # Tier-2 V&V: rescue correct-but-non-matching FAILs with the LLM judge.
-        # Runs only in single-run mode and only over deterministic FAILs, so it can
-        # only raise the auto pass rate, never lower it (see eval/judge.py).
         vv_summary = None
         if args.judge:
             from eval.judge import rejudge_records
@@ -475,18 +400,6 @@ def main():
     print("\n" + report)
     print(f"\nReport written to {report_path}")
     print(f"Raw results written to {json_path}")
-
-    if args.html:
-        from eval.report_html import generate_html
-        html_path = report_path.replace(".txt", ".html")
-        records_for_html = passes[0] if args.runs == 1 else [
-            {**q, "latency_s": q["latency_mean"], "llm_hops": "-",
-             "verdict": q["verdict"], "failures": [], "answer": "", "tools_called": []}
-            for q in agg["per_question"]
-        ]
-        with open(html_path, "w") as f:
-            f.write(generate_html(records_for_html, agg, MANAGER_MODEL, args.tag))
-        print(f"HTML report written to {html_path}")
 
 
 if __name__ == "__main__":

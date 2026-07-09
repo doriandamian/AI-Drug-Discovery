@@ -42,8 +42,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     'Find recent literature on kinase inhibitors',
   ];
 
-  // All in-progress status labels: capitalized present-participle phrases,
-  // no trailing punctuation (the "…" / icon is added once at render time).
   private readonly taskLabels: Record<string, string> = {
     cheminformatics_agent: 'Consulting the cheminformatics agent',
     safety_agent: 'Consulting the toxicology agent',
@@ -149,8 +147,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     return name.endsWith('_agent');
   }
 
-  /** Resolves a raw tool/agent identifier to its display label, falling back to a
-   * prettified version of the identifier for anything not in `taskLabels`. */
   private label(name: string): string {
     if (this.taskLabels[name]) return this.taskLabels[name];
     const pretty = name.replace(/_agent$/, '').replace(/_/g, ' ');

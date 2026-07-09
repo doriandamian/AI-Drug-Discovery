@@ -175,10 +175,10 @@ def test_vs_seed_directions_are_computed_per_metric(monkeypatch):
                         lambda *a, **k: _fake_run(cand_smiles, cand_tox=0.09))
     vs = json.loads(design_analogs.invoke({"compound_name": ASPIRIN}))["candidates"][0]["vs_seed"]
 
-    assert vs["fitness"] == {"delta": 0.07, "direction": "improved"}   # higher better
-    assert vs["qed"] == {"delta": 0.07, "direction": "improved"}       # higher better
-    assert vs["tox"] == {"delta": 0.03, "direction": "worsened"}       # LOWER better
-    assert vs["sa"] == {"delta": -0.68, "direction": "improved"}       # LOWER better
+    assert vs["fitness"] == {"delta": 0.07, "direction": "improved"}
+    assert vs["qed"] == {"delta": 0.07, "direction": "improved"}
+    assert vs["tox"] == {"delta": 0.03, "direction": "worsened"}
+    assert vs["sa"] == {"delta": -0.68, "direction": "improved"}
 
 
 def test_unresolvable_name_is_a_status_not_an_answer():

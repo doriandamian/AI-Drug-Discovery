@@ -38,7 +38,6 @@ def validate_smiles(compound_name: str) -> str:
 
 
 def format_validation(payload: dict) -> str:
-    """Render a validate_smiles payload into deterministic, labeled text."""
     if not payload.get("valid"):
         return payload.get("message", "Invalid input.")
     return (

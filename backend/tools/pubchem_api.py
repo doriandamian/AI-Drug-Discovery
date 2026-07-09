@@ -16,8 +16,8 @@ _session = requests.Session()
 
 _CACHE: dict[str, tuple[float, str]] = {}
 _CACHE_LOCK = threading.Lock()
-_OK_TTL = 3600.0     # successful lookup
-_MISS_TTL = 120.0    # not-found / network error
+_OK_TTL = 3600.0
+_MISS_TTL = 120.0
 
 
 def _norm(name: str) -> str:

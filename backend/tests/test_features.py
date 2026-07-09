@@ -32,8 +32,6 @@ def test_featurize_invalid_smiles_returns_none():
 
 
 def test_featurize_empty_string_is_a_degenerate_zero_vector():
-    # RDKit parses "" into a *valid empty molecule* (0 atoms),
-    # so featurize("") returns an all-zero vector rather than None.
     result = featurize("")
     assert result is not None
     combined, fp = result

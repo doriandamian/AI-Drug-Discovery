@@ -1,39 +1,3 @@
-"""Two-tier Verification & Validation (V&V) for the evaluation suite.
-
-The deterministic rubric in `eval/checks.py` is intentionally strict on phrasing:
-it matches literal substrings / regexes / tool names. That is perfect as a
-regression guard (a PASS is unambiguous and cheap), but it FALSE-FAILS answers
-that are factually correct yet worded differently than the rubric anticipated -
-e.g. the model says "roughly 180.2 daltons" when the rubric wanted "180.1", or
-it lists targets in a different order, or it phrases a refusal in a new way.
-
-This module adds the second tier:
-
-    Tier 1  VERIFICATION   deterministic rubric (checks.py)  -> PASS / FAIL
-    Tier 2  VALIDATION      LLM judge (this file)             -> rescues correct FAILs
-
-Only Tier-1 FAILs are sent to the judge (a Tier-1 PASS is already trusted, and
-re-judging it could only introduce false negatives). The judge reads the
-question, the per-question `reference` (a natural-language statement of what a
-valid answer must convey, authored in the dataset) and the model's answer, then
-decides VALID / INVALID. A rescued item gets the verdict `PASS-JUDGE`.
-
-Design guarantees:
-  - The judge can only turn FAIL -> PASS, never PASS -> FAIL, so it cannot
-    weaken the regression guard; worst case it abstains and the FAIL stands.
-  - It abstains (leaves the FAIL) when the LLM is unavailable or its output is
-    unparseable, so the harness still runs fully offline (deterministic tier only).
-  - The judge prompt is deliberately conservative about the failure modes this
-    system cares about: it must NOT validate fabricated citations/IC50s/SMILES,
-    missing tool grounding, or dropped safety caveats - the exact things the
-    hallucination and toxicity references call out.
-
-Usage:
-    # Re-score an existing results file, rescuing correct-but-non-matching FAILs:
-    python -m eval.judge --results eval/eval_results_pharma300.json
-
-    # Or use --judge on run_eval to fold this in during the run.
-"""
 from __future__ import annotations
 
 import argparse
@@ -43,8 +7,6 @@ import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
-# Category-specific "what the judge must never wave through" reminders. These
-# keep the LLM honest about THIS system's known failure modes.
 _CATEGORY_GUARDRAILS = {
     "hallucination": (
         "This is a HALLUCINATION probe. Mark INVALID if the answer fabricates any "
@@ -111,10 +73,8 @@ Return ONLY the JSON object."""
 
 
 def _extract_json(text: str) -> dict | None:
-    """Pull the first JSON object out of an LLM reply, tolerating stray prose."""
     if not text:
         return None
-    # Fast path.
     try:
         return json.loads(text.strip())
     except Exception:
@@ -146,11 +106,6 @@ def _coerce(obj: dict | None) -> dict | None:
 
 
 def get_judge_llm(model: str | None = None):
-    """Build the judge LLM. Defaults to the supervisor model (strong judge).
-
-    Overridable via JUDGE_MODEL so the judge can be a different / larger model
-    than the system under test - keeping the judge independent of the ablation.
-    """
     from core.llm_config import get_local_llm
     from core.config import MANAGER_MODEL
 
@@ -160,13 +115,6 @@ def get_judge_llm(model: str | None = None):
 def judge_answer(question: str, reference: str, answer: str,
                  tools_called: list[str] | None = None,
                  category: str = "", llm=None) -> dict:
-    """Validate one answer against its reference.
-
-    Returns {decision, valid, confidence, reason}. `decision` is one of:
-      - "valid"    the judge rescues it (FAIL -> PASS-JUDGE)
-      - "invalid"  the judge agrees it is wrong (FAIL stands)
-      - "abstain"  no judgement possible (no LLM / unparseable) -> FAIL stands
-    """
     if not (reference or "").strip():
         return {"decision": "abstain", "valid": False, "confidence": 0.0,
                 "reason": "no reference authored for this question"}
@@ -177,7 +125,7 @@ def judge_answer(question: str, reference: str, answer: str,
     if llm is None:
         try:
             llm = get_judge_llm()
-        except Exception as e:  # noqa: BLE001
+        except Exception as e:
             return {"decision": "abstain", "valid": False, "confidence": 0.0,
                     "reason": f"judge LLM unavailable: {type(e).__name__}"}
 
@@ -192,7 +140,7 @@ def judge_answer(question: str, reference: str, answer: str,
     try:
         resp = llm.invoke([("system", _SYSTEM), ("user", prompt)])
         raw = getattr(resp, "content", str(resp))
-    except Exception as e:  # noqa: BLE001
+    except Exception as e:
         return {"decision": "abstain", "valid": False, "confidence": 0.0,
                 "reason": f"judge invocation failed: {type(e).__name__}: {e}"}
 
@@ -210,22 +158,15 @@ def judge_answer(question: str, reference: str, answer: str,
 
 def rejudge_records(records: list[dict], questions_by_id: dict[str, dict],
                     llm=None, only_failed: bool = True) -> dict:
-    """Run the judge over a list of eval records, rescuing correct FAILs in place.
-
-    Mutates each rescued record: sets `verdict` to 'PASS-JUDGE', `passed` True,
-    and attaches a `judge` block. Returns a summary dict. A PASS is never touched.
-    """
     if llm is None:
         try:
             llm = get_judge_llm()
-        except Exception as e:  # noqa: BLE001
+        except Exception as e:
             return {"error": f"judge LLM unavailable: {type(e).__name__}: {e}",
                     "considered": 0, "rescued": 0, "upheld": 0, "abstained": 0}
 
     considered = rescued = upheld = abstained = 0
     for r in records:
-        # Only re-examine deterministic FAILs (never a PASS, never manual-review,
-        # never an ERROR record). This is what makes the judge monotonic.
         if r.get("error"):
             continue
         if r.get("manual_review"):
@@ -289,7 +230,6 @@ def main():
     if "error" in summary:
         raise SystemExit(summary["error"])
 
-    # Recompute headline auto pass rate after rescue.
     auto = [r for r in records if not r.get("manual_review") and not r.get("error")]
     auto_pass = sum(1 for r in auto if r.get("passed"))
     print("\nV&V SUMMARY")

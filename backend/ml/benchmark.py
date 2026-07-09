@@ -22,7 +22,6 @@ from ml.train_model import scaffold_split, TEST_SIZE
 from ml.train_multitask import load_multitask, MODEL_PATH
 
 
-# Part 1: held-out evaluation
 def held_out_evaluation():
     bundle = joblib.load(MODEL_PATH)
     tasks = bundle["tasks"]
@@ -99,7 +98,6 @@ def held_out_evaluation():
     }
 
 
-# Part 2: named-compound demonstration
 PANEL = [
     ("Bisphenol A",       "CC(C)(c1ccc(O)cc1)c1ccc(O)cc1",          "NR-ER"),
     ("Diethylstilbestrol","CC/C(=C(\\CC)/c1ccc(O)cc1)/c1ccc(O)cc1",  "NR-ER"),
@@ -119,7 +117,7 @@ STRONG = 0.50
 
 
 def named_demonstration():
-    from tools.toxicity_predictor import _BUNDLE  # the live, loaded bundle
+    from tools.toxicity_predictor import _BUNDLE
     tasks = _BUNDLE["tasks"]
 
     print("\n" + "=" * 78)

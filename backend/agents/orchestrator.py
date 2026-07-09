@@ -31,7 +31,6 @@ class AgentState(TypedDict):
 tools = [cheminformatics_agent, safety_agent, literature_agent, graph_agent, molecular_design_agent]
 _SPECIALIST_NAMES = {t.name for t in tools}
 
-# Max times a specialist may be called before forcing a text-only answer.
 _MAX_SPECIALIST_CALLS = 2
 
 def _surface_specialist_error(exc: Exception) -> str:
