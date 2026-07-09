@@ -63,15 +63,25 @@ def get_compound(name: str) -> dict[str, object] | None:
 
 _CYPHER_BLOCKLIST = re.compile(
     r'\b(LOAD\s+CSV|apoc\.load|apoc\.import|apoc\.export|apoc\.util\.sleep'
-    r'|CALL\s+apoc|dbms\.|PERIODIC\s+COMMIT|USING\s+PERIODIC)\b',
+    r'|CALL\s+apoc|dbms\.|PERIODIC\s+COMMIT|USING\s+PERIODIC'
+    r'|CREATE|MERGE|DELETE|DETACH|SET|REMOVE|DROP)\b',
     re.IGNORECASE,
 )
 
 
 def run_read_query(cypher: str, params: dict | None = None, limit: int = 50) -> list[dict]:
-    """Run a read-only Cypher query and return rows as plain dicts."""
+    """Run a read-only Cypher query and return rows as plain dicts.
+
+    The write clauses (CREATE/MERGE/SET/DELETE/DETACH/REMOVE/DROP) are blocked
+    here at the app layer rather than relied on implicitly via the driver's
+    read-transaction enforcement, so this function's read-only guarantee does
+    not depend on Neo4j driver/session behavior the caller can't see.
+    """
     if _CYPHER_BLOCKLIST.search(cypher):
-        raise ValueError("Blocked: query contains a disallowed clause (LOAD CSV / apoc.load / apoc.import / apoc.export / dbms.*)")
+        raise ValueError(
+            "Blocked: query contains a disallowed clause (write clauses "
+            "CREATE/MERGE/SET/DELETE/DETACH/REMOVE/DROP, LOAD CSV, apoc.load/import/export, dbms.*)"
+        )
     with get_driver().session() as session:
         # Cap while streaming: zip against range(limit) stops pulling from the
         # cursor after `limit` rows, so excess rows are never materialized even
