@@ -2,7 +2,6 @@
 
   <header class="chat-header">
     <div class="header-title">
-      <span class="logo">🧬</span>
       <div>
         <h1>AI Drug Discovery</h1>
         <p class="subtitle">Multi-agent assistant for cheminformatics, toxicology &amp; literature</p>
@@ -27,7 +26,6 @@
   <div class="messages-list">
 
     <div *ngIf="messages.length === 0" class="welcome">
-      <span class="welcome-icon">💊</span>
       <h2>How can I help with your research?</h2>
       <p>Ask about molecules, toxicity, properties, or the literature. Try one of these:</p>
       <div class="suggestions">
@@ -75,6 +73,6 @@
   </div>
 
   <div *ngIf="backendOnline === false" class="offline-banner">
-    ⚠️ The backend is not reachable. Start it and this will reconnect automatically.
+    The backend is not reachable. Start it and this will reconnect automatically.
   </div>
 </div>

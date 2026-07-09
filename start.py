@@ -49,8 +49,23 @@ def setup_ollama():
         subprocess.Popen(["ollama", "serve"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     time.sleep(3)
 
+def read_env_file():
+    env = {}
+    if os.path.exists(".env"):
+        with open(".env") as f:
+            for line in f.read().splitlines():
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    key, value = line.split("=", 1)
+                    env[key.strip()] = value.strip()
+    return env
+
 def pull_models():
-    models = ["qwen2.5:14b", "qwen2.5:7b", "nomic-embed-text"]
+    env = read_env_file()
+    manager_model = os.environ.get("MANAGER_MODEL", env.get("MANAGER_MODEL", "qwen2.5:14b"))
+    subagent_model = os.environ.get("SUBAGENT_MODEL", env.get("SUBAGENT_MODEL", "qwen2.5:7b"))
+
+    models = list(dict.fromkeys([manager_model, subagent_model, "nomic-embed-text"]))
     for model in models:
         print(f"Verifying/Downloading model: {model} (this might take a few minutes on first run)...")
         os.system(f"ollama pull {model}")
@@ -109,7 +124,7 @@ def main():
     print("FastAPI backend is running at: http://localhost:8000")
     print("Neo4j database is running at: http://localhost:7474")
     print("="*50)
-    print("ATENȚIE: Press Ctrl+C to stop the system and release resources.")
+    print("NOTE: Press Ctrl+C to stop the system and release resources.")
 
     try:
         while True:

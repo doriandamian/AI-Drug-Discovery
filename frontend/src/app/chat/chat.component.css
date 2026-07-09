@@ -30,11 +30,6 @@
   gap: 12px;
 }
 
-.header-title .logo {
-  font-size: 28px;
-  line-height: 1;
-}
-
 .header-title h1 {
   margin: 0;
   font-size: 18px;
@@ -114,9 +109,6 @@
   text-align: center;
   max-width: 560px;
   color: #475569;
-}
-.welcome-icon {
-  font-size: 40px;
 }
 .welcome h2 {
   margin: 12px 0 6px;

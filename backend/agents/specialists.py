@@ -55,6 +55,7 @@ def _make_llm(num_predict: int) -> ChatOllama:
         num_ctx=8192,
         num_predict=num_predict,
         keep_alive=-1,
+        reasoning=False,
     )
 
 _llm_subagent = None

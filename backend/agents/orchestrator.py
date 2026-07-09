@@ -173,6 +173,7 @@ def build_orchestrator() -> None:
         num_ctx=8192,
         num_predict=1024,
         keep_alive=-1,
+        reasoning=False
     )
     _llm_supervisor_with_tools = _llm_supervisor.bind_tools(tools)
 

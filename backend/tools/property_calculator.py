@@ -45,7 +45,7 @@ Use this tool when the user asks about drug-likeness, Lipinski's Rule of Five, Q
 
 INPUT (compound_name): The compound name already looked up with fetch_pubchem_properties (e.g. 'Aspirin'). Always pass the compound name, never a SMILES string.
 
-OUTPUT: a structured JSON document with named numeric fields (molecular_weight, logp, hbd, hba, tpsa, rotatable_bonds, rings, qed, lipinski_violations, lipinski_pass). Read every value by its KEY.""")
+OUTPUT: a structured JSON document with named numeric fields (molecular_formula, molecular_weight, logp, hbd, hba, tpsa, rotatable_bonds, rings, qed, lipinski_violations, lipinski_pass). Read every value by its KEY.""")
 def calculate_properties(compound_name: str) -> str:
     resolved_smiles, mol = resolve_smiles(compound_name)
     if mol is None:
@@ -74,6 +74,7 @@ def calculate_properties(compound_name: str) -> str:
     return json.dumps({
         "status": "ok",
         "compound": label,
+        "molecular_formula": rdMolDescriptors.CalcMolFormula(mol),
         "molecular_weight": mw,
         "logp": logp,
         "hbd": hbd,
@@ -101,6 +102,7 @@ def format_properties(payload: dict) -> str:
     fg_line = f"- Functional Groups: {', '.join(fg)}" if fg else "- Functional Groups: none detected"
     return (
         f"Molecular Properties for '{payload['compound']}':\n"
+        f"- Molecular Formula: {payload['molecular_formula']}\n"
         f"- Molecular Weight: {payload['molecular_weight']} g/mol  (limit ≤500)\n"
         f"- LogP (lipophilicity): {payload['logp']}  (limit ≤5)\n"
         f"- H-Bond Donors (HBD): {payload['hbd']}  (limit ≤5)\n"

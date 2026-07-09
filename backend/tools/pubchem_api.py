@@ -43,7 +43,7 @@ def _cache_put(name: str, payload: str, ttl: float) -> str:
     return payload
 
 
-@tool(description="Fetches chemical identity and properties for a named compound from PubChem and saves them to the local database. Input: The exact name of the compound (e.g., 'Aspirin' or 'Ibuprofen'). Returns a structured JSON document with keys: status, compound, cid (PubChem CID integer), molecular_weight, logp, smiles_stored (bool), synonyms (list of alternative names). Read every value by its KEY. Use this tool to look up a compound's PubChem CID, synonyms/alternative names, MW, or logP. After calling this tool, pass the compound NAME (not a SMILES string) to predict_toxicity, calculate_properties, and validate_smiles.")
+@tool(description="Fetches chemical identity and properties for a named compound from PubChem and saves them to the local database. Input: The exact name of the compound (e.g., 'Aspirin' or 'Ibuprofen'). Returns a structured JSON document with keys: status, compound, cid (PubChem CID integer), molecular_formula, molecular_weight, logp, smiles_stored (bool), synonyms (list of alternative names). Read every value by its KEY. Use this tool to look up a compound's PubChem CID, synonyms/alternative names, MW, or logP. After calling this tool, pass the compound NAME (not a SMILES string) to predict_toxicity, calculate_properties, and validate_smiles.")
 def fetch_pubchem_properties(compound_name: str) -> str:
     cached = _cache_get(compound_name)
     if cached is not None:
@@ -52,7 +52,7 @@ def fetch_pubchem_properties(compound_name: str) -> str:
     prop_url = (
         f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/"
         f"{quote(compound_name, safe='')}/property/"
-        f"IsomericSMILES,ConnectivitySMILES,MolecularWeight,XLogP/JSON"
+        f"IsomericSMILES,ConnectivitySMILES,MolecularFormula,MolecularWeight,XLogP/JSON"
     )
     try:
         response = _session.get(prop_url, timeout=10)
@@ -68,6 +68,7 @@ def fetch_pubchem_properties(compound_name: str) -> str:
         )
         clean_props = {
             "smiles": smiles,
+            "molecular_formula": properties.get('MolecularFormula'),
             "molecular_weight": properties.get('MolecularWeight'),
             "xlogp": properties.get('XLogP'),
         }
@@ -101,6 +102,7 @@ def fetch_pubchem_properties(compound_name: str) -> str:
             "compound": compound_name,
             "source": "pubchem",
             "cid": cid,
+            "molecular_formula": clean_props['molecular_formula'],
             "molecular_weight": clean_props['molecular_weight'],
             "logp": clean_props['xlogp'],
             "smiles_stored": True,
@@ -117,6 +119,7 @@ def fetch_pubchem_properties(compound_name: str) -> str:
 def format_pubchem(payload: dict) -> str:
     if payload.get("status") != "ok":
         return payload.get("message", "PubChem lookup failed.")
+    formula = payload.get("molecular_formula")
     mw = payload.get("molecular_weight")
     logp = payload.get("logp")
     cid = payload.get("cid")
@@ -124,6 +127,7 @@ def format_pubchem(payload: dict) -> str:
     lines = [
         f"Properties for '{payload['compound']}' (source: {payload.get('source', 'pubchem')}):",
         f"- PubChem CID: {cid if cid is not None else 'N/A'}",
+        f"- Molecular Formula: {formula if formula is not None else 'N/A'}",
         f"- Molecular Weight: {mw if mw is not None else 'N/A'} g/mol",
         f"- logP (lipophilicity): {logp if logp is not None else 'N/A'}",
     ]

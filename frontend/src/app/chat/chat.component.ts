@@ -42,15 +42,14 @@ export class ChatComponent implements OnInit, OnDestroy {
     'Find recent literature on kinase inhibitors',
   ];
 
-  private readonly agentNames: Record<string, string> = {
-    cheminformatics_agent: 'cheminformatics',
-    safety_agent: 'toxicology',
-    literature_agent: 'literature',
-    graph_agent: 'knowledge-graph',
-    molecular_design_agent: 'molecular design',
-  };
-
-  private readonly toolLabels: Record<string, string> = {
+  // All in-progress status labels: capitalized present-participle phrases,
+  // no trailing punctuation (the "…" / icon is added once at render time).
+  private readonly taskLabels: Record<string, string> = {
+    cheminformatics_agent: 'Consulting the cheminformatics agent',
+    safety_agent: 'Consulting the toxicology agent',
+    literature_agent: 'Consulting the literature agent',
+    graph_agent: 'Consulting the knowledge-graph agent',
+    molecular_design_agent: 'Consulting the molecular design agent',
     search_pubmed: 'Searching PubMed',
     search_semantic_scholar: 'Searching Semantic Scholar',
     search_literature: 'Searching the local knowledge base',
@@ -93,7 +92,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.userInput = '';
     this.isLoading = true;
 
-    const aiMsg: ChatMessage = { text: '', isAi: true, status: 'Connecting...', isStreaming: true };
+    const aiMsg: ChatMessage = { text: '', isAi: true, status: 'Connecting…', isStreaming: true };
     this.messages.push(aiMsg);
     this.activeAiMsg = aiMsg;
     this.tokenBuffer = '';
@@ -150,8 +149,12 @@ export class ChatComponent implements OnInit, OnDestroy {
     return name.endsWith('_agent');
   }
 
-  private agentName(name: string): string {
-    return this.agentNames[name] ?? name.replace(/_agent$/, '').replace(/_/g, ' ');
+  /** Resolves a raw tool/agent identifier to its display label, falling back to a
+   * prettified version of the identifier for anything not in `taskLabels`. */
+  private label(name: string): string {
+    if (this.taskLabels[name]) return this.taskLabels[name];
+    const pretty = name.replace(/_agent$/, '').replace(/_/g, ' ');
+    return this.isAgent(name) ? `Consulting the ${pretty} agent` : `Running ${pretty}`;
   }
 
   private handleEvent(evt: any, aiMsg: ChatMessage) {
@@ -160,20 +163,12 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.flushTokenBuffer();
         aiMsg.text = '';
         const tools: string[] = evt.tools ?? [];
-        const agents = tools.filter((t) => this.isAgent(t));
-        const others = tools.filter((t) => !this.isAgent(t));
-        const parts: string[] = [];
-        if (agents.length) {
-          parts.push('Consulting: ' + agents.map((t) => this.agentName(t)).join(', '));
-        }
-        parts.push(...others.map((t) => this.toolLabels[t] ?? t));
-        aiMsg.status = '⚙️ ' + parts.join(' · ') + '...';
+        const labels = tools.map((t) => this.label(t));
+        aiMsg.status = labels.join(', ') + '…';
         break;
       }
       case 'tool_result':
-        aiMsg.status = this.isAgent(evt.name)
-          ? '✓ ' + this.agentName(evt.name) + ' agent'
-          : '✓ ' + (this.toolLabels[evt.name] ?? evt.name);
+        aiMsg.status = 'Done: ' + this.label(evt.name);
         break;
       case 'reset': {
         if (this.flushTimer) {

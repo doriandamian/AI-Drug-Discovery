@@ -9,7 +9,8 @@ def get_local_llm(model: str = MANAGER_MODEL):
     return ChatOllama(
         model=model,
         base_url=OLLAMA_BASE_URL,
-        temperature=0.1
+        temperature=0.1,
+        reasoning=False
     )
 
 def wait_for_ollama(retries=20, delay=2):
