@@ -145,7 +145,8 @@ def test_cheminformatics_runner_prefers_calculated_properties(monkeypatch):
             {"status": "ok", "compound": "Aspirin", "molecular_weight": 180.16, "logp": 1.31,
              "smiles_stored": True})),
         ToolMessage(name="calculate_properties", tool_call_id="2", content=json.dumps(
-            {"status": "ok", "compound": "Aspirin", "molecular_weight": 180.16, "logp": 1.31,
+            {"status": "ok", "compound": "Aspirin", "molecular_formula": "C9H8O4",
+             "molecular_weight": 180.16, "logp": 1.31,
              "hbd": 1, "hba": 3, "tpsa": 63.6, "rotatable_bonds": 2, "rings": 1, "qed": 0.55,
              "lipinski_violations": 0, "lipinski_pass": True})),
         AIMessage(content="aspirin has 4 lipinski violations"),  # wrong on purpose

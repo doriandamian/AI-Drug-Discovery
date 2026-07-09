@@ -1,3 +1,7 @@
+import os
+
+os.environ.setdefault("NEO4J_PASSWORD", "test-only-not-a-real-password")
+
 import pytest
 
 ASPIRIN_SMILES = "CC(=O)Oc1ccccc1C(=O)O"
