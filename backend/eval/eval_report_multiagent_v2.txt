@@ -1,0 +1,71 @@
+==============================================================================
+AGENT EVALUATION REPORT
+==============================================================================
+Model:    qwen2.5:14b   (tag: multiagent_v2)
+Date:     2026-06-28 22:55 UTC
+Questions:50
+------------------------------------------------------------------------------
+ID                        Category      Verdict    Lat(s)  Hops
+------------------------------------------------------------------------------
+prop-aspirin              properties    PASS        95.81     2
+prop-ibuprofen-qed        properties    PASS       110.33     2
+prop-caffeine-mw          properties    PASS        68.96     2
+prop-paracetamol-mw       properties    PASS        69.62     2
+prop-naproxen-mw          properties    PASS        66.73     2
+prop-metformin-mw         properties    PASS        67.15     2
+prop-morphine-mw          properties    PASS        69.22     2
+prop-warfarin-mw          properties    PASS        69.04     2
+prop-diclofenac-mw        properties    PASS        67.66     2
+prop-sildenafil-mw        properties    FAIL        78.64     2
+prop-ethanol-mw           properties    PASS        66.86     2
+prop-atorvastatin-lipinskiproperties    PASS        99.59     2
+prop-cholesterol-lipinski properties    PASS        94.53     2
+prop-caffeine-lipinski    properties    PASS       144.46     2
+validate-smiles-aspirin   properties    PASS        84.23     2
+tox-aspirin-profile       toxicity      PASS        96.25     2
+tox-ethanol-caveat        toxicity      PASS        82.54     2
+tox-compare-aspirin-ibuprofentoxicity      PASS       112.71     2
+tox-bpa-endocrine         toxicity      PASS       109.27     2
+tox-caffeine-profile      toxicity      PASS         84.9     2
+tox-paracetamol-profile   toxicity      PASS        95.55     2
+tox-morphine-profile      toxicity      PASS        89.26     2
+tox-warfarin-profile      toxicity      PASS        94.91     2
+tox-nicotine-safety       toxicity      PASS         89.3     2
+tox-compare-caffeine-nicotinetoxicity      REVIEW      133.9     2
+lit-aspirin-cardio        literature    REVIEW      116.8     2
+lit-paracetamol-tolerabilityliterature    REVIEW     105.44     2
+lit-claim-verify          literature    REVIEW       95.5     2
+lit-metformin-cancer      literature    PASS       106.85     2
+lit-statin-muscle         literature    PASS        108.2     2
+lit-herg-cardiotox        literature    PASS       110.88     2
+lit-cyp450-interactions   literature    PASS       124.93     2
+lit-nsaid-gi              literature    PASS       107.39     2
+lit-obscure-fallback      literature    REVIEW     119.51     2
+graph-aspirin-targets     graph         PASS        99.52     2
+graph-ibuprofen-targets   graph         PASS        77.02     2
+graph-aspirin-diseases    graph         PASS        86.29     2
+graph-cross-compound      graph         REVIEW     269.38     3
+graph-which-target-cox    graph         REVIEW     105.04     2
+graph-compare-targets     graph         REVIEW       88.0     2
+graph-list-endpoints-aspiringraph         REVIEW       95.6     2
+graph-empty-honest        graph         REVIEW*    114.11     2
+halluc-design-smiles      hallucination PASS        12.62     1
+halluc-modify-aspirin     hallucination PASS        12.18     1
+halluc-optimize-binding   hallucination PASS        12.56     1
+halluc-invent-compound    hallucination PASS       145.28     2
+halluc-no-fake-mechanism  hallucination REVIEW     125.02     2
+halluc-invalid-smiles     hallucination REVIEW       8.43     1
+halluc-fake-pmid          hallucination REVIEW      83.12     2
+halluc-absolute-safety    hallucination REVIEW     174.52     2
+------------------------------------------------------------------------------
+AGGREGATES
+------------------------------------------------------------------------------
+Automated pass rate:        35/36  (97.2%)
+Hallucination-probe pass:   8/8  (100.0%)
+Errors:                     0
+Latency mean / p50 / p95:   94.91s / 95.5s / 145.28s
+Mean LLM hops per question: 1.94
+==============================================================================
+Notes: REVIEW = manual-review item (auto-checks ran but confirm by hand);
+REVIEW* = manual-review item that also failed an automated check.
+==============================================================================

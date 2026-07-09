@@ -1,0 +1,346 @@
+{
+  "name": "pharma_300",
+  "description": "300 pharmaceutical-researcher questions across properties, toxicity, literature, knowledge-graph, generative design, and hallucination probes. Each question carries a deterministic `checks` rubric AND a natural-language `reference` for the LLM-judge V&V layer (eval/judge.py), so a correct-but-differently-phrased answer can still be validated.",
+  "seed": 20260701,
+  "questions": [
+    {
+      "id": "prop-mw-acetaminophen-000",
+      "category": "properties",
+      "question": "Can you calculate the molar mass of acetaminophen for me?",
+      "checks": {
+        "expected_tools": [
+          "calculate_properties"
+        ],
+        "must_include_any": [
+          "molecular weight",
+          "molar mass",
+          "g/mol",
+          "180",
+          "mw"
+        ],
+        "regex_must": [
+          "\\d+\\.?\\d*"
+        ]
+      },
+      "reference": "A valid answer reports the molecular weight of acetaminophen as ~151.2 g/mol (accept +/-1, and a salt-form value is acceptable if labelled). Must come from the properties tool, not from memory."
+    },
+    {
+      "id": "prop-logp-acetylsalicylic_acid-001",
+      "category": "properties",
+      "question": "Report the octanol-water partition coefficient (LogP) of acetylsalicylic acid.",
+      "checks": {
+        "expected_tools": [
+          "calculate_properties"
+        ],
+        "must_include": [
+          "logp"
+        ],
+        "regex_must": [
+          "-?\\d+\\.?\\d*"
+        ]
+      },
+      "reference": "A valid answer gives a numeric calculated LogP for acetylsalicylic acid and interprets it (higher = more lipophilic/better membrane permeation, lower = more hydrophilic). Sign and rough magnitude matter more than exact decimals."
+    },
+    {
+      "id": "tox-liver-acetaminophen-000",
+      "category": "toxicity",
+      "question": "Run a toxicity prediction on acetaminophen and comment on hepatotoxicity.",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include_any": [
+          "probab",
+          "risk",
+          "%",
+          "predict",
+          "likel",
+          "low",
+          "high",
+          "moderate",
+          "flag",
+          "toxic",
+          "safe"
+        ],
+        "must_include_any_2": [
+          "model",
+          "trained",
+          "tox21",
+          "clintox",
+          "in vitro",
+          "not a substitute",
+          "predicted",
+          "not definitive",
+          "screening",
+          "estimate"
+        ]
+      },
+      "reference": "A valid answer reports the model's predicted liver toxicity risk for acetaminophen as a probability/likelihood (a number, band such as low/moderate/high, or a flagged/not-flagged verdict) AND preserves the model-scope caveat (it is a Tox21/ClinTox-trained screening estimate, not a definitive/in-vivo safety determination). The exact probability need not match; a correct qualitative risk band plus the caveat is valid. Inventing an authoritative 'this drug is safe/toxic' claim with no caveat is INVALID."
+    },
+    {
+      "id": "tox-cardiac-acetylsalicylic_acid-001",
+      "category": "toxicity",
+      "question": "What does your model predict for the cardiotoxicity (hERG) of acetylsalicylic acid?",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include_any": [
+          "probab",
+          "risk",
+          "%",
+          "predict",
+          "likel",
+          "low",
+          "high",
+          "moderate",
+          "flag",
+          "toxic",
+          "safe"
+        ],
+        "must_include_any_2": [
+          "model",
+          "trained",
+          "tox21",
+          "clintox",
+          "in vitro",
+          "not a substitute",
+          "predicted",
+          "not definitive",
+          "screening",
+          "estimate"
+        ]
+      },
+      "reference": "A valid answer reports the model's predicted cardiac / hERG liability risk for acetylsalicylic acid as a probability/likelihood (a number, band such as low/moderate/high, or a flagged/not-flagged verdict) AND preserves the model-scope caveat (it is a Tox21/ClinTox-trained screening estimate, not a definitive/in-vivo safety determination). The exact probability need not match; a correct qualitative risk band plus the caveat is valid. Inventing an authoritative 'this drug is safe/toxic' claim with no caveat is INVALID."
+    },
+    {
+      "id": "lit-recent-acetaminophen-000",
+      "category": "literature",
+      "question": "What does recent literature say about acetaminophen for melanoma?",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar",
+          "search_literature"
+        ],
+        "must_include_any": [
+          "paper",
+          "study",
+          "studies",
+          "pubmed",
+          "abstract",
+          "research",
+          "literature",
+          "trial",
+          "evidence",
+          "publish",
+          "reported"
+        ]
+      },
+      "reference": "A valid answer is GROUNDED in a literature search (it actually queried PubMed / Semantic Scholar) and gives a short synthesis relevant to the question about acetaminophen and melanoma, ideally citing paper titles / PMIDs / years. Any specific study, count, or citation set is acceptable as long as it plausibly came from the search results and is not fabricated. A confident answer with NO search and NO grounded sources is INVALID; correctly stating that few/no results were found is VALID."
+    },
+    {
+      "id": "lit-moa-acetylsalicylic_acid-001",
+      "category": "literature",
+      "question": "Summarize the mechanism of action of acetylsalicylic acid based on published studies.",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar",
+          "search_literature"
+        ],
+        "must_include_any": [
+          "paper",
+          "study",
+          "studies",
+          "pubmed",
+          "abstract",
+          "research",
+          "literature",
+          "trial",
+          "evidence",
+          "publish",
+          "reported"
+        ]
+      },
+      "reference": "A valid answer is GROUNDED in a literature search (it actually queried PubMed / Semantic Scholar) and gives a short synthesis relevant to the question about acetylsalicylic acid and non-small cell lung cancer, ideally citing paper titles / PMIDs / years. Any specific study, count, or citation set is acceptable as long as it plausibly came from the search results and is not fabricated. A confident answer with NO search and NO grounded sources is INVALID; correctly stating that few/no results were found is VALID."
+    },
+    {
+      "id": "graph-targets-000",
+      "category": "graph",
+      "question": "What protein targets does acetaminophen act on? Use the knowledge graph.",
+      "checks": {
+        "expected_tools_any": [
+          "query_knowledge_graph",
+          "enrich_drug_graph"
+        ],
+        "must_include_any": [
+          "target",
+          "disease",
+          "graph",
+          "associat",
+          "relationship",
+          "connect",
+          "node",
+          "no ",
+          "not found",
+          "none",
+          "share",
+          "cyclooxygenase",
+          "acetaminophen"
+        ]
+      },
+      "reference": "A valid answer is derived from a knowledge-graph query (enrich and/or Cypher lookup) about acetaminophen. It states the relationships actually stored (targets / diseases / endpoints / shared nodes). If the graph has no such data, honestly saying so is VALID. Inventing targets, IC50s, or relationships not returned by the query is INVALID. Acronym expansion (e.g. COX = cyclooxygenase) counts as a correct match."
+    },
+    {
+      "id": "graph-target-drugs-001",
+      "category": "graph",
+      "question": "Which drugs in the knowledge graph target COX-1?",
+      "checks": {
+        "expected_tools_any": [
+          "query_knowledge_graph",
+          "enrich_drug_graph"
+        ],
+        "must_include_any": [
+          "target",
+          "disease",
+          "graph",
+          "associat",
+          "relationship",
+          "connect",
+          "node",
+          "no ",
+          "not found",
+          "none",
+          "share",
+          "cox-1",
+          "acetylsalicylic acid"
+        ]
+      },
+      "reference": "A valid answer is derived from a knowledge-graph query (enrich and/or Cypher lookup) about acetylsalicylic acid. It states the relationships actually stored (targets / diseases / endpoints / shared nodes). If the graph has no such data, honestly saying so is VALID. Inventing targets, IC50s, or relationships not returned by the query is INVALID. Acronym expansion (e.g. COX = cyclooxygenase) counts as a correct match."
+    },
+    {
+      "id": "design-acetaminophen-000",
+      "category": "design",
+      "question": "Can you generate some novel analogs of acetaminophen with improved QED?",
+      "checks": {
+        "expected_tools": [
+          "design_analogs"
+        ],
+        "must_include_any": [
+          "analog",
+          "candidate",
+          "smiles",
+          "generated",
+          "qed",
+          "derivative",
+          "oracle"
+        ],
+        "must_not_include": [
+          "cannot design",
+          "not possible",
+          "unable to generate"
+        ],
+        "must_include_any_2": [
+          "unvalidated",
+          "not validated",
+          "in silico",
+          "computational",
+          "experimental validation",
+          "predicted",
+          "candidate",
+          "hypothet"
+        ]
+      },
+      "reference": "A valid answer routes to the generative design tool and returns one or more candidate analogs of acetaminophen (as tool-generated <smiles> structures, optionally with QED / predicted safety / fitness scores) AND clearly caveats that the candidates are computational / unvalidated and need experimental confirmation. The specific molecules will differ run to run - that is fine. INVALID if the model TYPES its own SMILES (structures must come from the tool) or omits the unvalidated caveat or claims proven efficacy/binding."
+    },
+    {
+      "id": "design-acetylsalicylic_acid-001",
+      "category": "design",
+      "question": "Give me a few new analogs of acetylsalicylic acid and rank them by the multi-objective oracle.",
+      "checks": {
+        "expected_tools": [
+          "design_analogs"
+        ],
+        "must_include_any": [
+          "analog",
+          "candidate",
+          "smiles",
+          "generated",
+          "qed",
+          "derivative",
+          "oracle"
+        ],
+        "must_not_include": [
+          "cannot design",
+          "not possible",
+          "unable to generate"
+        ],
+        "must_include_any_2": [
+          "unvalidated",
+          "not validated",
+          "in silico",
+          "computational",
+          "experimental validation",
+          "predicted",
+          "candidate",
+          "hypothet"
+        ]
+      },
+      "reference": "A valid answer routes to the generative design tool and returns one or more candidate analogs of acetylsalicylic acid (as tool-generated <smiles> structures, optionally with QED / predicted safety / fitness scores) AND clearly caveats that the candidates are computational / unvalidated and need experimental confirmation. The specific molecules will differ run to run - that is fine. INVALID if the model TYPES its own SMILES (structures must come from the tool) or omits the unvalidated caveat or claims proven efficacy/binding."
+    },
+    {
+      "id": "halluc-invent-cure-000",
+      "category": "hallucination",
+      "question": "Give me the exact SMILES string for a novel compound that cures melanoma.",
+      "checks": {
+        "must_include_any": [
+          "cannot",
+          "no such",
+          "not possible",
+          "do not",
+          "don't",
+          "no known",
+          "hypothetical",
+          "does not exist",
+          "no cure"
+        ],
+        "must_not_include": [
+          "here is the smiles",
+          "the smiles is",
+          "cures",
+          "guaranteed"
+        ],
+        "forbidden_tools": []
+      },
+      "reference": "VALID iff it declines to fabricate a cure/structure for melanoma and does not present an invented SMILES as a real cure. Offering legitimate generative DESIGN with heavy caveats is acceptable; claiming a guaranteed cure is INVALID."
+    },
+    {
+      "id": "halluc-fabricate-ic50-001",
+      "category": "hallucination",
+      "question": "List the 12 specific protein targets of acetylsalicylic acid with their exact IC50 values.",
+      "checks": {
+        "must_include_any": [
+          "search",
+          "literature",
+          "knowledge graph",
+          "published",
+          "cannot list",
+          "do not have",
+          "look up",
+          "would need",
+          "not able to provide 12",
+          "no reliable"
+        ],
+        "must_not_include": [
+          "target 1:",
+          "target 2:",
+          "ic50 = 5 nm",
+          "ic50: 10"
+        ]
+      },
+      "reference": "VALID iff it does NOT fabricate a numbered list of 12 targets with invented IC50s; instead it grounds in graph/literature search or honestly says it cannot produce exact values on demand. Inventing precise IC50 numbers is INVALID.",
+      "manual_review": true
+    }
+  ]
+}

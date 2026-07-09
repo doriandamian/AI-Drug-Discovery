@@ -1,0 +1,2024 @@
+{
+  "questions": [
+    {
+      "id": "prop-aspirin-mw",
+      "category": "properties",
+      "question": "What is the molecular weight of aspirin?",
+      "checks": {
+        "expected_tools": [
+          "calculate_properties"
+        ],
+        "must_include_any": [
+          "180",
+          "180.1",
+          "180.2"
+        ],
+        "regex_must": [
+          "\\b180\\.\\d"
+        ]
+      }
+    },
+    {
+      "id": "prop-ibuprofen-lipinski",
+      "category": "properties",
+      "question": "Does ibuprofen follow Lipinski's Rule of Five?",
+      "checks": {
+        "expected_tools": [
+          "calculate_properties"
+        ],
+        "must_include": [
+          "lipinski"
+        ],
+        "must_include_any": [
+          "pass",
+          "yes",
+          "satisf",
+          "no violation",
+          "0 violation",
+          "follows"
+        ]
+      }
+    },
+    {
+      "id": "prop-caffeine-logp",
+      "category": "properties",
+      "question": "What is the LogP of caffeine and what does it mean for drug absorption?",
+      "checks": {
+        "expected_tools": [
+          "calculate_properties"
+        ],
+        "must_include": [
+          "logp"
+        ],
+        "must_include_any": [
+          "absorption",
+          "hydrophilic",
+          "solubility",
+          "permeab"
+        ]
+      }
+    },
+    {
+      "id": "prop-metformin-qed",
+      "category": "properties",
+      "question": "What is the QED drug-likeness score of metformin?",
+      "checks": {
+        "expected_tools": [
+          "calculate_properties"
+        ],
+        "must_include": [
+          "qed"
+        ],
+        "regex_must": [
+          "0\\.[0-9]"
+        ]
+      }
+    },
+    {
+      "id": "prop-atorvastatin-rotbonds",
+      "category": "properties",
+      "question": "How many rotatable bonds does atorvastatin have?",
+      "checks": {
+        "expected_tools": [
+          "calculate_properties"
+        ],
+        "must_include_any": [
+          "rotatable",
+          "rot bond"
+        ],
+        "regex_must": [
+          "\\b[0-9]+\\b"
+        ]
+      }
+    },
+    {
+      "id": "prop-morphine-tpsa",
+      "category": "properties",
+      "question": "What is the topological polar surface area (TPSA) of morphine?",
+      "checks": {
+        "expected_tools": [
+          "calculate_properties"
+        ],
+        "must_include": [
+          "tpsa"
+        ],
+        "regex_must": [
+          "\\d+\\.?\\d*"
+        ]
+      }
+    },
+    {
+      "id": "prop-methotrexate-hbd-hba",
+      "category": "properties",
+      "question": "Can you calculate the hydrogen bond donors and acceptors for methotrexate?",
+      "checks": {
+        "expected_tools": [
+          "calculate_properties"
+        ],
+        "must_include_any": [
+          "hydrogen bond donor",
+          "hbd",
+          "hba",
+          "hydrogen bond acceptor"
+        ]
+      }
+    },
+    {
+      "id": "prop-tpsa-meaning",
+      "category": "properties",
+      "question": "What does a high TPSA value indicate for a drug candidate?",
+      "checks": {
+        "must_include_any": [
+          "absorption",
+          "blood-brain",
+          "bbb",
+          "permeab",
+          "140"
+        ],
+        "must_include": [
+          "tpsa"
+        ]
+      }
+    },
+    {
+      "id": "prop-penicillin-druglike",
+      "category": "properties",
+      "question": "Is penicillin G drug-like according to Lipinski's rules?",
+      "checks": {
+        "expected_tools": [
+          "calculate_properties"
+        ],
+        "must_include": [
+          "lipinski"
+        ],
+        "must_include_any": [
+          "pass",
+          "yes",
+          "satisf",
+          "drug-like",
+          "no violation"
+        ]
+      }
+    },
+    {
+      "id": "prop-aspirin-tpsa-hbd",
+      "category": "properties",
+      "question": "What are all the molecular properties of aspirin including TPSA, HBD, and HBA?",
+      "checks": {
+        "expected_tools": [
+          "calculate_properties"
+        ],
+        "must_include_any": [
+          "tpsa",
+          "polar surface"
+        ],
+        "must_include_any_2": [
+          "hbd",
+          "hydrogen bond donor"
+        ],
+        "must_include_any_3": [
+          "hba",
+          "hydrogen bond acceptor"
+        ]
+      }
+    },
+    {
+      "id": "prop-paracetamol-mw",
+      "category": "properties",
+      "question": "What is the molecular weight of paracetamol?",
+      "checks": {
+        "expected_tools": [
+          "calculate_properties"
+        ],
+        "must_include_any": [
+          "151",
+          "150",
+          "acetaminophen",
+          "paracetamol"
+        ],
+        "regex_must": [
+          "15[01]\\.\\d"
+        ]
+      }
+    },
+    {
+      "id": "prop-warfarin-lipinski",
+      "category": "properties",
+      "question": "Does warfarin pass Lipinski's Rule of Five?",
+      "checks": {
+        "expected_tools": [
+          "calculate_properties"
+        ],
+        "must_include": [
+          "lipinski"
+        ],
+        "must_include_any": [
+          "pass",
+          "yes",
+          "satisf",
+          "no violation"
+        ]
+      }
+    },
+    {
+      "id": "prop-veber-rules",
+      "category": "properties",
+      "question": "What is the difference between Lipinski's Rule of Five and Veber rules for oral bioavailability?",
+      "checks": {
+        "must_include": [
+          "lipinski"
+        ],
+        "must_include_any": [
+          "veber",
+          "rotatable",
+          "tpsa"
+        ],
+        "must_include_any_2": [
+          "oral",
+          "bioavailability",
+          "absorption"
+        ]
+      }
+    },
+    {
+      "id": "prop-cisapride-qed",
+      "category": "properties",
+      "question": "Calculate the molecular properties of cisapride including QED score.",
+      "checks": {
+        "expected_tools": [
+          "calculate_properties"
+        ],
+        "must_include": [
+          "qed"
+        ],
+        "regex_must": [
+          "0\\.[0-9]"
+        ]
+      }
+    },
+    {
+      "id": "prop-tamoxifen-logp",
+      "category": "properties",
+      "question": "What is the LogP of tamoxifen and is it within drug-like range?",
+      "checks": {
+        "expected_tools": [
+          "calculate_properties"
+        ],
+        "must_include": [
+          "logp"
+        ],
+        "regex_must": [
+          "\\d+\\.\\d+"
+        ]
+      }
+    },
+    {
+      "id": "smiles-ethanol-valid",
+      "category": "properties",
+      "question": "Is the SMILES CCO a valid molecule?",
+      "checks": {
+        "must_include_any": [
+          "valid",
+          "ethanol",
+          "yes"
+        ],
+        "must_not_include": [
+          "invalid",
+          "error",
+          "cannot parse"
+        ]
+      }
+    },
+    {
+      "id": "smiles-benzene-name",
+      "category": "properties",
+      "question": "What molecule does the SMILES c1ccccc1 represent?",
+      "checks": {
+        "must_include_any": [
+          "benzene",
+          "aromatic ring"
+        ],
+        "must_not_include": [
+          "cannot",
+          "unknown",
+          "not found"
+        ]
+      }
+    },
+    {
+      "id": "smiles-aspirin-validate",
+      "category": "properties",
+      "question": "Can you validate this SMILES for aspirin: CC(=O)Oc1ccccc1C(=O)O",
+      "checks": {
+        "expected_tools_any": [
+          "validate_smiles",
+          "calculate_properties"
+        ],
+        "must_include_any": [
+          "valid",
+          "aspirin",
+          "acetylsalicylic"
+        ],
+        "must_not_include": [
+          "invalid",
+          "error parsing"
+        ]
+      }
+    },
+    {
+      "id": "smiles-nicotine-name",
+      "category": "properties",
+      "question": "What molecule is CN1CCC[C@H]1c2cccnc2?",
+      "checks": {
+        "must_include_any": [
+          "nicotine",
+          "alkaloid"
+        ],
+        "must_not_include": [
+          "cannot",
+          "unknown"
+        ]
+      }
+    },
+    {
+      "id": "smiles-functional-groups",
+      "category": "properties",
+      "question": "Can you identify the functional groups in CC(=O)Nc1ccc(O)cc1?",
+      "checks": {
+        "must_include_any": [
+          "amide",
+          "hydroxyl",
+          "oh",
+          "aromatic"
+        ],
+        "must_include_any_2": [
+          "paracetamol",
+          "acetaminophen",
+          "phenol"
+        ]
+      }
+    },
+    {
+      "id": "tox-aspirin-safe",
+      "category": "toxicity",
+      "question": "Is aspirin predicted to be toxic?",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include_any": [
+          "low",
+          "safe",
+          "not toxic",
+          "minimal"
+        ],
+        "must_not_include": [
+          "cannot predict",
+          "no model"
+        ]
+      }
+    },
+    {
+      "id": "tox-acetaminophen-hepato",
+      "category": "toxicity",
+      "question": "What is the predicted toxicity profile of acetaminophen?",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include_any": [
+          "hepato",
+          "liver",
+          "dili",
+          "clinical"
+        ],
+        "must_not_include": [
+          "cannot predict"
+        ]
+      }
+    },
+    {
+      "id": "tox-metformin-safe",
+      "category": "toxicity",
+      "question": "Is metformin predicted to be safe according to the toxicity model?",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include_any": [
+          "low",
+          "safe",
+          "minimal",
+          "no significant"
+        ],
+        "must_not_include": [
+          "cannot predict"
+        ]
+      }
+    },
+    {
+      "id": "tox-endpoints-list",
+      "category": "toxicity",
+      "question": "What toxicity endpoints does the system evaluate for a compound?",
+      "checks": {
+        "must_include_any": [
+          "endpoint",
+          "ames",
+          "herg",
+          "hepato",
+          "dili",
+          "tox21",
+          "clintox",
+          "mitochond",
+          "endocrine"
+        ]
+      }
+    },
+    {
+      "id": "tox-ibuprofen-profile",
+      "category": "toxicity",
+      "question": "Run a toxicity prediction on ibuprofen and explain the results.",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include_any": [
+          "low",
+          "moderate",
+          "risk",
+          "safe"
+        ],
+        "must_not_include": [
+          "cannot predict"
+        ]
+      }
+    },
+    {
+      "id": "tox-cisapride-herg",
+      "category": "toxicity",
+      "question": "What is the predicted cardiotoxicity or hERG liability of cisapride?",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include_any": [
+          "herg",
+          "cardiac",
+          "cardio",
+          "channel",
+          "risk"
+        ]
+      }
+    },
+    {
+      "id": "tox-warfarin-profile",
+      "category": "toxicity",
+      "question": "Predict the toxicity of warfarin across all endpoints.",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include_any": [
+          "endpoint",
+          "profile",
+          "risk",
+          "low",
+          "high"
+        ]
+      }
+    },
+    {
+      "id": "tox-two-compounds-compare",
+      "category": "toxicity",
+      "question": "Compare the predicted toxicity of aspirin and ibuprofen side by side.",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include": [
+          "aspirin"
+        ],
+        "must_include_any_2": [
+          "ibuprofen",
+          "ibuprofeno"
+        ]
+      }
+    },
+    {
+      "id": "tox-reliability",
+      "category": "toxicity",
+      "question": "How reliable is the toxicity prediction model used in this system?",
+      "checks": {
+        "must_include_any": [
+          "tox21",
+          "clintox",
+          "lightgbm",
+          "machine learning",
+          "dataset",
+          "accuracy",
+          "auc",
+          "trained"
+        ]
+      }
+    },
+    {
+      "id": "tox-morphine-predict",
+      "category": "toxicity",
+      "question": "Can you predict the toxicity profile of morphine?",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include_any": [
+          "endpoint",
+          "profile",
+          "risk",
+          "low",
+          "high"
+        ]
+      }
+    },
+    {
+      "id": "tox-methotrexate-safety",
+      "category": "toxicity",
+      "question": "What are the predicted safety concerns for methotrexate?",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include_any": [
+          "hepato",
+          "liver",
+          "risk",
+          "toxicity",
+          "concern"
+        ]
+      }
+    },
+    {
+      "id": "tox-tamoxifen-risk",
+      "category": "toxicity",
+      "question": "Is tamoxifen predicted to have any hepatotoxicity risk?",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include_any": [
+          "hepato",
+          "liver",
+          "dili",
+          "risk",
+          "low",
+          "moderate",
+          "high"
+        ]
+      }
+    },
+    {
+      "id": "tox-penicillin-endpoints",
+      "category": "toxicity",
+      "question": "Run a full toxicity prediction for penicillin G.",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include_any": [
+          "endpoint",
+          "profile",
+          "risk",
+          "low"
+        ]
+      }
+    },
+    {
+      "id": "tox-domain-novel",
+      "category": "toxicity",
+      "question": "Can the toxicity model evaluate compounds that are not in any drug database?",
+      "checks": {
+        "must_include_any": [
+          "fingerprint",
+          "smiles",
+          "structure",
+          "novel",
+          "any compound"
+        ],
+        "must_include_any_2": [
+          "applicability domain",
+          "domain",
+          "confidence",
+          "yes"
+        ]
+      }
+    },
+    {
+      "id": "tox-atorvastatin-profile",
+      "category": "toxicity",
+      "question": "Predict the toxicity profile of atorvastatin.",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include_any": [
+          "endpoint",
+          "profile",
+          "risk",
+          "low"
+        ]
+      }
+    },
+    {
+      "id": "tox-digoxin-cardiac",
+      "category": "toxicity",
+      "question": "Does the toxicity model flag digoxin for cardiac risk?",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include_any": [
+          "cardiac",
+          "herg",
+          "cardio",
+          "channel",
+          "risk"
+        ]
+      }
+    },
+    {
+      "id": "tox-caffeine-predict",
+      "category": "toxicity",
+      "question": "What is the predicted toxicity of caffeine?",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include_any": [
+          "low",
+          "safe",
+          "minimal",
+          "risk"
+        ]
+      }
+    },
+    {
+      "id": "tox-naproxen-profile",
+      "category": "toxicity",
+      "question": "Run a toxicity prediction on naproxen.",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include_any": [
+          "endpoint",
+          "profile",
+          "risk",
+          "low",
+          "moderate"
+        ]
+      }
+    },
+    {
+      "id": "tox-dexamethasone-predict",
+      "category": "toxicity",
+      "question": "Predict the toxicity profile of dexamethasone.",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include_any": [
+          "endpoint",
+          "profile",
+          "risk"
+        ]
+      }
+    },
+    {
+      "id": "tox-erlotinib-safety",
+      "category": "toxicity",
+      "question": "Are there predicted hepatotoxicity concerns for erlotinib?",
+      "checks": {
+        "expected_tools": [
+          "predict_toxicity"
+        ],
+        "must_include_any": [
+          "hepato",
+          "liver",
+          "dili",
+          "risk",
+          "low",
+          "moderate",
+          "high"
+        ]
+      }
+    },
+    {
+      "id": "lit-braf-melanoma",
+      "category": "literature",
+      "question": "Find recent papers about BRAF inhibitors in melanoma.",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "braf",
+          "melanoma",
+          "inhibitor"
+        ],
+        "must_include_any_2": [
+          "paper",
+          "study",
+          "pubmed",
+          "abstract",
+          "research"
+        ]
+      }
+    },
+    {
+      "id": "lit-metformin-mechanism",
+      "category": "literature",
+      "question": "What is known about the mechanism of action of metformin according to published literature?",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar",
+          "search_literature"
+        ],
+        "must_include_any": [
+          "ampk",
+          "glucose",
+          "hepatic",
+          "mitochond",
+          "complex i"
+        ],
+        "must_include_any_2": [
+          "paper",
+          "study",
+          "research",
+          "literature"
+        ]
+      }
+    },
+    {
+      "id": "lit-cdk46-breast",
+      "category": "literature",
+      "question": "Are there papers about CDK4/6 inhibitors for breast cancer?",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "cdk4",
+          "cdk6",
+          "palbociclib",
+          "ribociclib",
+          "abemaciclib"
+        ],
+        "must_include_any_2": [
+          "breast cancer",
+          "breast",
+          "cancer"
+        ]
+      }
+    },
+    {
+      "id": "lit-glp1-research",
+      "category": "literature",
+      "question": "What is the latest research on GLP-1 receptor agonists?",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "glp-1",
+          "glp1",
+          "semaglutide",
+          "liraglutide",
+          "receptor agonist"
+        ],
+        "must_include_any_2": [
+          "diabetes",
+          "obesity",
+          "t2dm",
+          "weight"
+        ]
+      }
+    },
+    {
+      "id": "lit-egfr-resistance",
+      "category": "literature",
+      "question": "Find papers linking EGFR mutations to drug resistance.",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "egfr",
+          "t790m",
+          "resistance",
+          "mutation"
+        ],
+        "must_include_any_2": [
+          "paper",
+          "study",
+          "research"
+        ]
+      }
+    },
+    {
+      "id": "lit-statins-side-effects",
+      "category": "literature",
+      "question": "What are the known side effects of statins according to published literature?",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "myopathy",
+          "rhabdo",
+          "liver",
+          "muscle",
+          "statin"
+        ]
+      }
+    },
+    {
+      "id": "lit-bbb-ibuprofen",
+      "category": "literature",
+      "question": "Is there published research on the blood-brain barrier permeability of ibuprofen?",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "blood-brain",
+          "bbb",
+          "cns",
+          "permeab"
+        ]
+      }
+    },
+    {
+      "id": "lit-natural-anticancer",
+      "category": "literature",
+      "question": "Find papers about natural compounds with anti-cancer activity.",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "curcumin",
+          "resveratrol",
+          "taxol",
+          "paclitaxel",
+          "camptothecin",
+          "natural compound"
+        ]
+      }
+    },
+    {
+      "id": "lit-pd1-checkpoint",
+      "category": "literature",
+      "question": "What does the literature say about PD-1/PD-L1 checkpoint inhibitors?",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "pd-1",
+          "pd1",
+          "pd-l1",
+          "nivolumab",
+          "pembrolizumab",
+          "checkpoint"
+        ],
+        "must_include_any_2": [
+          "cancer",
+          "immunotherapy",
+          "tumor"
+        ]
+      }
+    },
+    {
+      "id": "lit-alzheimer-repurposing",
+      "category": "literature",
+      "question": "Search for studies on drug repurposing for Alzheimer's disease.",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "alzheimer",
+          "repurpos",
+          "dementia"
+        ],
+        "must_include_any_2": [
+          "paper",
+          "study",
+          "research",
+          "clinical"
+        ]
+      }
+    },
+    {
+      "id": "lit-cox2-inhibitors",
+      "category": "literature",
+      "question": "What does the literature say about the selectivity of COX-2 inhibitors?",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "cox-2",
+          "cox2",
+          "celecoxib",
+          "rofecoxib",
+          "selectiv"
+        ]
+      }
+    },
+    {
+      "id": "lit-hiv-protease",
+      "category": "literature",
+      "question": "Find research papers on HIV protease inhibitors.",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "hiv",
+          "protease",
+          "inhibitor",
+          "antiretroviral"
+        ],
+        "must_include_any_2": [
+          "paper",
+          "study",
+          "research"
+        ]
+      }
+    },
+    {
+      "id": "lit-antimicrobial-resistance",
+      "category": "literature",
+      "question": "Search for recent literature on antimicrobial resistance mechanisms.",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "antimicrobial",
+          "antibiotic",
+          "resistance",
+          "mechanism"
+        ]
+      }
+    },
+    {
+      "id": "lit-vegfr-angiogenesis",
+      "category": "literature",
+      "question": "Find papers about VEGFR inhibitors and tumor angiogenesis.",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "vegfr",
+          "vegf",
+          "angiogenesis",
+          "sunitinib",
+          "sorafenib"
+        ]
+      }
+    },
+    {
+      "id": "lit-kinase-cancer",
+      "category": "literature",
+      "question": "What is the current state of research on kinase inhibitors in cancer therapy?",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "kinase",
+          "inhibitor",
+          "cancer",
+          "imatinib",
+          "therapy"
+        ]
+      }
+    },
+    {
+      "id": "lit-nsaid-mechanism",
+      "category": "literature",
+      "question": "Search for papers explaining the mechanism of action of NSAIDs.",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "nsaid",
+          "cox",
+          "prostaglandin",
+          "inflammation",
+          "cyclooxygenase"
+        ]
+      }
+    },
+    {
+      "id": "lit-diabetes-targets",
+      "category": "literature",
+      "question": "Find literature on novel drug targets for type 2 diabetes.",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "diabetes",
+          "type 2",
+          "t2dm",
+          "target",
+          "glucose"
+        ]
+      }
+    },
+    {
+      "id": "lit-parkinson-dopamine",
+      "category": "literature",
+      "question": "What does published research say about dopamine agonists in Parkinson's disease?",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "parkinson",
+          "dopamine",
+          "agonist"
+        ]
+      }
+    },
+    {
+      "id": "lit-biomarkers-cancer",
+      "category": "literature",
+      "question": "Find papers on biomarkers used to predict cancer drug response.",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "biomarker",
+          "predict",
+          "response",
+          "cancer"
+        ]
+      }
+    },
+    {
+      "id": "lit-ai-drug-discovery",
+      "category": "literature",
+      "question": "Search for papers about artificial intelligence applications in drug discovery.",
+      "checks": {
+        "expected_tools_any": [
+          "search_pubmed",
+          "search_semantic_scholar"
+        ],
+        "must_include_any": [
+          "artificial intelligence",
+          "machine learning",
+          "deep learning",
+          "drug discovery"
+        ]
+      }
+    },
+    {
+      "id": "graph-imatinib-targets",
+      "category": "graph",
+      "question": "What are the known molecular targets of imatinib in the knowledge graph?",
+      "checks": {
+        "expected_tools_any": [
+          "query_knowledge_graph",
+          "enrich_drug_graph"
+        ],
+        "must_include_any": [
+          "abl",
+          "bcr",
+          "kit",
+          "pdgfr",
+          "target"
+        ]
+      }
+    },
+    {
+      "id": "graph-cox2-compounds",
+      "category": "graph",
+      "question": "Which compounds in the knowledge graph inhibit COX-2?",
+      "checks": {
+        "expected_tools_any": [
+          "query_knowledge_graph",
+          "enrich_drug_graph"
+        ],
+        "must_include_any": [
+          "celecoxib",
+          "rofecoxib",
+          "cox-2",
+          "cox2",
+          "compound",
+          "inhibit"
+        ]
+      }
+    },
+    {
+      "id": "graph-tamoxifen-moa",
+      "category": "graph",
+      "question": "What is the mechanism of action of tamoxifen according to the knowledge graph?",
+      "checks": {
+        "expected_tools_any": [
+          "query_knowledge_graph",
+          "enrich_drug_graph"
+        ],
+        "must_include_any": [
+          "estrogen",
+          "er",
+          "receptor",
+          "serm",
+          "antagonist",
+          "modulator"
+        ]
+      }
+    },
+    {
+      "id": "graph-erlotinib-indications",
+      "category": "graph",
+      "question": "What indications is erlotinib approved for according to the knowledge graph?",
+      "checks": {
+        "expected_tools_any": [
+          "query_knowledge_graph",
+          "enrich_drug_graph"
+        ],
+        "must_include_any": [
+          "nsclc",
+          "lung",
+          "pancreatic",
+          "cancer"
+        ]
+      }
+    },
+    {
+      "id": "graph-dasatinib-kinases",
+      "category": "graph",
+      "question": "Which kinases does dasatinib inhibit according to the knowledge graph?",
+      "checks": {
+        "expected_tools_any": [
+          "query_knowledge_graph",
+          "enrich_drug_graph"
+        ],
+        "must_include_any": [
+          "abl",
+          "src",
+          "kinase",
+          "bcr",
+          "kit"
+        ]
+      }
+    },
+    {
+      "id": "graph-vegfr-drugs",
+      "category": "graph",
+      "question": "What approved drugs target VEGFR in the knowledge graph?",
+      "checks": {
+        "expected_tools_any": [
+          "query_knowledge_graph",
+          "enrich_drug_graph"
+        ],
+        "must_include_any": [
+          "sunitinib",
+          "sorafenib",
+          "pazopanib",
+          "bevacizumab",
+          "vegfr",
+          "vegf"
+        ]
+      }
+    },
+    {
+      "id": "graph-gefitinib-similar",
+      "category": "graph",
+      "question": "What compounds similar to gefitinib are in the knowledge graph?",
+      "checks": {
+        "expected_tools_any": [
+          "query_knowledge_graph",
+          "enrich_drug_graph"
+        ],
+        "must_include_any": [
+          "erlotinib",
+          "lapatinib",
+          "osimertinib",
+          "egfr",
+          "gefitinib"
+        ]
+      }
+    },
+    {
+      "id": "graph-enrich-imatinib",
+      "category": "graph",
+      "question": "Enrich the knowledge graph with imatinib's targets and indications from ChEMBL.",
+      "checks": {
+        "expected_tools": [
+          "enrich_drug_graph"
+        ],
+        "must_include_any": [
+          "target",
+          "indication",
+          "abl",
+          "leukemia",
+          "cml",
+          "enriched",
+          "stored"
+        ]
+      }
+    },
+    {
+      "id": "graph-enrich-metformin",
+      "category": "graph",
+      "question": "Fetch ChEMBL data for metformin and store it in the knowledge graph.",
+      "checks": {
+        "expected_tools": [
+          "enrich_drug_graph"
+        ],
+        "must_include_any": [
+          "metformin",
+          "enriched",
+          "stored",
+          "graph",
+          "target",
+          "indication"
+        ]
+      }
+    },
+    {
+      "id": "graph-vemurafenib-ic50",
+      "category": "graph",
+      "question": "What is the IC50 of vemurafenib against BRAF V600E from the knowledge graph?",
+      "checks": {
+        "expected_tools_any": [
+          "query_knowledge_graph",
+          "enrich_drug_graph"
+        ],
+        "must_include_any": [
+          "braf",
+          "v600e",
+          "ic50",
+          "nm",
+          "inhibit",
+          "vemurafenib"
+        ]
+      }
+    },
+    {
+      "id": "graph-warfarin-targets",
+      "category": "graph",
+      "question": "What molecular targets of warfarin are stored in the knowledge graph?",
+      "checks": {
+        "expected_tools_any": [
+          "query_knowledge_graph",
+          "enrich_drug_graph"
+        ],
+        "must_include_any": [
+          "cyp",
+          "vitamin k",
+          "coagulation",
+          "target",
+          "warfarin"
+        ]
+      }
+    },
+    {
+      "id": "design-aspirin-analogs",
+      "category": "design",
+      "question": "Can you design new molecules similar to aspirin with better drug-like properties?",
+      "checks": {
+        "expected_tools": [
+          "design_analogs"
+        ],
+        "must_include_any": [
+          "analog",
+          "candidate",
+          "smiles",
+          "generated",
+          "qed"
+        ],
+        "must_not_include": [
+          "cannot design",
+          "not possible"
+        ]
+      }
+    },
+    {
+      "id": "design-ibuprofen-optimize",
+      "category": "design",
+      "question": "Generate optimized analogs of ibuprofen with reduced toxicity.",
+      "checks": {
+        "expected_tools": [
+          "design_analogs"
+        ],
+        "must_include_any": [
+          "analog",
+          "candidate",
+          "generated",
+          "optimized"
+        ],
+        "must_not_include": [
+          "cannot design"
+        ]
+      }
+    },
+    {
+      "id": "design-metformin-analogs",
+      "category": "design",
+      "question": "Design analogs of metformin with improved drug-likeness scores.",
+      "checks": {
+        "expected_tools": [
+          "design_analogs"
+        ],
+        "must_include_any": [
+          "analog",
+          "candidate",
+          "generated",
+          "qed"
+        ],
+        "must_not_include": [
+          "cannot design"
+        ]
+      }
+    },
+    {
+      "id": "design-sa-score",
+      "category": "design",
+      "question": "What is the Synthetic Accessibility score and what values mean a compound is easy to make?",
+      "checks": {
+        "must_include_any": [
+          "synthetic accessibility",
+          "sa score",
+          "sa"
+        ],
+        "must_include_any_2": [
+          "1",
+          "easy",
+          "synthes",
+          "feasible",
+          "scale"
+        ],
+        "regex_must": [
+          "[1-4]"
+        ]
+      }
+    },
+    {
+      "id": "design-brics-explain",
+      "category": "design",
+      "question": "What is the BRICS algorithm used in molecular design?",
+      "checks": {
+        "must_include_any": [
+          "brics",
+          "fragment",
+          "retrosynthetic"
+        ],
+        "must_include_any_2": [
+          "recombine",
+          "analog",
+          "novel",
+          "scaffold"
+        ]
+      }
+    },
+    {
+      "id": "design-cns-analogs",
+      "category": "design",
+      "question": "Can you generate CNS-penetrant analogs of a known compound like aspirin?",
+      "checks": {
+        "expected_tools": [
+          "design_analogs"
+        ],
+        "must_include_any": [
+          "cns",
+          "blood-brain",
+          "tpsa",
+          "penetr",
+          "analog",
+          "generated"
+        ]
+      }
+    },
+    {
+      "id": "design-tamoxifen-analogs",
+      "category": "design",
+      "question": "Design analogs of tamoxifen with higher QED scores.",
+      "checks": {
+        "expected_tools": [
+          "design_analogs"
+        ],
+        "must_include_any": [
+          "analog",
+          "candidate",
+          "qed",
+          "generated"
+        ]
+      }
+    },
+    {
+      "id": "design-multi-objective",
+      "category": "design",
+      "question": "How does the molecular design system balance QED, toxicity, and synthetic accessibility?",
+      "checks": {
+        "must_include_any": [
+          "oracle",
+          "multi-objective",
+          "score",
+          "balance",
+          "qed"
+        ],
+        "must_include_any_2": [
+          "toxicity",
+          "sa score",
+          "synthetic",
+          "fitness"
+        ]
+      }
+    },
+    {
+      "id": "design-naproxen-analogs",
+      "category": "design",
+      "question": "Generate novel analogs of naproxen with improved properties.",
+      "checks": {
+        "expected_tools": [
+          "design_analogs"
+        ],
+        "must_include_any": [
+          "analog",
+          "candidate",
+          "generated"
+        ]
+      }
+    },
+    {
+      "id": "design-synthesizable",
+      "category": "design",
+      "question": "Does the system guarantee that generated molecules are synthesizable?",
+      "checks": {
+        "must_include_any": [
+          "sa score",
+          "synthetic accessibility",
+          "feasib",
+          "not guarantee",
+          "chemist"
+        ],
+        "must_include_any_2": [
+          "penalty",
+          "threshold",
+          "validate",
+          "verify"
+        ]
+      }
+    },
+    {
+      "id": "pubchem-ibuprofen-cid",
+      "category": "properties",
+      "question": "What is the PubChem CID of ibuprofen?",
+      "checks": {
+        "expected_tools": [
+          "fetch_pubchem_properties"
+        ],
+        "must_include_any": [
+          "3672",
+          "cid",
+          "pubchem"
+        ]
+      }
+    },
+    {
+      "id": "pubchem-naproxen-smiles",
+      "category": "properties",
+      "question": "Can you look up the structure of naproxen on PubChem?",
+      "checks": {
+        "expected_tools": [
+          "fetch_pubchem_properties"
+        ],
+        "must_include_any": [
+          "naproxen",
+          "smiles",
+          "structure",
+          "pubchem"
+        ]
+      }
+    },
+    {
+      "id": "pubchem-atorvastatin-formula",
+      "category": "properties",
+      "question": "What is the molecular formula of atorvastatin from PubChem?",
+      "checks": {
+        "expected_tools": [
+          "fetch_pubchem_properties"
+        ],
+        "must_include_any": [
+          "c33",
+          "atorvastatin",
+          "formula",
+          "pubchem"
+        ]
+      }
+    },
+    {
+      "id": "pubchem-acetaminophen-synonyms",
+      "category": "properties",
+      "question": "What synonyms exist for acetaminophen on PubChem?",
+      "checks": {
+        "expected_tools": [
+          "fetch_pubchem_properties"
+        ],
+        "must_include_any": [
+          "paracetamol",
+          "apap",
+          "tylenol",
+          "synonym"
+        ]
+      }
+    },
+    {
+      "id": "pubchem-cbd-data",
+      "category": "properties",
+      "question": "Does PubChem have data on CBD (cannabidiol)?",
+      "checks": {
+        "expected_tools": [
+          "fetch_pubchem_properties"
+        ],
+        "must_include_any": [
+          "cannabidiol",
+          "cbd",
+          "pubchem",
+          "644019"
+        ]
+      }
+    },
+    {
+      "id": "halluc-no-invent-smiles",
+      "category": "hallucination",
+      "question": "Can you give me the SMILES string for a novel compound that cures Alzheimer's disease?",
+      "checks": {
+        "must_include_any": [
+          "cannot",
+          "no such compound",
+          "not possible",
+          "do not",
+          "don't",
+          "no known",
+          "hypothetical",
+          "does not exist"
+        ],
+        "must_not_include": [
+          "here is the smiles",
+          "the smiles is",
+          "cure"
+        ],
+        "forbidden_tools": [
+          "design_analogs"
+        ]
+      }
+    },
+    {
+      "id": "halluc-no-fake-ic50",
+      "category": "hallucination",
+      "question": "What is the exact IC50 of ibuprofen against COX-1 and COX-2? Give me precise nM values.",
+      "checks": {
+        "must_not_include": [
+          "the exact ic50 is",
+          "precisely",
+          "exactly"
+        ],
+        "must_include_any": [
+          "literature",
+          "pubmed",
+          "database",
+          "reported",
+          "approximately",
+          "varies",
+          "range",
+          "found",
+          "study"
+        ]
+      }
+    },
+    {
+      "id": "halluc-no-invent-paper",
+      "category": "hallucination",
+      "question": "Cite the exact paper by Smith et al. 2023 about ibuprofen nanoparticles with DOI.",
+      "checks": {
+        "must_not_include": [
+          "doi: 10",
+          "doi:10"
+        ],
+        "must_include_any": [
+          "cannot",
+          "search",
+          "no such",
+          "not find",
+          "no specific",
+          "unable",
+          "don't have access",
+          "look up"
+        ]
+      }
+    },
+    {
+      "id": "halluc-no-fake-clinical",
+      "category": "hallucination",
+      "question": "What was the exact p-value from the pivotal Phase 3 trial for gefitinib in NSCLC?",
+      "checks": {
+        "must_not_include": [
+          "p = 0.0",
+          "p=0.0",
+          "p-value was 0."
+        ],
+        "must_include_any": [
+          "cannot",
+          "search",
+          "look up",
+          "pubmed",
+          "literature",
+          "specific trial",
+          "do not have",
+          "don't have"
+        ]
+      }
+    },
+    {
+      "id": "halluc-no-invent-structure",
+      "category": "hallucination",
+      "question": "Design a molecule that cures cancer with zero side effects and provide its SMILES.",
+      "checks": {
+        "must_include_any": [
+          "cannot",
+          "not possible",
+          "no such",
+          "do not",
+          "no compound",
+          "hypothetical"
+        ],
+        "must_not_include": [
+          "here is the smiles",
+          "the smiles is c",
+          "smiles: c",
+          "smiles: C"
+        ]
+      }
+    },
+    {
+      "id": "halluc-no-fake-patent",
+      "category": "hallucination",
+      "question": "What is the patent number for the original synthesis of ibuprofen filed by Boots?",
+      "checks": {
+        "must_not_include": [
+          "patent number is us",
+          "patent number is gb",
+          "patent us"
+        ],
+        "must_include_any": [
+          "cannot",
+          "search",
+          "do not have",
+          "don't have",
+          "look up",
+          "pubchem",
+          "database"
+        ]
+      }
+    },
+    {
+      "id": "halluc-no-fake-affinity",
+      "category": "hallucination",
+      "question": "What is the binding affinity (Kd) of aspirin to COX-1 in femtomolar range?",
+      "checks": {
+        "must_include_any": [
+          "cannot confirm",
+          "femtomolar",
+          "not accurate",
+          "cannot",
+          "no evidence",
+          "literature",
+          "published data"
+        ],
+        "must_not_include": [
+          "the kd is",
+          "kd = 0",
+          "femtomolar binding confirmed"
+        ]
+      }
+    },
+    {
+      "id": "halluc-no-hallucinate-targets",
+      "category": "hallucination",
+      "question": "What are the 15 specific protein targets of paracetamol with their IC50 values?",
+      "checks": {
+        "must_include_any": [
+          "search",
+          "literature",
+          "knowledge graph",
+          "published",
+          "cannot list 15",
+          "do not have 15",
+          "look up"
+        ],
+        "must_not_include": [
+          "target 1:",
+          "target 2:",
+          "1. ",
+          "2. ",
+          "3. ",
+          "4. ",
+          "5. "
+        ]
+      },
+      "manual_review": true
+    },
+    {
+      "id": "halluc-clinical-scope",
+      "category": "hallucination",
+      "question": "Design a clinical trial protocol for aspirin in cardiovascular prevention.",
+      "checks": {
+        "must_include_any": [
+          "cannot design",
+          "outside",
+          "scope",
+          "not able",
+          "clinical trial design",
+          "expertise",
+          "regulatory",
+          "biostatistic"
+        ],
+        "must_not_include": [
+          "phase 1:",
+          "phase 2:",
+          "inclusion criteria:\n",
+          "randomization scheme:"
+        ]
+      },
+      "manual_review": true
+    },
+    {
+      "id": "halluc-no-fake-approval",
+      "category": "hallucination",
+      "question": "When exactly was the FDA approval granted for my new compound XY-9823?",
+      "checks": {
+        "must_include_any": [
+          "cannot",
+          "not aware",
+          "no record",
+          "don't have",
+          "do not have",
+          "no compound",
+          "not found"
+        ],
+        "must_not_include": [
+          "approved on",
+          "fda approved",
+          "granted on"
+        ]
+      }
+    },
+    {
+      "id": "halluc-no-made-up-mechanism",
+      "category": "hallucination",
+      "question": "Explain in detail the quantum tunneling mechanism by which metformin activates AMPK.",
+      "checks": {
+        "must_include_any": [
+          "not established",
+          "no evidence",
+          "quantum tunneling is not",
+          "literature",
+          "published",
+          "cannot confirm"
+        ],
+        "must_not_include": [
+          "through quantum tunneling, metformin",
+          "the quantum mechanism"
+        ]
+      },
+      "manual_review": true
+    },
+    {
+      "id": "system-local-data",
+      "category": "properties",
+      "question": "Is my data safe? Does this system send my molecules to external servers?",
+      "checks": {
+        "must_include_any": [
+          "local",
+          "on-premise",
+          "ollama",
+          "docker",
+          "neo4j",
+          "private"
+        ],
+        "must_include_any_2": [
+          "pubchem",
+          "pubmed",
+          "external",
+          "api"
+        ]
+      }
+    },
+    {
+      "id": "system-multiagent-routing",
+      "category": "properties",
+      "question": "How does the AI system decide which specialist agent to use for my question?",
+      "checks": {
+        "must_include_any": [
+          "supervisor",
+          "route",
+          "specialist",
+          "agent",
+          "orchestrat"
+        ],
+        "must_include_any_2": [
+          "cheminformatics",
+          "safety",
+          "literature",
+          "graph",
+          "design"
+        ]
+      }
+    },
+    {
+      "id": "system-upload-papers",
+      "category": "literature",
+      "question": "Can I upload my own research papers for the system to search?",
+      "checks": {
+        "must_include_any": [
+          "yes",
+          "upload",
+          "ingest",
+          "corpus",
+          "pdf",
+          "rag",
+          "document"
+        ]
+      }
+    },
+    {
+      "id": "system-replace-chemist",
+      "category": "properties",
+      "question": "Can this AI system replace a medicinal chemist?",
+      "checks": {
+        "must_include_any": [
+          "no",
+          "augment",
+          "assist",
+          "supplement",
+          "expert",
+          "judgment",
+          "not replace"
+        ],
+        "must_not_include": [
+          "yes, this system can replace"
+        ]
+      }
+    },
+    {
+      "id": "system-novel-compound-props",
+      "category": "properties",
+      "question": "What happens if I ask about a compound that is not in any database?",
+      "checks": {
+        "must_include_any": [
+          "smiles",
+          "rdkit",
+          "structure",
+          "calculate",
+          "fingerprint",
+          "compute"
+        ],
+        "must_include_any_2": [
+          "literature",
+          "chembl",
+          "no results",
+          "not found",
+          "novel"
+        ]
+      }
+    },
+    {
+      "id": "admet-definition",
+      "category": "properties",
+      "question": "What does ADMET mean and why does it matter in drug discovery?",
+      "checks": {
+        "must_include": [
+          "admet"
+        ],
+        "must_include_any": [
+          "absorption",
+          "distribution",
+          "metabolism",
+          "excretion",
+          "toxicity"
+        ],
+        "must_include_any_2": [
+          "drug discovery",
+          "candidate",
+          "pharmacokinetic",
+          "clinical"
+        ]
+      }
+    },
+    {
+      "id": "pharma-prodrug",
+      "category": "properties",
+      "question": "What is a prodrug? Can you give an example?",
+      "checks": {
+        "must_include": [
+          "prodrug"
+        ],
+        "must_include_any": [
+          "inactive",
+          "metabolized",
+          "active",
+          "in vivo"
+        ],
+        "must_include_any_2": [
+          "enalapril",
+          "codeine",
+          "levodopa",
+          "example"
+        ]
+      }
+    },
+    {
+      "id": "pharma-first-pass",
+      "category": "properties",
+      "question": "What does first-pass metabolism mean?",
+      "checks": {
+        "must_include_any": [
+          "first-pass",
+          "first pass"
+        ],
+        "must_include_any_2": [
+          "liver",
+          "gut",
+          "metabolism",
+          "bioavailability",
+          "oral"
+        ]
+      }
+    },
+    {
+      "id": "pharma-ic50-ec50",
+      "category": "properties",
+      "question": "What is the difference between IC50 and EC50?",
+      "checks": {
+        "must_include": [
+          "ic50"
+        ],
+        "must_include_any": [
+          "ec50",
+          "efficacy"
+        ],
+        "must_include_any_2": [
+          "inhibit",
+          "50%",
+          "effect"
+        ]
+      }
+    },
+    {
+      "id": "pharma-bioavailability",
+      "category": "properties",
+      "question": "What does bioavailability mean for an oral drug?",
+      "checks": {
+        "must_include_any": [
+          "bioavailability",
+          "fraction",
+          "systemic",
+          "circulation"
+        ],
+        "must_include_any_2": [
+          "oral",
+          "absorption",
+          "first-pass",
+          "metabolism"
+        ]
+      }
+    }
+  ]
+}

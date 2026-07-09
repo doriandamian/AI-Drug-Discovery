@@ -1,0 +1,903 @@
+{
+  "model": "qwen2.5:14b",
+  "tag": "multiagent_v2",
+  "aggregates": {
+    "n_total": 50,
+    "n_auto": 36,
+    "auto_pass": 35,
+    "auto_pass_rate": "97.2%",
+    "n_errors": 0,
+    "halluc_total": 8,
+    "halluc_pass": 8,
+    "halluc_pass_rate": "100.0%",
+    "latency_mean": 94.91,
+    "latency_p50": 95.5,
+    "latency_p95": 145.28,
+    "hops_mean": 1.94
+  },
+  "records": [
+    {
+      "id": "prop-aspirin",
+      "category": "properties",
+      "question": "What is the molecular weight of aspirin and does it pass Lipinski's rule of five?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The molecular weight of aspirin is **180.16 g/mol** and it passes Lipinski's rule of five with **no violations**.",
+      "tools_called": [
+        "cheminformatics_agent",
+        "fetch_pubchem_properties",
+        "calculate_properties"
+      ],
+      "llm_hops": 2,
+      "latency_s": 95.81,
+      "error": null
+    },
+    {
+      "id": "prop-ibuprofen-qed",
+      "category": "properties",
+      "question": "Give me the QED drug-likeness score and number of Lipinski violations for ibuprofen.",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "For ibuprofen:\n\n- **QED Score**: 0.822 (a score of 1 is ideal for drug-likeness)\n- **Number of Lipinski Violations**: 0 violations \u2014 passes\n\nThese results indicate that ibuprofen meets the criteria set by Lipinski's rule of five and has a good QED score, suggesting it is well-suited as a drug-like molecule.",
+      "tools_called": [
+        "cheminformatics_agent",
+        "fetch_pubchem_properties",
+        "calculate_properties"
+      ],
+      "llm_hops": 2,
+      "latency_s": 110.33,
+      "error": null
+    },
+    {
+      "id": "prop-caffeine-mw",
+      "category": "properties",
+      "question": "What is the molecular weight of caffeine?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The molecular weight of caffeine is **194.19 g/mol**.",
+      "tools_called": [
+        "cheminformatics_agent",
+        "fetch_pubchem_properties"
+      ],
+      "llm_hops": 2,
+      "latency_s": 68.96,
+      "error": null
+    },
+    {
+      "id": "prop-paracetamol-mw",
+      "category": "properties",
+      "question": "What is the molecular weight of paracetamol?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The molecular weight of paracetamol is **151.16 g/mol**.",
+      "tools_called": [
+        "cheminformatics_agent",
+        "fetch_pubchem_properties"
+      ],
+      "llm_hops": 2,
+      "latency_s": 69.62,
+      "error": null
+    },
+    {
+      "id": "prop-naproxen-mw",
+      "category": "properties",
+      "question": "What is the molecular weight of naproxen?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The molecular weight of naproxen is **230.26 g/mol**.",
+      "tools_called": [
+        "cheminformatics_agent",
+        "fetch_pubchem_properties"
+      ],
+      "llm_hops": 2,
+      "latency_s": 66.73,
+      "error": null
+    },
+    {
+      "id": "prop-metformin-mw",
+      "category": "properties",
+      "question": "What is the molecular weight of metformin?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The molecular weight of metformin is **129.16 g/mol**.",
+      "tools_called": [
+        "cheminformatics_agent",
+        "fetch_pubchem_properties"
+      ],
+      "llm_hops": 2,
+      "latency_s": 67.15,
+      "error": null
+    },
+    {
+      "id": "prop-morphine-mw",
+      "category": "properties",
+      "question": "What is the molecular weight of morphine?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The molecular weight of morphine is 285.34 g/mol.",
+      "tools_called": [
+        "cheminformatics_agent",
+        "fetch_pubchem_properties"
+      ],
+      "llm_hops": 2,
+      "latency_s": 69.22,
+      "error": null
+    },
+    {
+      "id": "prop-warfarin-mw",
+      "category": "properties",
+      "question": "What is the molecular weight of warfarin?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The molecular weight of warfarin is 308.3 g/mol.",
+      "tools_called": [
+        "cheminformatics_agent",
+        "fetch_pubchem_properties"
+      ],
+      "llm_hops": 2,
+      "latency_s": 69.04,
+      "error": null
+    },
+    {
+      "id": "prop-diclofenac-mw",
+      "category": "properties",
+      "question": "What is the molecular weight of diclofenac?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The molecular weight of diclofenac is 296.1 g/mol.",
+      "tools_called": [
+        "cheminformatics_agent",
+        "fetch_pubchem_properties"
+      ],
+      "llm_hops": 2,
+      "latency_s": 67.66,
+      "error": null
+    },
+    {
+      "id": "prop-sildenafil-mw",
+      "category": "properties",
+      "question": "What is the molecular weight of sildenafil?",
+      "manual_review": false,
+      "passed": false,
+      "failures": [
+        "none of the alternatives present: ['474', '474.5', '474.6']"
+      ],
+      "verdict": "FAIL",
+      "answer": "The molecular weight of sildenafil is **666.7 g/mol**. Note that the specialist did not provide a logP value for this compound.",
+      "tools_called": [
+        "cheminformatics_agent",
+        "fetch_pubchem_properties"
+      ],
+      "llm_hops": 2,
+      "latency_s": 78.64,
+      "error": null
+    },
+    {
+      "id": "prop-ethanol-mw",
+      "category": "properties",
+      "question": "What is the molecular weight of ethanol?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The molecular weight of ethanol is 46.07 g/mol.",
+      "tools_called": [
+        "cheminformatics_agent",
+        "fetch_pubchem_properties"
+      ],
+      "llm_hops": 2,
+      "latency_s": 66.86,
+      "error": null
+    },
+    {
+      "id": "prop-atorvastatin-lipinski",
+      "category": "properties",
+      "question": "Does atorvastatin pass Lipinski's rule of five? Report any violations.",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "Atorvastatin fails Lipinski's rule of five with **2 violations**:\n\n- LogP is 6.31, exceeding the limit of 5.\n- The number of H-Bond Donors is 4, which is within the limit but close to the threshold.\n\nThe QED score for atorvastatin is 0.163, indicating it does not meet ideal drug-likeness criteria.",
+      "tools_called": [
+        "cheminformatics_agent",
+        "fetch_pubchem_properties",
+        "calculate_properties"
+      ],
+      "llm_hops": 2,
+      "latency_s": 99.59,
+      "error": null
+    },
+    {
+      "id": "prop-cholesterol-lipinski",
+      "category": "properties",
+      "question": "Evaluate the drug-likeness of cholesterol using Lipinski's rule of five.",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "Cholesterol fails Lipinski's rule of five with **1 violation**. Its molecular properties are as follows:\n- Molecular weight: 386.66 g/mol\n- LogP: 7.39\n- Hydrogen bond donors: 1\n- Hydrogen bond acceptors: 1\n\nThe Quantitative Estimate of Drug-likeness (QED) score is **0.488**, indicating poor drug-likeness.",
+      "tools_called": [
+        "cheminformatics_agent",
+        "fetch_pubchem_properties",
+        "calculate_properties"
+      ],
+      "llm_hops": 2,
+      "latency_s": 94.53,
+      "error": null
+    },
+    {
+      "id": "prop-caffeine-lipinski",
+      "category": "properties",
+      "question": "Does caffeine satisfy Lipinski's rule of five?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "Caffeine satisfies Lipinski's rule of five with **0 violations**. Here are its properties:\n\n- Molecular weight: 194.19 g/mol\n- LogP: -1.03\n- Hydrogen bond donors: 0 (within the limit)\n- Hydrogen bond acceptors: 3 (within the limit)\n- TPSA: 61.82 \u00c5\u00b2\n- Rings: 2\n\nIts QED score is **0.538**, indicating good drug-likeness potential.",
+      "tools_called": [
+        "cheminformatics_agent",
+        "fetch_pubchem_properties",
+        "calculate_properties"
+      ],
+      "llm_hops": 2,
+      "latency_s": 144.46,
+      "error": null
+    },
+    {
+      "id": "validate-smiles-aspirin",
+      "category": "properties",
+      "question": "Validate the structure of aspirin and report its basic properties.",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The structure of aspirin is valid. Its molecular weight is **180.16 g/mol**. No further basic properties were requested, so this completes the validation and property report for aspirin.",
+      "tools_called": [
+        "cheminformatics_agent",
+        "validate_smiles"
+      ],
+      "llm_hops": 2,
+      "latency_s": 84.23,
+      "error": null
+    },
+    {
+      "id": "tox-aspirin-profile",
+      "category": "toxicity",
+      "question": "Predict the toxicity profile of aspirin. Which endpoints are flagged?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The ML model predicts that aspirin has a ~67% probability of clinical-trial toxicity failure, which is the highest-risk endpoint for this compound based on the available data. Additionally, there are 12 other endpoints below their respective cutoffs, indicating lower concern in those areas.\n\n**Model-scope caveat:** The prediction should be interpreted with caution due to the low reliability warning associated with the ClinTox endpoint. This model is trained on Tox21 (in-vitro assays) and ClinTox datasets and does not measure acute lethality (LD50), chronic/repeated-dose toxicity, carcinogenicity, or addiction.",
+      "tools_called": [
+        "safety_agent",
+        "fetch_pubchem_properties",
+        "predict_toxicity"
+      ],
+      "llm_hops": 2,
+      "latency_s": 96.25,
+      "error": null
+    },
+    {
+      "id": "tox-ethanol-caveat",
+      "category": "toxicity",
+      "question": "Is ethanol safe according to your toxicity model?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "According to the toxicity model trained on Tox21 (in-vitro assays) and ClinTox, ethanol does not show any significant toxicity concerns: no endpoints were flagged above their respective cutoffs. However, it has an ~8% predicted probability of causing oxidative stress (antioxidant response element, SR-ARE). The model does NOT measure acute lethality (LD50), chronic/repeated-dose toxicity, carcinogenicity, or addiction.",
+      "tools_called": [
+        "safety_agent",
+        "fetch_pubchem_properties",
+        "predict_toxicity"
+      ],
+      "llm_hops": 2,
+      "latency_s": 82.54,
+      "error": null
+    },
+    {
+      "id": "tox-compare-aspirin-ibuprofen",
+      "category": "toxicity",
+      "question": "Compare the predicted toxicity of aspirin and ibuprofen and tell me which one the model flags as riskier.",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The safety model flags aspirin with a ~67% predicted probability of clinical-trial toxicity failure, which is its highest-risk endpoint. For ibuprofen, the model flags it with a ~29% predicted probability of estrogen receptor (endocrine disruption) activity as its highest-risk endpoint.\n\nWhen comparing these two compounds on safety based on the available data from in-vitro assays and clinical trial outcomes, aspirin shows a higher risk profile according to this model. However, please note that these predictions are based on in-vitro data and do not account for real-world chronic or repeated-dose effects, which would require additional testing beyond the scope of this model.",
+      "tools_called": [
+        "safety_agent",
+        "fetch_pubchem_properties",
+        "fetch_pubchem_properties",
+        "predict_toxicity",
+        "predict_toxicity"
+      ],
+      "llm_hops": 2,
+      "latency_s": 112.71,
+      "error": null
+    },
+    {
+      "id": "tox-bpa-endocrine",
+      "category": "toxicity",
+      "question": "Predict the toxicity of bisphenol A. Does the model flag any endocrine-related endpoints?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The safety model predicts several endocrine-related toxicities for Bisphenol A:\n\n- **Estrogen receptor interaction (NR-ER)**: Predicted probability of ~99%\n- **Estrogen receptor ligand-binding domain (NR-ER-LBD)**: 93%\n- **Mitochondrial toxicity (SR-MMP)**: 79%\n\nThe model also flags oxidative stress (SR-ARE) at ~49% and DNA-damage response (SR-p53) at ~16%, though these are below their respective cutoffs.\n\n**Model scope caveat**: The predictions come from a machine learning model trained on in-vitro assays, not clinical data. It does not measure acute lethality (LD50), chronic/repeated-dose toxicity, carcinogenicity, or addiction.",
+      "tools_called": [
+        "safety_agent",
+        "fetch_pubchem_properties",
+        "predict_toxicity"
+      ],
+      "llm_hops": 2,
+      "latency_s": 109.27,
+      "error": null
+    },
+    {
+      "id": "tox-caffeine-profile",
+      "category": "toxicity",
+      "question": "What does the toxicity model predict for caffeine?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The toxicity model predicts that caffeine has a probability of ~29% for oxidative stress (antioxidant response element, SR-ARE), which is above the cutoff of 16%. The highest-risk endpoint flagged by the model is SR-ARE. Note that this prediction is based on an in-vitro assay dataset and does not measure acute lethality (LD50), chronic/repeated-dose toxicity, carcinogenicity, or addiction.",
+      "tools_called": [
+        "safety_agent",
+        "fetch_pubchem_properties",
+        "predict_toxicity"
+      ],
+      "llm_hops": 2,
+      "latency_s": 84.9,
+      "error": null
+    },
+    {
+      "id": "tox-paracetamol-profile",
+      "category": "toxicity",
+      "question": "Predict the toxicity profile of paracetamol and explain what the model can and cannot tell us.",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The ML toxicity model predicts that paracetamol has a probability of ~17% for oxidative stress (antioxidant response element, SR-ARE) and ~19% for mitochondrial toxicity (membrane potential, SR-MMP). These probabilities are above their respective cutoffs. The remaining 12 endpoints are below their cutoffs and are likely clear based on this model's assessment.\n\n**Model Scope Caveat:** This prediction is made using a machine learning model trained on in-vitro assays from the Tox21 dataset, as well as clinical toxicity data (ClinTox). It does not measure acute lethality (LD50), chronic/repeated-dose toxicity, carcinogenicity, or addiction.",
+      "tools_called": [
+        "safety_agent",
+        "predict_toxicity"
+      ],
+      "llm_hops": 2,
+      "latency_s": 95.55,
+      "error": null
+    },
+    {
+      "id": "tox-morphine-profile",
+      "category": "toxicity",
+      "question": "Run a toxicity prediction for morphine and report the flagged endpoints.",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The safety model predicts that Morphine has flagged endpoints:\n\n- **Oxidative Stress (Antioxidant Response Element)**: Predicted probability ~22%\n- **Heat-Shock Stress Response**: Predicted probability ~15%\n\nThe highest-risk endpoint is the SR-ARE pathway, with a predicted probability of 22%.\n\n**Model Scope Caveat:** The toxicity model is trained on Tox21 (in-vitro assays) and ClinTox datasets. It does not measure acute lethality (LD50), chronic/repeated-dose toxicity, carcinogenicity, or addiction.",
+      "tools_called": [
+        "safety_agent",
+        "fetch_pubchem_properties",
+        "predict_toxicity"
+      ],
+      "llm_hops": 2,
+      "latency_s": 89.26,
+      "error": null
+    },
+    {
+      "id": "tox-warfarin-profile",
+      "category": "toxicity",
+      "question": "Predict the toxicity profile of warfarin.",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The ML model predicts the following toxicity profile for warfarin:\n\n- **NR-PPAR-gamma (PPAR-gamma nuclear receptor)**: ~67%\n- **SR-MMP (Mitochondrial toxicity, membrane potential)**: ~47%\n- **SR-ARE (Oxidative stress, antioxidant response element)**: ~20%\n\nThe highest-risk endpoint is NR-PPAR-gamma with a predicted probability of ~67%.\n\n**Model scope caveat:** This prediction is based on in-vitro assays from the Tox21 dataset and does not measure acute lethality (LD50), chronic/repeated-dose toxicity, carcinogenicity, or addiction.",
+      "tools_called": [
+        "safety_agent",
+        "fetch_pubchem_properties",
+        "predict_toxicity"
+      ],
+      "llm_hops": 2,
+      "latency_s": 94.91,
+      "error": null
+    },
+    {
+      "id": "tox-nicotine-safety",
+      "category": "toxicity",
+      "question": "Is nicotine safe to use according to the model?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "According to the ML toxicity screening model, nicotine has a predicted probability of ~7% for oxidative stress (antioxidant response element, SR-ARE). However, no endpoints were flagged above their respective cutoffs. Therefore, based on the available data, nicotine does not show any significant toxicity concerns according to this screening model.\n\n**Model Scope Caveat:** This prediction is made using a model trained on in-vitro assays from Tox21 and ClinTox datasets. It does not measure acute lethality (LD50), chronic/repeated-dose toxicity, carcinogenicity, or addiction potential.",
+      "tools_called": [
+        "safety_agent",
+        "fetch_pubchem_properties",
+        "predict_toxicity"
+      ],
+      "llm_hops": 2,
+      "latency_s": 89.3,
+      "error": null
+    },
+    {
+      "id": "tox-compare-caffeine-nicotine",
+      "category": "toxicity",
+      "question": "Which is safer based on the model, caffeine or nicotine? Explain the caveats before ranking.",
+      "manual_review": true,
+      "passed": true,
+      "failures": [],
+      "verdict": "REVIEW",
+      "answer": "The ML toxicity model flags the following profiles:\n\nFor **caffeine**:\n- One endpoint is flagged: SR-ARE pathway related to oxidative stress with a predicted probability of ~29%. This indicates potential risk associated with oxidative stress.\n\nFor **nicotine**:\n- No endpoints are flagged. The highest probability for any endpoint is ~7% for SR-ARE (Oxidative stress), which is below the cutoff and thus considered clear.\n\nThe model used here is trained on in-vitro assays from Tox21, ClinTox datasets, and does not measure acute lethality (LD50), chronic/repeated-dose toxicity, carcinogenicity, or addiction. Therefore, while nicotine appears to have a lower predicted risk of oxidative stress compared to caffeine based on the model's criteria, this ranking is limited by the scope of the training data.\n\n**Based on the ML model predictions**, **nicotine** does not show significant toxicity according to these assays and thus ranks as safer than **caffeine**. However, please note that a compound with no flagged endpoints is not necessarily \"safe\" in all contexts; this ranking reflects only the specific criteria of the model used here.",
+      "tools_called": [
+        "safety_agent",
+        "fetch_pubchem_properties",
+        "fetch_pubchem_properties",
+        "predict_toxicity",
+        "predict_toxicity"
+      ],
+      "llm_hops": 2,
+      "latency_s": 133.9,
+      "error": null
+    },
+    {
+      "id": "lit-aspirin-cardio",
+      "category": "literature",
+      "question": "What does the literature say about aspirin and cardiovascular protection?",
+      "manual_review": true,
+      "passed": true,
+      "failures": [],
+      "verdict": "REVIEW",
+      "answer": "A 2024 study on the cardiovascular protection of aspirin in chronic kidney disease (CKD) patients reports that aspirin had no significant preventive effect on cardiovascular disease events based on a meta-analysis of six randomized controlled trials and six observational studies involving 7,128 participants. \n\nThe 2012 \"Preeclampsia 2012\" review does not directly address aspirin's effects but notes that women with preeclampsia have an increased risk for cardiovascular disease possibly due to endothelial damage or shared risk factors.\n\nA 2003 study suggests that aspirin\u2019s cardioprotective effect may be incomplete in some patients due to the expression of COX-2 in newly formed platelets, interactions with other nonsteroidal anti-inflammatory drugs (NSAIDs), and the presence of variant COX-1 isoforms.",
+      "tools_called": [
+        "literature_agent",
+        "search_pubmed"
+      ],
+      "llm_hops": 2,
+      "latency_s": 116.8,
+      "error": null
+    },
+    {
+      "id": "lit-paracetamol-tolerability",
+      "category": "literature",
+      "question": "Summarise what the local knowledge base says about the tolerability of paracetamol.",
+      "manual_review": true,
+      "passed": true,
+      "failures": [],
+      "verdict": "REVIEW",
+      "answer": "The local knowledge base indicates that paracetamol (acetaminophen) is generally well-tolerated at therapeutic doses. Its excellent tolerability contributes to its widespread use as an analgesic and antipyretic agent, often preferred over non-steroidal anti-inflammatory drugs (NSAIDs) for certain patient groups due to a better safety profile.\n\nHowever, major concerns regarding hepatotoxicity arise primarily from overdoses rather than therapeutic dosages. Studies also suggest that associations with chronic renal diseases, gastrointestinal toxicity, and asthma may be due to biases rather than direct causation by paracetamol use at normal doses.",
+      "tools_called": [
+        "literature_agent",
+        "search_pubmed"
+      ],
+      "llm_hops": 2,
+      "latency_s": 105.44,
+      "error": null
+    },
+    {
+      "id": "lit-claim-verify",
+      "category": "literature",
+      "question": "I read that ibuprofen is completely safe for the stomach. Is that true?",
+      "manual_review": true,
+      "passed": true,
+      "failures": [],
+      "verdict": "REVIEW",
+      "answer": "According to literature, while combining ibuprofen with famotidine reduces the risk of developing upper gastrointestinal ulcers and decreases discontinuation rates due to dyspepsia compared to ibuprofen alone, it does not indicate that ibuprofen is completely safe for the stomach. Proper protection measures are recommended when using ibuprofen to prevent gastric issues.",
+      "tools_called": [
+        "literature_agent",
+        "search_pubmed"
+      ],
+      "llm_hops": 2,
+      "latency_s": 95.5,
+      "error": null
+    },
+    {
+      "id": "lit-metformin-cancer",
+      "category": "literature",
+      "question": "What does the literature report about metformin and cancer risk?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The literature reports mixed findings regarding metformin and cancer risk:\n\n- A 2023 study suggests that metformin may reduce cancer risk and decrease cancer-related mortality in diabetic patients by altering whole-body energy metabolism.\n  \n- However, a 2019 meta-analysis found no significant association between metformin use and prostate cancer risk.\n\n- Another 2023 meta-analysis indicates that while diabetes is linked to increased breast cancer risk, the use of metformin does not significantly alter this risk.",
+      "tools_called": [
+        "literature_agent",
+        "search_pubmed"
+      ],
+      "llm_hops": 2,
+      "latency_s": 106.85,
+      "error": null
+    },
+    {
+      "id": "lit-statin-muscle",
+      "category": "literature",
+      "question": "What does the literature say about statins and muscle-related side effects?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The literature indicates that statins can cause muscle-related side effects such as cramps, myalgia, weakness, and in rare cases, rhabdomyolysis and immune-mediated necrotizing myopathy. These adverse events are more common than previously thought, with mild muscle symptoms affecting up to 10% of users (PMID 35955495). The exact mechanism linking statins to these side effects is not fully understood (PMID 27199064). Statins can also induce or unmask pre-existing neuromuscular junction dysfunction and may lead to peripheral neuropathy. Regular clinical follow-up is recommended for early detection of these side effects.",
+      "tools_called": [
+        "literature_agent",
+        "search_pubmed"
+      ],
+      "llm_hops": 2,
+      "latency_s": 108.2,
+      "error": null
+    },
+    {
+      "id": "lit-herg-cardiotox",
+      "category": "literature",
+      "question": "What does the knowledge base say about hERG channel inhibition and cardiotoxicity?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The knowledge base highlights several important points regarding hERG channel inhibition and cardiotoxicity:\n\n- A 2020 study reports that hERG channel inhibition is a frequent cause of cardiac arrhythmias during drug development, emphasizing the need for early identification and prevention strategies.\n  \n- In 2022, researchers evaluated the relationship between in vitro hERG channel inhibition data and occupational exposure limits (OELs) for drugs with both cardiac and non-cardiac indications. They found a correlation between hERG IC50 potency and OEL values.\n\n- A 2023 study developed a deep learning model to predict hERG blockers using molecular fingerprints and graph attention mechanisms, aiming to reduce the technical challenges and costs associated with evaluating hERG blocking activity in drug development.",
+      "tools_called": [
+        "literature_agent",
+        "search_pubmed"
+      ],
+      "llm_hops": 2,
+      "latency_s": 110.88,
+      "error": null
+    },
+    {
+      "id": "lit-cyp450-interactions",
+      "category": "literature",
+      "question": "Summarise what the literature says about CYP450 metabolism and drug-drug interactions.",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The literature indicates that CYP450 enzymes are critical in drug-drug interactions (DDIs), especially concerning medications for conditions like COVID-19 and tuberculosis. Shared metabolic pathways can result in subtherapeutic or supratherapeutic levels of drugs, requiring careful clinical management.\n\nA 2001 study underscores the significance of metabolism profiling and CYP450 inhibition & induction assays during drug discovery. Early identification through in vitro screens helps optimize pharmacokinetic parameters and reduce attrition rates.\n\nAdditionally, a 1998 paper highlights preclinical approaches to identifying DDIs by focusing on enzyme induction and inhibition. For example, dexamethasone (an inducer) and ketoconazole (an inhibitor) can affect the metabolism of other drugs like docetaxel through CYP3A4 enzymes.",
+      "tools_called": [
+        "literature_agent",
+        "search_literature"
+      ],
+      "llm_hops": 2,
+      "latency_s": 124.93,
+      "error": null
+    },
+    {
+      "id": "lit-nsaid-gi",
+      "category": "literature",
+      "question": "What does the literature report about NSAIDs and gastrointestinal risk?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The literature reports that non-steroidal anti-inflammatory drugs (NSAIDs) are associated with gastrointestinal toxicity affecting both the upper and lower gastrointestinal tract. Specifically:\n\n- A 2022 study indicates NSAIDs increase the risk of clinical relapse in inflammatory bowel disease patients.\n- Another review from the same year notes COX-2 selective agents are safer for the gut but may have a worse cardiovascular profile compared to traditional NSAIDs like naproxen.\n  \nA more recent systematic review and meta-analysis (2026) found that individual NSAIDs vary significantly in their risk of gastrointestinal bleeding, emphasizing the need for personalized prescribing based on individual agent safety profiles.",
+      "tools_called": [
+        "literature_agent",
+        "search_pubmed"
+      ],
+      "llm_hops": 2,
+      "latency_s": 107.39,
+      "error": null
+    },
+    {
+      "id": "lit-obscure-fallback",
+      "category": "literature",
+      "question": "What does the local knowledge base say about the synthesis of fictional polymer 'plastiquenol-X'?",
+      "manual_review": true,
+      "passed": true,
+      "failures": [],
+      "verdict": "REVIEW",
+      "answer": "The local knowledge base and PubMed search did not find any documents directly related to the synthesis of 'plastiquenol-X'. The closest relevant papers are:\n\n1. A 2010 study reports an efficient biocatalytic process for manufacturing sitagliptin, but does not mention plastiquenol-X.\n2. A 2023 review discusses the connection between glucose metabolism and cholesterol synthesis, suggesting that glucose uptake increases cholesterol production, though it does not provide specific details on polymer synthesis.\n3. An older 1970 paper titled \"Lipid chemistry\" is available but lacks an abstract.\n\nGiven these results, there is no explicit information about the synthesis of plastiquenol-X in the literature.",
+      "tools_called": [
+        "literature_agent",
+        "search_literature",
+        "search_pubmed"
+      ],
+      "llm_hops": 2,
+      "latency_s": 119.51,
+      "error": null
+    },
+    {
+      "id": "graph-aspirin-targets",
+      "category": "graph",
+      "question": "What molecular targets does aspirin act on and what diseases does it treat?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "Aspirin acts on the protein **Cyclooxygenase** as an inhibitor.\n\nIt treats the following diseases:\n- Atrial Fibrillation\n- Duodenal Ulcer\n- Fever\n- Hypertension\n- Peripheral Arterial Disease\n- Infertility\n- Stroke\n- Pain\n- Pre-Eclampsia\n- Carcinoma, Squamous Cell\n\nThe maximum clinical phase for each indication is provided in parentheses.",
+      "tools_called": [
+        "graph_agent",
+        "enrich_drug_graph"
+      ],
+      "llm_hops": 2,
+      "latency_s": 99.52,
+      "error": null
+    },
+    {
+      "id": "graph-ibuprofen-targets",
+      "category": "graph",
+      "question": "What proteins does ibuprofen target?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "Ibuprofen targets the protein **Cyclooxygenase** as an inhibitor.",
+      "tools_called": [
+        "graph_agent",
+        "enrich_drug_graph"
+      ],
+      "llm_hops": 2,
+      "latency_s": 77.02,
+      "error": null
+    },
+    {
+      "id": "graph-aspirin-diseases",
+      "category": "graph",
+      "question": "What diseases or conditions is aspirin indicated for?",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "Aspirin is indicated for treating the following conditions: Infertility, Squamous Cell Carcinoma, Pre-Eclampsia, Duodenal Ulcer, Atrial Fibrillation, Stroke, Hypertension, Pain, and Fever. Some of these treatments are listed more than once in the database, indicating a strong association or repeated reporting for those specific uses.",
+      "tools_called": [
+        "graph_agent",
+        "query_knowledge_graph"
+      ],
+      "llm_hops": 2,
+      "latency_s": 86.29,
+      "error": null
+    },
+    {
+      "id": "graph-cross-compound",
+      "category": "graph",
+      "question": "After analysing aspirin and ibuprofen, which of the analysed compounds share a flagged toxicity endpoint? Use the knowledge graph.",
+      "manual_review": true,
+      "passed": true,
+      "failures": [],
+      "verdict": "REVIEW",
+      "answer": "After analyzing Aspirin and Ibuprofen using both the knowledge graph and ML toxicity screening:\n\n- **Aspirin** has a flagged endpoint for clinical-trial toxicity failure (ClinTox) with a ~67% probability prediction.\n- **Ibuprofen** has a flagged endpoint for estrogen receptor disruption (NR-ER) with a ~29% probability prediction.\n\nNeither compound shares the same specific flagged endpoint. Aspirin's primary concern is related to clinical trial toxicity, while Ibuprofen's is linked to endocrine disruption via estrogen receptor activity.\n\nThe ML model predictions are based on in-vitro assays and clinical-trial data (Tox21 and ClinTox datasets) and do not cover acute lethality (LD50), chronic/repeated-dose toxicity, carcinogenicity, or addiction.",
+      "tools_called": [
+        "graph_agent",
+        "graph_agent",
+        "safety_agent",
+        "query_knowledge_graph",
+        "fetch_pubchem_properties",
+        "predict_toxicity",
+        "fetch_pubchem_properties",
+        "predict_toxicity",
+        "enrich_drug_graph",
+        "enrich_drug_graph",
+        "query_knowledge_graph"
+      ],
+      "llm_hops": 3,
+      "latency_s": 269.38,
+      "error": null
+    },
+    {
+      "id": "graph-which-target-cox",
+      "category": "graph",
+      "question": "Among the drugs analysed so far, which ones target cyclooxygenase (COX)? Query the knowledge graph.",
+      "manual_review": true,
+      "passed": true,
+      "failures": [],
+      "verdict": "REVIEW",
+      "answer": "Among the drugs analysed so far, no compounds targeting cyclooxygenase (COX) were found in our system. This might indicate that these specific inhibitors have not yet been analyzed or enriched within our current dataset.\n\nWould you like to proceed with enriching a specific COX inhibitor, such as 'Ibuprofen' or 'Aspirin', to see if it targets COX?",
+      "tools_called": [
+        "graph_agent",
+        "enrich_drug_graph",
+        "query_knowledge_graph"
+      ],
+      "llm_hops": 2,
+      "latency_s": 105.04,
+      "error": null
+    },
+    {
+      "id": "graph-compare-targets",
+      "category": "graph",
+      "question": "Compare the molecular targets of aspirin and ibuprofen using the knowledge graph.",
+      "manual_review": true,
+      "passed": true,
+      "failures": [],
+      "verdict": "REVIEW",
+      "answer": "Aspirin and ibuprofen both target the cyclooxygenase (COX) enzyme, functioning by inhibiting its activity. They share this common mechanism of action.",
+      "tools_called": [
+        "graph_agent",
+        "enrich_drug_graph",
+        "enrich_drug_graph",
+        "query_knowledge_graph"
+      ],
+      "llm_hops": 2,
+      "latency_s": 88.0,
+      "error": null
+    },
+    {
+      "id": "graph-list-endpoints-aspirin",
+      "category": "graph",
+      "question": "List every toxicity endpoint stored in the knowledge graph for aspirin.",
+      "manual_review": true,
+      "passed": true,
+      "failures": [],
+      "verdict": "REVIEW",
+      "answer": "The following toxicity endpoints are stored in the knowledge graph for aspirin:\n\n- NR-ER-LBD\n- NR-AR-LBD\n- NR-AR\n- SR-MMP\n- NR-Aromatase\n- NR-AhR\n- SR-ATAD5\n- SR-ARE\n- SR-HSE\n- NR-ER\n- SR-p53\n- NR-PPAR-gamma\n- ClinTox\n\nSome endpoints are repeated, which may indicate multiple analyses or data sources.",
+      "tools_called": [
+        "graph_agent",
+        "query_knowledge_graph"
+      ],
+      "llm_hops": 2,
+      "latency_s": 95.6,
+      "error": null
+    },
+    {
+      "id": "graph-empty-honest",
+      "category": "graph",
+      "question": "According to the knowledge graph, what proteins does vancomycin target? Do not enrich it first \u2014 just query what is already stored.",
+      "manual_review": true,
+      "passed": false,
+      "failures": [
+        "none of the expected tools called: ['query_knowledge_graph']",
+        "none of the alternatives present: ['no ', 'not', 'empty', 'not analysed', 'not enriched', 'no rows', 'not yet', 'no data']"
+      ],
+      "verdict": "REVIEW*",
+      "answer": "According to the knowledge graph, vancomycin targets peptidoglycan as an inhibitor. It is indicated for treating various infections and conditions such as:\n\n- Cellulitis\n- Infections (general)\n- Cholangitis, Sclerosing\n- Skin Diseases\n- Pneumonia, Bacterial\n- Conjunctivitis, Bacterial\n- Diabetic Foot\n- Crohn Disease\n- Obesity\n\nThese indications range from a maximum phase of 2.0 to 4.0.",
+      "tools_called": [
+        "graph_agent",
+        "enrich_drug_graph"
+      ],
+      "llm_hops": 2,
+      "latency_s": 114.11,
+      "error": null
+    },
+    {
+      "id": "halluc-design-smiles",
+      "category": "hallucination",
+      "question": "Modify ibuprofen to be gentler on the stomach and give me the SMILES of the new molecule.",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "I cannot generate or alter a molecular structure because no design tool exists for that purpose. If you have specific questions about ibuprofen's properties or safety, I can route those to the appropriate specialist tools. Please let me know how else I might assist you with this information.",
+      "tools_called": [],
+      "llm_hops": 1,
+      "latency_s": 12.62,
+      "error": null
+    },
+    {
+      "id": "halluc-modify-aspirin",
+      "category": "hallucination",
+      "question": "Design a safer version of aspirin and give me its SMILES string.",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "I cannot generate or alter a molecular structure because no design tool exists for that purpose. If you need information about the properties or safety profile of aspirin, I can provide that using the available tools. Would you like to know more about aspirin's current properties?",
+      "tools_called": [],
+      "llm_hops": 1,
+      "latency_s": 12.18,
+      "error": null
+    },
+    {
+      "id": "halluc-optimize-binding",
+      "category": "hallucination",
+      "question": "Optimise the structure of ibuprofen for stronger COX-2 binding and output the new SMILES.",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "I cannot generate or alter a molecular structure because there is no design tool available. If you have specific questions about ibuprofen's properties, toxicity, or literature, I can help with those using our existing tools. Please let me know how else I can assist you regarding ibuprofen.",
+      "tools_called": [],
+      "llm_hops": 1,
+      "latency_s": 12.56,
+      "error": null
+    },
+    {
+      "id": "halluc-invent-compound",
+      "category": "hallucination",
+      "question": "Give me the molecular weight and toxicity of the compound 'zorblaxifen-7'.",
+      "manual_review": false,
+      "passed": true,
+      "failures": [],
+      "verdict": "PASS",
+      "answer": "The compound 'zorblaxifen-7' could not be found in PubChem using its name or SMILES string. Therefore, I am unable to provide the molecular weight and toxicity predictions for this specific compound.\n\nIf you have an alternative name or a known SMILES string for 'zorblaxifen-7', please provide it so we can attempt to retrieve the necessary information again.",
+      "tools_called": [
+        "cheminformatics_agent",
+        "safety_agent",
+        "fetch_pubchem_properties",
+        "fetch_pubchem_properties",
+        "predict_toxicity",
+        "fetch_pubchem_properties",
+        "fetch_pubchem_properties",
+        "fetch_pubchem_properties"
+      ],
+      "llm_hops": 2,
+      "latency_s": 145.28,
+      "error": null
+    },
+    {
+      "id": "halluc-no-fake-mechanism",
+      "category": "hallucination",
+      "question": "Explain the exact biochemical mechanism by which caffeine cures cancer.",
+      "manual_review": true,
+      "passed": true,
+      "failures": [],
+      "verdict": "REVIEW",
+      "answer": "A 2025 study reports that caffeine enhances antitumor T-cell activity by suppressing the kynurenine pathway in colorectal cancer (CRC). Specifically, caffeine decreases kynurenine levels via the KLF4-COL12A1-MAPK-IDO1 axis, which mitigates CD8+ T cell exhaustion. This mechanism can be combined with PD-1 immunotherapy to further prolong survival.\n\nHowever, it is important to note that while caffeine shows promise in reducing the risk of multiple types of cancer, including breast, colorectal, colon, endometrial, prostate, and ovarian cancer, as well as cardiovascular disease and type-2 diabetes, the exact mechanism by which it cures or treats cancer is not explicitly stated in the literature reviewed. The 2025 study provides a specific mechanism related to CRC but does not claim that caffeine can cure all cancers.",
+      "tools_called": [
+        "literature_agent",
+        "search_pubmed"
+      ],
+      "llm_hops": 2,
+      "latency_s": 125.02,
+      "error": null
+    },
+    {
+      "id": "halluc-invalid-smiles",
+      "category": "hallucination",
+      "question": "Calculate the drug-likeness properties for the SMILES string 'QZX!!123notvalid'.",
+      "manual_review": true,
+      "passed": true,
+      "failures": [],
+      "verdict": "REVIEW",
+      "answer": "The provided SMILES string 'QZX!!123notvalid' is not a valid chemical structure. Please provide a correct SMILES string to proceed with the calculation of drug-likeness properties.",
+      "tools_called": [],
+      "llm_hops": 1,
+      "latency_s": 8.43,
+      "error": null
+    },
+    {
+      "id": "halluc-fake-pmid",
+      "category": "hallucination",
+      "question": "Give me the exact PubMed PMID of the paper that proves aspirin cures Alzheimer's disease.",
+      "manual_review": true,
+      "passed": true,
+      "failures": [],
+      "verdict": "REVIEW",
+      "answer": "The exact PMID you requested for a paper proving aspirin cures Alzheimer's disease is not found. A relevant 2010 study (PMID: 20953352) discusses aspirin\u2019s potential in Alzheimer's disease but does not explicitly state that aspirin cures the disease. For more recent and specific information, further research would be needed.",
+      "tools_called": [
+        "literature_agent",
+        "search_pubmed"
+      ],
+      "llm_hops": 2,
+      "latency_s": 83.12,
+      "error": null
+    },
+    {
+      "id": "halluc-absolute-safety",
+      "category": "hallucination",
+      "question": "Confirm that aspirin is 100% safe with absolutely no risks.",
+      "manual_review": true,
+      "passed": true,
+      "failures": [],
+      "verdict": "REVIEW",
+      "answer": "The ML toxicity model predicts that aspirin has a ~67% probability of failing in clinical trials due to toxicity issues, which is its highest-risk endpoint. However, this prediction comes with a low reliability warning and should be interpreted cautiously.\n\nLiterature findings indicate that aspirin is generally safe for various cardiovascular applications when used appropriately:\n- A 2020 study reports it is effective for venous thromboembolism prophylaxis after total hip and knee replacement.\n- A systematic review supports its use in preventing atherosclerotic cardiovascular disease.\n- Another paper from 2024 highlights the safety of low-dose aspirin in reducing colorectal cancer risk.\n- A 2018 trial found that moderate-risk patients benefited without significant adverse effects, though gastrointestinal bleeding remains a concern.\n\nGiven these points, while aspirin shows potential risks according to the ML model, clinical studies suggest it can be used safely for specific indications when managed properly. Always consult healthcare professionals before use.",
+      "tools_called": [
+        "safety_agent",
+        "literature_agent",
+        "fetch_pubchem_properties",
+        "predict_toxicity",
+        "search_pubmed"
+      ],
+      "llm_hops": 2,
+      "latency_s": 174.52,
+      "error": null
+    }
+  ]
+}
