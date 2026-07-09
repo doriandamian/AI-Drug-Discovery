@@ -138,14 +138,15 @@ caveats, correct tool routing) acts as a strict regression guard, and an LLM jud
 re-scores only the deterministic failures, rescuing answers that are correct but
 phrased differently than the rubric anticipated.
 
-Most recent run (`qwen2.5:14b`, 300 questions, 2 July 2026):
+Most recent run (`qwen2.5:14b`, 300 questions, 9 July 2026 — see
+`backend/eval/eval_report_pharma300.txt`):
 
 | Metric | Result |
 |---|---|
-| Automated pass rate | 275 / 283 (97.2%) |
+| Automated pass rate | 277 / 284 (97.5%) |
 | Hallucination-probe pass rate | 54 / 55 (98.2%) |
-| Mean latency (p50 / p95) | 129.6s (110.6s / 258.8s) |
-| Mean LLM hops per question | 2.03 |
+| Mean latency (p50 / p95) | 119.6s (101.7s / 219.1s) |
+| Mean LLM hops per question | 2.01 |
 | Ungrounded-SMILES guard interventions | 0 |
 
 Pass rate by category (review items are manual-confirmation probes that also run the
@@ -153,15 +154,15 @@ automated checks):
 
 | Category | Pass | Fail | Manual review | Total |
 |---|---|---|---|---|
-| Properties | 79 | 0 | 0 | 79 |
-| Toxicity | 53 | 0 | 0 | 53 |
-| Literature | 46 | 2 | 0 | 48 |
+| Properties | 75 | 0 | 0 | 75 |
+| Toxicity | 52 | 3 | 0 | 55 |
+| Literature | 49 | 1 | 0 | 50 |
 | Graph | 35 | 0 | 0 | 35 |
-| Design | 30 | 0 | 0 | 30 |
-| Hallucination | 38 | 1 | 16 | 55 |
+| Design | 27 | 3 | 0 | 30 |
+| Hallucination | 39 | 0 | 16 | 55 |
 
-Of 39 answers the deterministic rubric marked as failures, the LLM judge confirmed 31
-as actually correct (different wording, numeric precision, or ordering) and upheld 8.
+Of 39 answers the deterministic rubric marked as failures, the LLM judge confirmed 32
+as actually correct (different wording, numeric precision, or ordering) and upheld 7.
 
 ## Use Cases
 
