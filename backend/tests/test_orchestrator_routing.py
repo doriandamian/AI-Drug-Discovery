@@ -11,7 +11,6 @@ from agents import orchestrator
 
 
 def _tool_call(name: str, task: str, call_id: str = "call_1") -> AIMessage:
-    """An assistant message that calls one specialist tool."""
     return AIMessage(
         content="",
         tool_calls=[{"name": name, "args": {"task": task}, "id": call_id, "type": "tool_call"}],

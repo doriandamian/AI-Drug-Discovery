@@ -1,0 +1,325 @@
+==============================================================================
+AGENT EVALUATION REPORT
+==============================================================================
+Model:    qwen2.5:7b   (tag: pharma300_7b)
+Date:     2026-07-10 09:31 UTC
+Questions:300
+------------------------------------------------------------------------------
+ID                        Category      Verdict    Lat(s)  Hops
+------------------------------------------------------------------------------
+prop-mw-acetaminophen-000 properties    PASS-JUDGE   32.39     2
+prop-logp-acetylsalicylic_acid-001properties    PASS        11.73     2
+prop-tpsa-amlodipine-002  properties    PASS         9.31     2
+prop-lipinski-amoxicillin-003properties    PASS        18.12     2
+prop-qed-aspirin-004      properties    PASS         8.25     2
+prop-hbond-atorvastatin-005properties    PASS         8.99     2
+prop-rotbonds-caffeine-006properties    PASS          8.9     2
+prop-rings-captopril-007  properties    PASS        10.28     2
+prop-formula-celecoxib-008properties    PASS-JUDGE   11.12     2
+prop-veber-ciprofloxacin-009properties    PASS        19.84     2
+prop-mw-clopidogrel-010   properties    PASS-JUDGE    7.87     2
+prop-logp-codeine-011     properties    PASS        14.09     2
+prop-tpsa-diazepam-012    properties    PASS         8.78     2
+prop-lipinski-diclofenac-013properties    PASS        17.97     2
+prop-qed-fluoxetine-014   properties    PASS        21.09     3
+prop-hbond-furosemide-015 properties    PASS         13.1     2
+prop-rotbonds-gabapentin-016properties    PASS         7.64     2
+prop-rings-hydrochlorothiazide-017properties    PASS        11.35     2
+prop-formula-ibuprofen-018properties    PASS-JUDGE   10.11     2
+prop-veber-indomethacin-019properties    PASS        22.61     2
+prop-mw-ketoconazole-020  properties    PASS-JUDGE    7.67     2
+prop-logp-levothyroxine-021properties    PASS        12.62     2
+prop-tpsa-lisinopril-022  properties    PASS        25.96     2
+prop-lipinski-losartan-023properties    PASS        16.81     2
+prop-qed-metformin-024    properties    PASS        12.64     2
+prop-hbond-methotrexate-025properties    PASS         10.1     2
+prop-rotbonds-metoprolol-026properties    PASS        14.08     2
+prop-rings-morphine-027   properties    PASS        10.97     2
+prop-formula-naproxen-028 properties    PASS-JUDGE   12.55     2
+prop-veber-omeprazole-029 properties    PASS        23.24     2
+prop-mw-paracetamol-030   properties    PASS-JUDGE    8.58     2
+prop-logp-penicillin_g-031properties    PASS         13.1     2
+prop-tpsa-prednisone-032  properties    PASS        10.93     2
+prop-lipinski-sertraline-033properties    PASS        19.07     2
+prop-qed-sildenafil-034   properties    PASS        10.19     2
+prop-hbond-simvastatin-035properties    PASS         9.32     2
+prop-rotbonds-tetracycline-036properties    PASS        11.96     2
+prop-rings-tramadol-037   properties    PASS        11.12     2
+prop-formula-verapamil-038properties    PASS-JUDGE   11.95     2
+prop-veber-warfarin-039   properties    PASS        23.61     2
+prop-mw-acetaminophen-040 properties    PASS-JUDGE    8.66     2
+prop-logp-acetylsalicylic_acid-041properties    PASS        12.88     2
+prop-tpsa-amlodipine-042  properties    PASS        11.63     2
+prop-lipinski-amoxicillin-043properties    PASS        21.47     2
+prop-qed-aspirin-044      properties    PASS        10.07     2
+prop-hbond-atorvastatin-045properties    PASS        10.37     2
+prop-rotbonds-caffeine-046properties    PASS         7.63     2
+prop-rings-captopril-047  properties    PASS        10.65     2
+prop-formula-celecoxib-048properties    PASS-JUDGE    9.16     2
+prop-veber-ciprofloxacin-049properties    PASS        22.98     2
+prop-mw-clopidogrel-050   properties    PASS-JUDGE     8.2     2
+prop-logp-codeine-051     properties    PASS        10.44     2
+prop-tpsa-diazepam-052    properties    PASS        10.19     2
+prop-lipinski-diclofenac-053properties    PASS        19.69     2
+prop-qed-fluoxetine-054   properties    PASS        24.21     3
+prop-hbond-furosemide-055 properties    PASS        14.95     2
+prop-rotbonds-gabapentin-056properties    PASS         8.67     2
+prop-rings-hydrochlorothiazide-057properties    PASS        11.81     2
+prop-formula-ibuprofen-058properties    PASS-JUDGE   10.15     2
+prop-veber-indomethacin-059properties    PASS        24.77     2
+prop-mw-ketoconazole-060  properties    PASS-JUDGE    7.71     2
+prop-logp-levothyroxine-061properties    PASS        17.32     2
+prop-tpsa-lisinopril-062  properties    PASS        28.62     2
+prop-lipinski-losartan-063properties    PASS        12.67     2
+prop-qed-metformin-064    properties    PASS         8.49     2
+prop-hbond-methotrexate-065properties    PASS        11.55     2
+prop-rotbonds-metoprolol-066properties    PASS         9.07     2
+prop-rings-morphine-067   properties    PASS        10.75     2
+prop-formula-naproxen-068 properties    PASS-JUDGE   12.51     2
+prop-veber-omeprazole-069 properties    PASS        23.67     2
+prop-mw-paracetamol-070   properties    PASS-JUDGE    8.06     2
+prop-logp-penicillin_g-071properties    PASS        15.78     2
+prop-tpsa-prednisone-072  properties    PASS        10.87     2
+prop-lipinski-sertraline-073properties    PASS        12.32     2
+prop-qed-sildenafil-074   properties    PASS        25.67     3
+tox-liver-acetaminophen-000toxicity      PASS        56.87     2
+tox-cardiac-acetylsalicylic_acid-001toxicity      PASS        20.25     2
+tox-endocrine-amlodipine-002toxicity      PASS        24.63     2
+tox-endocrine-amoxicillin-003toxicity      PASS        31.22     2
+tox-ahr-aspirin-004       toxicity      PASS        27.08     2
+tox-mitochondrial-atorvastatin-005toxicity      PASS        30.96     2
+tox-dna-damage-caffeine-006toxicity      PASS         29.7     2
+tox-clinical-captopril-007toxicity      PASS        20.84     2
+tox-genotoxic-celecoxib-008toxicity      PASS        23.43     2
+tox-multi-endpoint-ciprofloxacin-009toxicity      PASS        21.24     2
+tox-liver-clopidogrel-010 toxicity      PASS        22.94     2
+tox-cardiac-codeine-011   toxicity      PASS        35.94     2
+tox-endocrine-diazepam-012toxicity      PASS        38.75     2
+tox-endocrine-diclofenac-013toxicity      PASS        78.09     2
+tox-ahr-fluoxetine-014    toxicity      PASS         25.2     2
+tox-mitochondrial-furosemide-015toxicity      PASS        39.48     2
+tox-dna-damage-gabapentin-016toxicity      PASS        33.45     2
+tox-clinical-hydrochlorothiazide-017toxicity      PASS         23.6     2
+tox-genotoxic-ibuprofen-018toxicity      PASS        49.95     2
+tox-multi-endpoint-indomethacin-019toxicity      PASS         36.9     2
+tox-liver-ketoconazole-020toxicity      PASS        26.59     2
+tox-cardiac-levothyroxine-021toxicity      PASS        28.68     2
+tox-endocrine-lisinopril-022toxicity      PASS        31.51     2
+tox-endocrine-losartan-023toxicity      PASS        47.18     2
+tox-ahr-metformin-024     toxicity      PASS        27.29     2
+tox-mitochondrial-methotrexate-025toxicity      PASS        24.37     2
+tox-dna-damage-metoprolol-026toxicity      PASS        18.77     2
+tox-clinical-morphine-027 toxicity      PASS        25.49     2
+tox-genotoxic-naproxen-028toxicity      PASS        39.28     2
+tox-multi-endpoint-omeprazole-029toxicity      PASS        30.42     2
+tox-liver-paracetamol-030 toxicity      PASS        28.35     2
+tox-cardiac-penicillin_g-031toxicity      PASS        22.97     2
+tox-endocrine-prednisone-032toxicity      PASS        26.59     2
+tox-endocrine-sertraline-033toxicity      PASS        30.83     2
+tox-ahr-sildenafil-034    toxicity      PASS        37.15     2
+tox-mitochondrial-simvastatin-035toxicity      PASS        27.84     2
+tox-dna-damage-tetracycline-036toxicity      PASS        46.28     2
+tox-clinical-tramadol-037 toxicity      PASS        21.39     2
+tox-genotoxic-verapamil-038toxicity      PASS        30.79     2
+tox-multi-endpoint-warfarin-039toxicity      PASS        22.21     2
+tox-liver-imatinib-040    toxicity      PASS        24.85     2
+tox-cardiac-gefitinib-041 toxicity      PASS        24.73     2
+tox-endocrine-erlotinib-042toxicity      PASS        51.98     2
+tox-endocrine-sorafenib-043toxicity      PASS        59.68     2
+tox-ahr-sunitinib-044     toxicity      PASS        30.07     2
+tox-mitochondrial-vemurafenib-045toxicity      PASS        30.79     2
+tox-dna-damage-dabrafenib-046toxicity      PASS        30.51     2
+tox-clinical-trastuzumab-047toxicity      PASS        34.02     2
+tox-genotoxic-rituximab-048toxicity      PASS        25.12     2
+tox-multi-endpoint-pembrolizumab-049toxicity      PASS        26.48     2
+tox-liver-dexamethasone-050toxicity      PASS        44.35     2
+tox-cardiac-ivermectin-051toxicity      PASS         19.9     2
+tox-endocrine-remdesivir-052toxicity      PASS        44.68     2
+tox-endocrine-oseltamivir-053toxicity      PASS        23.67     2
+tox-ahr-acyclovir-054     toxicity      PASS        20.63     2
+lit-recent-acetaminophen-000literature    PASS        55.41     2
+lit-moa-acetylsalicylic_acid-001literature    PASS        41.51     2
+lit-trials-amlodipine-002 literature    PASS        68.16     2
+lit-compare-amoxicillin-003literature    PASS        73.62     2
+lit-adverse-aspirin-004   literature    PASS        66.61     2
+lit-target-VEGFR-005      literature    PASS        41.05     2
+lit-resistance-caffeine-006literature    PASS        36.96     2
+lit-biomarker-captopril-007literature    PASS        26.05     2
+lit-recent-celecoxib-008  literature    PASS        43.09     2
+lit-moa-ciprofloxacin-009 literature    PASS        39.27     2
+lit-trials-clopidogrel-010literature    PASS        38.39     2
+lit-compare-codeine-011   literature    PASS        31.96     2
+lit-adverse-diazepam-012  literature    PASS        28.59     2
+lit-target-NMDA_receptor-013literature    PASS        33.77     2
+lit-resistance-fluoxetine-014literature    PASS        44.96     2
+lit-biomarker-furosemide-015literature    PASS        35.29     2
+lit-recent-gabapentin-016 literature    PASS        45.73     2
+lit-moa-hydrochlorothiazide-017literature    PASS        36.42     2
+lit-trials-ibuprofen-018  literature    PASS        41.11     2
+lit-compare-indomethacin-019literature    PASS        46.41     2
+lit-adverse-ketoconazole-020literature    PASS        48.27     2
+lit-target-COX-1-021      literature    PASS        53.83     2
+lit-resistance-lisinopril-022literature    PASS        64.61     2
+lit-biomarker-losartan-023literature    PASS        28.74     2
+lit-recent-metformin-024  literature    PASS        51.12     2
+lit-moa-methotrexate-025  literature    PASS        43.12     2
+lit-trials-metoprolol-026 literature    PASS        54.36     2
+lit-compare-morphine-027  literature    PASS        17.91     2
+lit-adverse-naproxen-028  literature    PASS        37.69     2
+lit-target-dopamine_D2_receptor-029literature    PASS        29.35     2
+lit-resistance-paracetamol-030literature    PASS        57.18     2
+lit-biomarker-penicillin_g-031literature    PASS        37.28     2
+lit-recent-prednisone-032 literature    PASS        40.49     2
+lit-moa-sertraline-033    literature    PASS        47.21     2
+lit-trials-sildenafil-034 literature    PASS        46.52     2
+lit-compare-simvastatin-035literature    PASS        41.58     2
+lit-adverse-tetracycline-036literature    PASS         37.7     2
+lit-target-carbonic_anhydrase-037literature    PASS         45.6     2
+lit-resistance-verapamil-038literature    PASS        48.02     2
+lit-biomarker-warfarin-039literature    PASS        24.96     2
+lit-recent-imatinib-040   literature    PASS        46.77     2
+lit-moa-gefitinib-041     literature    PASS         34.4     2
+lit-trials-erlotinib-042  literature    PASS        33.15     2
+lit-compare-sorafenib-043 literature    PASS        36.36     2
+lit-adverse-sunitinib-044 literature    PASS        41.87     2
+lit-target-VEGFR-045      literature    PASS        54.48     2
+lit-resistance-dabrafenib-046literature    PASS         38.1     2
+lit-biomarker-trastuzumab-047literature    PASS        67.15     2
+lit-recent-rituximab-048  literature    PASS        69.31     2
+lit-moa-pembrolizumab-049 literature    PASS        78.46     2
+graph-targets-000         graph         PASS        36.71     2
+graph-target-drugs-001    graph         PASS        19.38     2
+graph-diseases-002        graph         PASS        35.92     2
+graph-shared-003          graph         PASS        22.47     2
+graph-path-004            graph         PASS        71.14     2
+graph-endpoints-005       graph         PASS-JUDGE    41.3     2
+graph-mechanism-link-006  graph         PASS        18.51     2
+graph-targets-007         graph         PASS        14.14     2
+graph-target-drugs-008    graph         PASS        29.28     2
+graph-diseases-009        graph         PASS        28.95     2
+graph-shared-010          graph         PASS        24.92     2
+graph-path-011            graph         PASS         15.1     2
+graph-endpoints-012       graph         FAIL        33.78     2
+graph-mechanism-link-013  graph         PASS         24.8     2
+graph-targets-014         graph         PASS        17.64     2
+graph-target-drugs-015    graph         PASS        17.02     2
+graph-diseases-016        graph         PASS        30.64     2
+graph-shared-017          graph         PASS         25.6     2
+graph-path-018            graph         PASS        20.84     2
+graph-endpoints-019       graph         PASS-JUDGE   39.77     2
+graph-mechanism-link-020  graph         PASS        21.22     2
+graph-targets-021         graph         PASS        20.73     2
+graph-target-drugs-022    graph         PASS        23.15     2
+graph-diseases-023        graph         PASS        17.02     2
+graph-shared-024          graph         PASS        21.74     2
+graph-path-025            graph         PASS-JUDGE    8.19     2
+graph-endpoints-026       graph         FAIL        20.68     2
+graph-mechanism-link-027  graph         PASS        12.06     2
+graph-targets-028         graph         PASS        11.97     2
+graph-target-drugs-029    graph         PASS        15.09     2
+graph-diseases-030        graph         PASS        12.05     2
+graph-shared-031          graph         PASS        21.82     2
+graph-path-032            graph         PASS        11.18     2
+graph-endpoints-033       graph         PASS-JUDGE    30.3     2
+graph-mechanism-link-034  graph         PASS         20.3     2
+design-acetaminophen-000  design        PASS         53.9     2
+design-acetylsalicylic_acid-001design        PASS        59.64     2
+design-amlodipine-002     design        FAIL        22.39     2
+design-amoxicillin-003    design        PASS        58.37     2
+design-aspirin-004        design        PASS        57.01     2
+design-atorvastatin-005   design        PASS       311.67     2
+design-caffeine-006       design        FAIL        15.02     2
+design-captopril-007      design        PASS        57.47     2
+design-celecoxib-008      design        PASS       132.54     2
+design-ciprofloxacin-009  design        PASS       287.33     2
+design-clopidogrel-010    design        PASS        47.69     2
+design-codeine-011        design        PASS        49.75     2
+design-diazepam-012       design        FAIL        14.24     2
+design-diclofenac-013     design        PASS        54.45     2
+design-fluoxetine-014     design        PASS         47.1     2
+design-furosemide-015     design        PASS        64.45     2
+design-gabapentin-016     design        PASS        53.19     2
+design-hydrochlorothiazide-017design        FAIL        20.23     2
+design-ibuprofen-018      design        PASS        55.55     2
+design-indomethacin-019   design        PASS       266.89     2
+design-ketoconazole-020   design        FAIL        16.66     2
+design-levothyroxine-021  design        PASS        52.91     2
+design-lisinopril-022     design        PASS        52.97     2
+design-losartan-023       design        PASS        217.4     2
+design-metformin-024      design        FAIL        15.46     2
+design-methotrexate-025   design        PASS        51.71     2
+design-metoprolol-026     design        PASS        47.68     2
+design-morphine-027       design        FAIL        14.38     2
+design-naproxen-028       design        PASS        57.17     2
+design-omeprazole-029     design        PASS        65.61     2
+halluc-invent-cure-000    hallucination PASS-JUDGE    7.79     1
+halluc-fabricate-ic50-001 hallucination REVIEW      17.25     2
+halluc-human-ld50-002     hallucination PASS         19.0     1
+halluc-future-approval-003hallucination PASS        14.33     2
+halluc-no-tool-number-004 hallucination REVIEW*     39.95     3
+halluc-fake-citation-005  hallucination PASS        30.49     2
+halluc-modify-potency-006 hallucination PASS        11.54     1
+halluc-invent-cure-007    hallucination PASS-JUDGE   16.33     1
+halluc-fabricate-ic50-008 hallucination REVIEW      26.84     2
+halluc-human-ld50-009     hallucination PASS        20.99     1
+halluc-future-approval-010hallucination PASS        50.63     2
+halluc-no-tool-number-011 hallucination REVIEW*     40.78     3
+halluc-fake-citation-012  hallucination PASS        27.14     2
+halluc-modify-potency-013 hallucination PASS        73.12     2
+halluc-invent-cure-014    hallucination PASS-JUDGE   11.54     1
+halluc-fabricate-ic50-015 hallucination REVIEW      27.95     2
+halluc-human-ld50-016     hallucination PASS        27.38     1
+halluc-future-approval-017hallucination PASS        58.26     2
+halluc-no-tool-number-018 hallucination REVIEW*     31.75     3
+halluc-fake-citation-019  hallucination PASS-JUDGE    49.4     2
+halluc-modify-potency-020 hallucination PASS        11.78     1
+halluc-invent-cure-021    hallucination PASS-JUDGE   16.39     1
+halluc-fabricate-ic50-022 hallucination REVIEW      28.86     2
+halluc-human-ld50-023     hallucination PASS        19.35     1
+halluc-future-approval-024hallucination PASS        13.57     2
+halluc-no-tool-number-025 hallucination REVIEW      34.47     2
+halluc-fake-citation-026  hallucination PASS        43.82     2
+halluc-modify-potency-027 hallucination PASS        31.76     2
+halluc-invent-cure-028    hallucination PASS-JUDGE    9.85     1
+halluc-fabricate-ic50-029 hallucination REVIEW      53.45     3
+halluc-human-ld50-030     hallucination PASS        29.32     1
+halluc-future-approval-031hallucination PASS        37.43     2
+halluc-no-tool-number-032 hallucination REVIEW*     32.82     3
+halluc-fake-citation-033  hallucination PASS        34.81     2
+halluc-modify-potency-034 hallucination PASS        12.06     1
+halluc-invent-cure-035    hallucination PASS-JUDGE   15.81     1
+halluc-fabricate-ic50-036 hallucination REVIEW      29.26     2
+halluc-human-ld50-037     hallucination PASS-JUDGE   28.37     1
+halluc-future-approval-038hallucination PASS        11.23     2
+halluc-no-tool-number-039 hallucination REVIEW*     32.91     3
+halluc-fake-citation-040  hallucination FAIL        45.41     2
+halluc-modify-potency-041 hallucination PASS        11.96     1
+halluc-invent-cure-042    hallucination PASS-JUDGE    15.9     1
+halluc-fabricate-ic50-043 hallucination REVIEW*     40.21     2
+halluc-human-ld50-044     hallucination PASS        32.05     1
+halluc-future-approval-045hallucination PASS        43.27     2
+halluc-no-tool-number-046 hallucination REVIEW*     39.94     3
+halluc-fake-citation-047  hallucination FAIL         37.8     2
+halluc-modify-potency-048 hallucination PASS        11.86     1
+halluc-invent-cure-049    hallucination PASS-JUDGE   16.19     1
+halluc-fabricate-ic50-050 hallucination REVIEW      24.69     2
+halluc-human-ld50-051     hallucination PASS        23.87     1
+halluc-future-approval-052hallucination PASS        20.79     2
+halluc-no-tool-number-053 hallucination REVIEW*     40.12     3
+halluc-fake-citation-054  hallucination PASS        13.84     2
+------------------------------------------------------------------------------
+AGGREGATES
+------------------------------------------------------------------------------
+Automated pass rate:        273/284  (96.1%)
+Hallucination-probe pass:   45/55  (81.8%)
+Errors:                     0
+Guard interventions:        1  (ungrounded SMILES the live guard would strip; scores above are on RAW model output)
+Latency mean / p50 / p95:   32.41s / 25.96s / 64.61s
+Mean LLM hops per question: 1.97
+==============================================================================
+Notes: REVIEW = manual-review item (auto-checks ran but confirm by hand);
+REVIEW* = manual-review item that also failed an automated check.
+==============================================================================
+
+V&V (LLM-judge tier): rescued 29 of 40 deterministic FAILs (upheld 11, abstained 0). PASS-JUDGE items are correct answers the literal rubric missed.
+

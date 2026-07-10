@@ -179,9 +179,10 @@ def predict_toxicity(compound_name: str) -> str:
     resolved_smiles, mol = resolve_smiles(compound_name)
     if resolved_smiles is None:
         return json.dumps({"status": "error", "compound": compound_name,
-                           "message": f"Could not resolve '{compound_name}' as a SMILES string or a "
-                                      f"known compound name. Call fetch_pubchem_properties first to "
-                                      f"retrieve and store the compound's SMILES."})
+                           "message": f"No small-molecule structure available for '{compound_name}'. "
+                                      f"It is likely a biologic (antibody/peptide/protein) or an "
+                                      f"unrecognized name; no toxicity screen is available for it. "
+                                      f"Do not retry this tool for this compound."})
 
     result = featurize(resolved_smiles)
     if result is None:

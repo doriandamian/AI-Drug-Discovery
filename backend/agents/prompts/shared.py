@@ -1,5 +1,3 @@
-"""Prompt fragments shared across multiple specialists."""
-
 SMILES_GOLDEN_RULE = """\
 GOLDEN RULE: a SMILES string is opaque data, never text to rewrite:
 - You may ONLY use a SMILES that came out of a tool result.
